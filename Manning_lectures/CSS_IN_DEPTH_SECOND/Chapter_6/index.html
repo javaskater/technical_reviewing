@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 200vh;
+            margin: 0;
+        }
+        button, input{
+            font: inherit;
+        }
+        button {
+            padding: 0.5em 0.7em;
+            border: 1px solid #8d8d8d;
+            background-color: #eee;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .top-banner {
+            padding: 0.5em;
+            background-color: #ffd698;
+            box-shadow: 0 1px 5px rgb(0 0 0 / 0.1);
+        }
+        .top-banner-inner {
+            width: 80%;
+            max-inline-size: 1000px;
+            margin-inline: auto;
+        }
+        .modal {
+            display: none;
+        }
+        .modal.is-open {
+            display: block;
+        }
+        .modal-backdrop{
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .modal-body {
+            position: fixed;
+            inset-block: 3em;
+            inset-inline: 20%;
+            background-color: white;
+            overflow: auto;
+            z-index: 2;
+        }
+        body.no-scroll {
+            overflow: hidden;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.3em;
+            right: 0.3em;
+            padding: 0.3em;
+            /*For the text itself*/
+            border: 0;
+            font-size: 2em;
+            height: 1em;
+            width: 1em;
+            text-indent: 10em;
+            overflow: hidden;
+            background-color: transparent;
+        }
+        .modal-close::after{
+            position: absolute;
+            line-height: 0.5;
+            text-indent:0;
+            top: 0.2em;
+            left: 0.1em;
+            content: "\00D7";
+        }
+        /*Dropdown menu part*/
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+        .dropdown-toggle{
+            padding: 0.5em 2em 0.5em 1.5em;
+            border: 1px solid #ccc;
+            background-color: #eee;
+            border-radius: 0;
+        }
+        .dropdown-toggle::after{
+            content: "";
+            position:absolute;
+            right: 1em;
+            top: 0.9em;
+            border: 0.3em solid;
+            /*border-color: black red green blue*/
+            border-color: black transparent transparent
+        }
+        .dropdown.is-open .dropdown-toggle::after{
+            top: 0.6em;
+            border: 0.3em solid;
+            border-color: transparent transparent black
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 2.1em;
+            inline-size: max-content;
+            min-inline-size: 100%;
+            background-color: #eee;
+        }
+        .dropdown.is-open .dropdown-menu{
+            display: block;
+        }
+
+        .submenu{
+            padding-inline-start: 0;
+            margin: 0;
+            list-style-type: none;
+            border: 1px solid #999;
+
+        }
+        .submenu > li + li {
+            border-top: 1px solid #999;
+        }
+        .submenu > li > a {
+            display: block;
+            padding: 0.5em 1.5em;
+            background-color: #eee;
+            color: #369;
+            text-decoration: none;
+        }
+        .submenu > li > a:hover {
+            background-color: #fff;
+        }
+        /*two submenus*/
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1000px;
+            margin: 1em auto;
+        }
+        .col-main{
+            width: 80%;
+            padding-right: 1em;
+        }
+        .col-sidebar{
+            width: 20%;
+        }
+        .affix{
+            position: sticky;
+            top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <header class="top-banner">
+        <div class="top-banner-inner">
+            <p>Find out what's going on at Wombat Coffee each month. Sign up for our newsletter:
+                <button id="open" type="button">Sign Up</button>
+            </p>
+        </div>
+    </header>
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+        <div class="modal-backdrop"></div> <!--to obscure the background-->
+        <div class="modal-body">
+            <button class="modal-close" id="close" type="button">close</button>
+            <h2>Wombat Newsletter</h2>
+            <p>Sign up for our monthly newsletter. No Spam. We promise!</p>
+            <form>
+                <p>
+                    <label for="email">Email address:</label>
+                    <input type="text" name="email">
+                </p>
+                <p><button type="submit">Submit</button></p>
+            </form>
+        </div>
+    </div>
+    <main class="container">
+        <div class="col-main"> 
+            <nav>
+                <div class="dropdown" id="dropdown">
+                    <button type="button" class="dropdown-toggle" id="dropdown-toggle">Main Menu</button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <ul class="submenu">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/coffees">Coffees</a></li>
+                            <li><a href="/brewers">Brewers</a></li>
+                            <li><a href="/specials">Specials</a></li>
+                            <li><a href="/about">About us</a></li>
+                        </ul>
+                    </div> <!--Drop down -menu-->
+                </div> <!--Dropdaown button + menu div-->
+            </nav>
+            <h1>Wombat Coffee Roasters</h1>
+            
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis lectus nec lectus convallis lobortis ut vitae dui. Suspendisse sit amet velit lacinia, placerat felis nec, posuere mi. Duis ut aliquet velit. Maecenas et lacus volutpat, pulvinar justo scelerisque, gravida ex. Nunc ullamcorper sapien non suscipit ullamcorper. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut dictum ac tortor eu placerat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam porttitor urna a sem gravida, non malesuada leo pulvinar. </p>
+            <p> Aenean cursus viverra odio id volutpat. Pellentesque hendrerit ut lorem in scelerisque. Proin quis lectus dignissim, auctor risus malesuada, finibus enim. Aenean ultrices diam felis, id porta nunc scelerisque posuere. Phasellus a elementum est. Phasellus lobortis consectetur nisi nec imperdiet. Nullam tempus vitae risus in auctor. Etiam pulvinar ullamcorper porta. Aliquam vitae feugiat sapien, vehicula laoreet ante. Cras pretium consequat mi in efficitur. </p>
+            <p>Cras euismod mi vel risus elementum, ac molestie ante cursus. Nullam ipsum est, fringilla a sem non, pellentesque pulvinar quam. Sed nisi sem, placerat non dui ut, pharetra rhoncus erat. Phasellus convallis consectetur porta. Quisque dapibus tortor id turpis mollis cursus. Integer placerat, justo sed tincidunt tincidunt, tortor nisl accumsan quam, vel finibus dui turpis sit amet arcu. Maecenas a commodo dolor. Mauris vitae dolor ac justo ultrices maximus. Phasellus vitae suscipit sem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec a malesuada sem, vel tincidunt tellus. Nullam maximus interdum turpis eget sodales. Sed maximus molestie ex, eu fermentum quam. Maecenas eu interdum mi, vitae ultrices sapien. Mauris eu congue arcu. Nulla ultricies enim sem, non maximus libero pellentesque eget. </p>
+            <p>Donec eu malesuada lacus, vitae pharetra velit. Curabitur sodales, ex a placerat iaculis, eros lectus venenatis ipsum, vitae molestie diam purus a dui. Donec mauris felis, ullamcorper nec mauris sed, sodales mollis lorem. Maecenas porttitor mi vitae risus dictum, vel fermentum augue malesuada. Nam at laoreet lacus, gravida lacinia ante. Quisque egestas nunc a odio auctor porttitor a quis erat. Donec et justo egestas eros tristique finibus at et dui. Phasellus sed fermentum ex. Curabitur malesuada quam id accumsan viverra. Aliquam suscipit augue eget ipsum malesuada, vitae luctus ligula iaculis. In eget odio maximus, molestie nulla et, pellentesque odio. Aliquam ut ex nulla. Nunc diam dui, ultrices eget consequat quis, dictum vel nulla. Nunc consectetur arcu venenatis tortor suscipit, id bibendum neque semper. Etiam ut euismod ex. Sed at gravida tellus, eu tristique erat. </p>
+            <p>Aliquam condimentum rutrum tortor, id porta nibh interdum nec. Mauris ac urna egestas, posuere sapien vel, aliquet ante. Duis imperdiet, diam a venenatis ullamcorper, augue lacus pellentesque leo, quis congue sem mauris at libero. Sed ut fermentum velit. Curabitur ut libero non justo viverra aliquam. Nunc non ullamcorper metus, sed dictum ex. Morbi condimentum semper ligula at consequat. Praesent turpis lorem, tempor a pharetra vel, venenatis ac purus. Morbi libero leo, iaculis id orci quis, pretium euismod est. Quisque varius orci ante, in rutrum mi porttitor non. Praesent condimentum scelerisque massa vel posuere. Aenean vulputate velit enim, ac feugiat libero scelerisque eu. In rutrum lorem nec augue luctus, eu accumsan ante venenatis. </p>
+            <p>Morbi venenatis elit in arcu rutrum, vel cursus massa mollis. Nam convallis ante eu lorem vehicula, in luctus sapien blandit. Nulla massa elit, laoreet non enim vel, maximus consectetur quam. Donec suscipit iaculis lorem, ut hendrerit ligula porta vitae. Aliquam vel urna eu est porta blandit. Sed est ante, semper sit amet elit non, rutrum luctus augue. Aenean nec magna leo. Phasellus non tincidunt ipsum. </p>
+            <p>Cras viverra sed tellus quis vulputate. Integer gravida purus dictum, luctus nisi ut, malesuada diam. Maecenas quam justo, faucibus eu gravida ut, semper a arcu. Fusce rhoncus scelerisque risus, ut malesuada eros maximus at. Vivamus placerat euismod urna eget finibus. Morbi purus neque, sagittis vitae lacinia ac, pellentesque porttitor ante. Donec a ultrices leo. Aenean convallis massa ut odio varius accumsan. </p>
+            <p>Nullam quis felis in quam tempor dignissim. Nullam elementum enim sed purus hendrerit mattis. Sed sit amet ullamcorper velit. Sed ut fringilla purus. Aenean sed lacus et magna suscipit vulputate scelerisque at nunc. Nunc mattis magna purus, eget sollicitudin massa commodo quis. Nam venenatis aliquam sollicitudin. Etiam vitae luctus odio, a porttitor urna. Cras egestas libero at metus tincidunt efficitur. Aenean iaculis, nibh a consequat gravida, eros purus commodo nisl, eu hendrerit dolor elit non elit. Fusce ac justo in velit ultricies molestie. Donec augue purus, scelerisque et libero at, malesuada placerat lorem. Ut a est ex. Vestibulum eget tincidunt purus, tristique tristique neque. Sed rutrum consequat mauris eget tincidunt. </p>
+            <p>Phasellus convallis lorem eros, ac rutrum magna pellentesque nec. Duis ac lacus eget tortor elementum cursus. Etiam nec mauris sed est posuere mattis. Aenean dictum, ex at commodo aliquam, nulla risus finibus velit, quis bibendum ante magna convallis risus. Ut semper egestas fringilla. Aenean maximus vulputate ullamcorper. Mauris mattis nibh urna, in laoreet massa dictum sit amet. Aliquam eleifend condimentum risus, quis laoreet magna tempus quis. Pellentesque tempus id justo quis porttitor. Quisque at ex vel ante maximus porttitor. Ut risus mauris, pulvinar ut ullamcorper vitae, volutpat at neque. Aenean malesuada lacus vitae arcu finibus, nec mollis elit volutpat. Fusce ut ornare enim. Vestibulum in orci leo. Vivamus mattis orci magna, ac vestibulum diam vestibulum ac. Ut pretium accumsan eros, quis rutrum tellus tincidunt id. </p>
+            <p>Integer quis varius augue. Integer quis libero at augue pretium fringilla. Nunc tempus tortor ac lorem cursus sollicitudin. Duis convallis convallis justo, et porttitor arcu viverra vitae. In laoreet, mauris non facilisis lacinia, nulla diam pretium ante, eget efficitur lectus massa quis metus. Vestibulum ultricies eleifend lorem at malesuada. Maecenas nec convallis elit. Pellentesque eu venenatis sapien, ut dapibus lacus.</p>
+        </div>
+        <aside class="col-sidebar">
+            <div class="affix">
+                <ul class="submenu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/coffees">Coffees</a></li>
+                    <li><a href="/brewers">Brewers</a></li>
+                    <li><a href="/specials">Specials</a></li>
+                    <li><a href="/about">About us</a></li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+    <script type="text/javascript"> 
+        const button = document.getElementById("open");
+        const close = document.getElementById("close");
+        const modal = document.getElementById("modal");
+        button.addEventListener("click", function(event){
+            console.log("open the pop up");
+            modal.classList.add("is-open");
+            document.body.classList.add("no-scroll")
+        });
+        close.addEventListener("click", function(event){
+            console.log("close the pop up");
+            modal.classList.remove("is-open");
+            document.body.classList.remove("no-scroll")
+        });
+        const dropdownToggle = document.getElementById("dropdown-toggle");
+        const dropdown = document.getElementById("dropdown");
+        dropdownToggle.addEventListener('click', function(event){
+            dropdown.classList.toggle("is-open")
+        });
+    </script>
+</body>
+</html>

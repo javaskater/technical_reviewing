@@ -1,0 +1,2 @@
+# Solution to the exercises
+* The solution to the exercises are on [GitHub page of Basile du Plessis(link)](https://github.com/BasileDuPlessis/scala-for-the-impatient/tree/master/src/main/scala/com/basile/scala/ch09)
