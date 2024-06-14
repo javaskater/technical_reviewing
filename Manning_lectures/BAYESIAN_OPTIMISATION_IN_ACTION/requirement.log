@@ -1,0 +1,119 @@
+Collecting botorch==0.9.5
+  Downloading botorch-0.9.5-py3-none-any.whl (596 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 596.4/596.4 KB 10.5 MB/s eta 0:00:00
+Collecting gpytorch==1.11
+  Downloading gpytorch-1.11-py3-none-any.whl (266 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 266.1/266.1 KB 25.8 MB/s eta 0:00:00
+Collecting jupyter==1.0.0
+  Using cached jupyter-1.0.0-py2.py3-none-any.whl (2.7 kB)
+Collecting jupyterlab==3.2.5
+  Using cached jupyterlab-3.2.5-py3-none-any.whl (8.6 MB)
+Collecting matplotlib==3.5.1
+  Using cached matplotlib-3.5.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (11.9 MB)
+Collecting notebook==6.4.6
+  Using cached notebook-6.4.6-py3-none-any.whl (9.9 MB)
+Collecting numpy==1.21.4
+  Using cached numpy-1.21.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (15.9 MB)
+Collecting pandas==1.3.5
+  Using cached pandas-1.3.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (11.5 MB)
+Collecting scikit-learn==1.3.1
+  Using cached scikit_learn-1.3.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (10.8 MB)
+Collecting scipy==1.7.3
+  Using cached scipy-1.7.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (39.9 MB)
+Collecting seaborn==0.11.2
+  Using cached seaborn-0.11.2-py3-none-any.whl (292 kB)
+Collecting torch==2.1.1
+  Using cached torch-2.1.1-cp310-cp310-manylinux1_x86_64.whl (670.2 MB)
+Collecting torchvision==0.17.1
+  Using cached torchvision-0.17.1-cp310-cp310-manylinux1_x86_64.whl (6.9 MB)
+Collecting tqdm==4.62.3
+  Using cached tqdm-4.62.3-py2.py3-none-any.whl (76 kB)
+Collecting pyro-ppl>=1.8.4
+  Downloading pyro_ppl-1.9.0-py3-none-any.whl (745 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 745.2/745.2 KB 36.3 MB/s eta 0:00:00
+Collecting linear-operator==0.5.1
+  Downloading linear_operator-0.5.1-py3-none-any.whl (174 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 174.5/174.5 KB 15.8 MB/s eta 0:00:00
+Collecting multipledispatch
+  Downloading multipledispatch-1.0.0-py3-none-any.whl (12 kB)
+Collecting nbconvert
+  Using cached nbconvert-7.16.3-py3-none-any.whl (257 kB)
+Collecting jupyter-console
+  Using cached jupyter_console-6.6.3-py3-none-any.whl (24 kB)
+Collecting ipywidgets
+  Using cached ipywidgets-8.1.2-py3-none-any.whl (139 kB)
+Collecting qtconsole
+  Using cached qtconsole-5.5.1-py3-none-any.whl (123 kB)
+Collecting ipykernel
+  Using cached ipykernel-6.29.3-py3-none-any.whl (117 kB)
+Collecting packaging
+  Using cached packaging-24.0-py3-none-any.whl (53 kB)
+Collecting jupyterlab-server~=2.3
+  Using cached jupyterlab_server-2.25.4-py3-none-any.whl (58 kB)
+Collecting jupyter-server~=1.4
+  Using cached jupyter_server-1.24.0-py3-none-any.whl (347 kB)
+Collecting nbclassic~=0.2
+  Using cached nbclassic-0.5.6-py3-none-any.whl (10.0 MB)
+Collecting jinja2>=2.1
+  Using cached Jinja2-3.1.3-py3-none-any.whl (133 kB)
+Collecting jupyter-core
+  Using cached jupyter_core-5.7.2-py3-none-any.whl (28 kB)
+Collecting tornado>=6.1.0
+  Using cached tornado-6.4-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (435 kB)
+Collecting ipython
+  Using cached ipython-8.22.2-py3-none-any.whl (811 kB)
+Collecting kiwisolver>=1.0.1
+  Using cached kiwisolver-1.4.5-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.6 MB)
+Collecting fonttools>=4.22.0
+  Using cached fonttools-4.50.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.6 MB)
+Collecting python-dateutil>=2.7
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Collecting pyparsing>=2.2.1
+  Using cached pyparsing-3.1.2-py3-none-any.whl (103 kB)
+Collecting cycler>=0.10
+  Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Collecting pillow>=6.2.0
+  Using cached pillow-10.2.0-cp310-cp310-manylinux_2_28_x86_64.whl (4.5 MB)
+Collecting nbformat
+  Using cached nbformat-5.10.3-py3-none-any.whl (78 kB)
+Collecting nest-asyncio>=1.5
+  Using cached nest_asyncio-1.6.0-py3-none-any.whl (5.2 kB)
+Collecting terminado>=0.8.3
+  Using cached terminado-0.18.1-py3-none-any.whl (14 kB)
+Collecting traitlets>=4.2.1
+  Using cached traitlets-5.14.2-py3-none-any.whl (85 kB)
+Collecting Send2Trash>=1.8.0
+  Using cached Send2Trash-1.8.2-py3-none-any.whl (18 kB)
+Collecting ipython-genutils
+  Using cached ipython_genutils-0.2.0-py2.py3-none-any.whl (26 kB)
+Collecting pyzmq>=17
+  Using cached pyzmq-25.1.2-cp310-cp310-manylinux_2_28_x86_64.whl (1.1 MB)
+Collecting jupyter-client>=5.3.4
+  Using cached jupyter_client-8.6.1-py3-none-any.whl (105 kB)
+Collecting prometheus-client
+  Using cached prometheus_client-0.20.0-py3-none-any.whl (54 kB)
+Collecting argon2-cffi
+  Using cached argon2_cffi-23.1.0-py3-none-any.whl (15 kB)
+Collecting pytz>=2017.3
+  Using cached pytz-2024.1-py2.py3-none-any.whl (505 kB)
+Collecting joblib>=1.1.1
+  Using cached joblib-1.3.2-py3-none-any.whl (302 kB)
+Collecting threadpoolctl>=2.0.0
+  Using cached threadpoolctl-3.4.0-py3-none-any.whl (17 kB)
+Collecting sympy
+  Using cached sympy-1.12-py3-none-any.whl (5.7 MB)
+Collecting nvidia-cuda-runtime-cu12==12.1.105
+  Using cached nvidia_cuda_runtime_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (823 kB)
+Collecting nvidia-nccl-cu12==2.18.1
+  Using cached nvidia_nccl_cu12-2.18.1-py3-none-manylinux1_x86_64.whl (209.8 MB)
+Collecting nvidia-nvtx-cu12==12.1.105
+  Using cached nvidia_nvtx_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (99 kB)
+Collecting typing-extensions
+  Using cached typing_extensions-4.10.0-py3-none-any.whl (33 kB)
+Collecting fsspec
+  Using cached fsspec-2024.3.1-py3-none-any.whl (171 kB)
+Collecting nvidia-cublas-cu12==12.1.3.1
+  Using cached nvidia_cublas_cu12-12.1.3.1-py3-none-manylinux1_x86_64.whl (410.6 MB)
+Collecting nvidia-cufft-cu12==11.0.2.54
+  Using cached nvidia_cufft_cu12-11.0.2.54-py3-none-manylinux1_x86_64.whl (121.6 MB)
+Collecting nvidia-cudnn-cu12==8.9.2.26
