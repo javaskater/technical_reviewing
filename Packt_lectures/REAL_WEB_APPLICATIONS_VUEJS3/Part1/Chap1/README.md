@@ -41,3 +41,22 @@ Terminé. Exécutez maintenant :
   npm run format
   npm run dev
 ```
+* I check the commands
+  * npm i is the longuest and the more problematic (it warns us of the age of our node.js)
+  * *npm run format* calls *prettier --write src/*
+# page 11
+* test of the simplified template:
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vue_js/Chapter1/my-first-vue$ npm run dev
+
+> my-first-vue@0.0.0 dev
+> vite
+
+
+  VITE v5.3.2  ready in 1310 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+```
+* in the prevoius console you also see the errors (VSCode helps)
