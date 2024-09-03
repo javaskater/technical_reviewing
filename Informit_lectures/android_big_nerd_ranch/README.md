@@ -1,0 +1,2 @@
+# Exploring ans testing the [Android Big Herd Ranch Guide 5th Edition](https://www.informit.com/store/android-programming-the-big-nerd-ranch-guide-9780137645602)
+* This [5th Edition](https://www.informit.com/store/android-programming-the-big-nerd-ranch-guide-9780137645602) uses [Kotlin](https://kotlinlang.org/) as programming language since [JetPAck Compose](https://developer.android.com/compose) is written in Kotlin and can only be used in Kotlin.

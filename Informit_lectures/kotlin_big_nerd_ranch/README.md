@@ -1,0 +1,2 @@
+# TODO see where I am left on the [Kotlin Big Nerd Ranch Guide 2nd Edition](https://www.informit.com/store/kotlin-programming-the-big-nerd-ranch-guide-9780136891055)
+* **TODO**: I must have some notes anywhere ?
