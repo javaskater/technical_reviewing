@@ -61,3 +61,97 @@ position: {coords:Geolocation}
   * here a key *coords* of props (wihich is the object passed by the calling component here GetLocation) whose value is of type *Coords*
 * what is [defineProps](https://dev.to/cn-2k/working-with-props-declaration-in-vue-3-ts-included-4o4f)
  * this component will be called by the GetLocation
+# 39
+* we use on Mounted for the *WeatherReport* component. But it is mounted only when called by the *GetLocation* component
+# 40
+* [Installation  of tailwind css](https://tailwindcss.com/docs/guides/vite)
+  * [Vite](https://vitejs.dev/guide/why.html) is used by Vitest installéd when creating the project p 42
+  * I have a file *Chapter3/vue-local-weather/vite.config.ts* at the root of the Weather project...
+* [postcss](https://postcss.org/) is not SASS, it only adpats to the browser using  prefixes, polyfills
+  * it must use [autoprefixer](https://autoprefixer.github.io/) which add vendor prefixes to the classes
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vue_js/Chapter3/vue-local-weather$ npm install -D tailwindcss postcss autoprefixer
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@vue/eslint-config-typescript@13.0.0',
+npm WARN EBADENGINE   required: { node: '^18.18.0 || >=20.0.0' },
+npm WARN EBADENGINE   current: { node: 'v18.16.0', npm: '9.5.1' }
+npm WARN EBADENGINE }
+
+added 54 packages, changed 1 package, and audited 393 packages in 10s # we added 54 packages
+
+92 packages are looking for funding
+  run `npm fund` for details
+
+1 moderate severity vulnerability
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+npm notice 
+npm notice New major version of npm available! 9.5.1 -> 10.8.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.8.3
+npm notice Run npm install -g npm@10.8.3 to update!
+npm notice 
+```
+* [difference between npm and npx](https://www.naukri.com/code360/library/difference-between-npm-and-npx)
+  * npx can run/execute a module/package present in the registry without installing it
+  * from version 5.4 npm and npx are installed together
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vue_js/Chapter3/vue-local-weather$ npx tailwindcss init -p
+
+Created Tailwind CSS config file: tailwind.config.js
+Created PostCSS config file: postcss.config.js
+```
+* we see here that autoprefixer is a plugin of postcss in hte same way than tailwindcss
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vue_js/Chapter3/vue-local-weather$ cat postcss.config.js 
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+* We have to modify the default taiilwind configuration:
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  purge: ['./index.html', './src/**/*.{vue,js,ts;jsx,tsx}'], //removes all unused styles from our production app
+  content: ['./src/**/*.{vue,js,ts;jsx,tsx}'], //Where tailwind should be applied
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+* exposing utility classes of tailwind to the application
+  * is using @Tailwind annotation int a root style.css which is imported int he main.ts file
+# 41
+* the style.css file is not imported in the traditional sense, it is only an element of the development pipeline
+  * it is just the list of all the utility classes used by the tooling system
+  * I wonder why ./inndex.html is not in the content
+# 42
+* as icon in the .index.htm file we don't use a SVG icon but the *Chapter3/vue-local-weather/public/favicon.ico*
+* great Advantage of VSCode, the class names in index.html are automatically completed
+```
+Version: 1.92.2
+Commit: fee1edb8d6d72a0ddff41e5f71a671c23ed924b9
+Date: 2024-08-14T17:29:30.058Z
+Electron: 30.1.2
+ElectronBuildId: 9870757
+Chromium: 124.0.6367.243
+Node.js: 20.14.0
+V8: 12.4.254.20-electron.0
+OS: Linux x64 5.15.0-72-generic snap
+```
+* [listing Visual Studio code extensions using the command line](https://code.visualstudio.com/docs/editor/extension-marketplace#_command-line-extension-management)
+  * the only Vue  extension is [vue.volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 
+```bash
+jmena01@M077-1840900:/var/www/formationDrupal$ code --list-extensions | grep -i vue
+vue.volar
+```
+* I have a problem:
+  * nothing in the div/app beacause the *<GetLocation />* does not work !!
+    * TODO behind a enterprise proxy there is no position given by the navigator!!! 
+    *  **TODO** use getLocationBlockedByUser
