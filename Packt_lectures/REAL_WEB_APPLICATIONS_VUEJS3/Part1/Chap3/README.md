@@ -214,3 +214,36 @@ const icon_src: Ref<string | undefined> = ref();
 ```bash
 npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
 ```
+# p 47
+* after having suppressed the directory __test__ created by the default App (inside there is a test for a compoent we did eliminate)
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vue_js/Chapter3/vue-local-weather$ npm run test:unit
+
+> vue-local-weather@0.0.0 test:unit
+> vitest
+
+
+ DEV  v1.6.0 /home/jmena01/CONSULTANT/my_vue_js/Chapter3/vue-local-weather
+
+ ✓ src/App.spec.ts (1)
+   ✓ App (1)
+     ✓ renders the GetLocation Component
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:42:17
+   Duration  1.43s (transform 261ms, setup 1ms, collect 313ms, tests 23ms, environment 520ms, prepare 269ms)
+
+
+ PASS  Waiting for file changes...
+       press h to show help, press q to quit
+```
+* the text after the *describe* and the *it* appear in the console
+  * a practical way to know which test does not pass
+* Here we only make the App wrapper dos finds the *GetLocation* component
+  * we changed *shallowMount<App>(App);* by *shallowMount<typeof App>(App)* (change suggested by the Vue's official extension [Vue Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar))  
+# p 48
+* [Vitest globals](https://vitest.dev/config/#globals)
+  * is meant to use [Jest API](https://jestjs.io/fr/) in my [Vitest](https://vitest.dev/config/#globals)
+> We can make a small modification in our project files that removes the need for manually importing those much used functions.
+* So we avoid *import { describe, it, expect} from 'vitest'*
