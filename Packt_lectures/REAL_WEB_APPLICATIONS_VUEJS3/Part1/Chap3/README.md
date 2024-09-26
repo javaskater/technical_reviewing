@@ -153,5 +153,64 @@ vue.volar
 ```
 * I have a problem:
   * nothing in the div/app beacause the *<GetLocation />* does not work !!
-    * TODO behind a enterprise proxy there is no position given by the navigator!!! 
-    *  **TODO** use getLocationBlockedByUser
+    * behind a enterprise proxy there is no position given by the navigator!!! 
+    * so I give the coordinates manually for Paris
+  ```ts
+  const getGeolocation = async(): Promise<void> => {
+    /*await navigator.geolocation.getCurrentPosition(
+        async (position: {coords:Geolocation}) => {
+            coords.value = position.coords;
+        },
+        (error: {message:string}) => {
+            geoLocationBlockedByUser.value = true;
+            console.error(error.message);
+        }
+    );*/
+    coords.value = {latitude:48.864716, longitude: 2.349014}; //Paris coordinates
+};```
+## To debug WeatherReport
+* curl it:
+```javascript
+jmena01@M077-1840900:~$ curl "https://api.weatherapi.com/v1/current.json?key=cbbee947ff994b1c89b154220241308&q=Paris"
+{"location":{"name":"Paris","region":"Ile-de-France","country":"France","lat":48.87,"lon":2.33,"tz_id":"Europe/Paris","localtime_epoch":1727269188,"localtime":"2024-09-25 14:59"},"current":{"last_updated_epoch":1727268300,"last_updated":"2024-09-25 14:45","temp_c":16.1,"temp_f":61.0,"is_day":1,"condition":{"text":"Moderate rain","icon":"//cdn.weatherapi.com/weather/64x64/day/302.png","code":1189},"wind_mph":10.7,"wind_kph":17.3,"wind_degree":192,"wind_dir":"SSW","pressure_mb":1004.0,"pressure_in":29.65,"precip_mm":0.12,"precip_in":0.0,"humidity":82,"cloud":50,"feelslike_c":16.1,"feelslike_f":61.0,"windchill_c":16.0,"windchill_f":60.8,"heatindex_c":16.0,"heatindex_f":60.8,"dewpoint_c":13.1,"dewpoint_f":55.5,"vis_km":2.5,"vis_miles":1.0,"uv":4.0,"gust_mph":15.2,"gust_kph":24.4}}
+```
+* Try the URL of the API using Firefox
+* a lot of console.log to be done
+```ts
+onMounted(async() => {
+    const {latitude, longitude} = props.coords;
+    console.log("[WeatherApp] on va demander le temps pour latitude:"+latitude+ " et longitude:"+longitude);
+    const weatherResponse = await fetchWeather({latitude, longitude});
+    data.value = weatherResponse;
+    icon_src.value = `http:${data.value.current.condition.icon}`; //must be defined to include to refix wiht http: the cdn url 
+    console.log("[WeatherApp] météo:"+data.value.current.condition.text+ "icon:"+icon_src.value);
+
+});
+```
+* I was obliged to define a *icon_src* as a *ref String* because *data.current.condition.icon* (**//cdn.weatherapi.com/weather/64x64/day/302.png** above see the curl output) does not include the http prfix and my localhost (*npm run dev*) thinks it is a localfile
+```ts
+const icon_src: Ref<string | undefined> = ref();
+```
+# 43 formatting a date
+* note we can call a function inside *{{}}*
+  * it would have been a good way to add http: to the icon url.
+```ts
+<p>{{ formatDate(data.location.localtime) }}</p>
+```
+* data.location.localtime is considered in Javascript as a Date object though *2024-09-25 14:59* in the curl output above
+* it is the *res.json()* function that does the conversion 
+* dateString is only from the Date interface.
+* we need a real objetc of type Date to do some work !!!
+# 45
+* note the parent component passes only the member of the interface defined as property
+* I cannot rotate an utf8 icon
+* None of the tailwindcss styles has been taken *class="inline-block"* is a tailwind css style
+* see [trying to actvate tailwind.css](./PB_TAILWIND.md)
+  * solved: I mispelled @utilities (@utilititis) in *Chapter3/vue-local-weather/src/style.css*
+  * Vite does not tells you that it cannot find the library   
+## For a real project:
+* starts the TailWind cli process see [tailwind installation](https://tailwindcss.com/docs/installation)
+  * especially
+```bash
+npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+```
