@@ -247,3 +247,42 @@ jmena01@M077-1840900:~/CONSULTANT/my_vue_js/Chapter3/vue-local-weather$ npm run 
   * is meant to use [Jest API](https://jestjs.io/fr/) in my [Vitest](https://vitest.dev/config/#globals)
 > We can make a small modification in our project files that removes the need for manually importing those much used functions.
 * So we avoid *import { describe, it, expect} from 'vitest'*
+* Erratum: the json test part is not in *Chapter3/vue-local-weather/vite.config.ts* but in *Chapter3/vue-local-weather/vitest.config.ts* 
+  * That is where I add the *globals: true*
+  * It imports *Chapter3/vue-local-weather/vite.config.ts* 
+# 52 Mocking
+## Go back to the orginal GetLocation component
+* I changed the position of the comments to go back to the navigator position
+```ts
+const getGeolocation = async(): Promise<void> => {
+    await navigator.geolocation.getCurrentPosition(
+        async (position: {coords:Geolocation}) => {
+            coords.value = position.coords;
+        },
+        (error: {message:string}) => {
+            geoLocationBlockedByUser.value = true;
+            console.error(error.message);
+        }
+    );
+    //coords.value = {latitude:48.864716, longitude: 2.349014};
+};
+```
+## First Tests:
+* The error message states: *Cannot read properties of undefined (reading 'getCurrentPosition')*
+* because jsdom as Virtual navigator does not have the getCurrentPosition() in its API
+# p 53
+* *global.navigator.geolocation = {* is no accepted by the plugib Vue od Visual Studio Code
+  * but the test passes 
+## Test with a mock returning values
+* The book gives access to the [](https://w3c.github.io/geolocation/#dom-geolocation-getcurrentposition)
+  * it is passed a *successCallback* as well as a *errorCallback* function
+  * Here we simulate only the *successCallback* function
+* [wrapper.wm](https://v1.test-utils.vuejs.org/api/wrapper/#properties) is the Vue Instance
+# 54
+* The promise of *getCurrentPosition* that we simulate takes [two functions as parameter](https://w3c.github.io/geolocation/#dom-geolocation-getcurrentposition) 
+ * we call either the *successcallback* or the *errocallback* as the result of getCurrentPosition 
+ * to simulate either a successful result respectively negative result in the **real component**
+ * that is all the force of **vi.fn**
+ * On that page we simulate a errorCallback by calling it at the end of the mock of getComponent
+   * *we are defining and invoking the error Callback*
+   * we get only a div (the WeatherReoport component if not called because of a v-if)
