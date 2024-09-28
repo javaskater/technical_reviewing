@@ -27,3 +27,32 @@ OpenJDK Runtime Environment (build 17.0.10+0--11609105)
 OpenJDK 64-Bit Server VM (build 17.0.10+0--11609105, mixed mode)
 PS C:\Program Files\Android\Android Studio\jbr\bin>
 ```
+* It is a Koala usage question solved in [answer 8 of this Stack Overflow Post](https://stackoverflow.com/questions/60855576/cant-build-kotlin-files-using-gradle-kotlin-dsl-in-intellij-idea)
+  * don't press the Run/Debug Button above
+  * use the Run/Debug button near the MainActivity.kt Window.
+## I don't see the question in the Running App
+* At the end of the MainActivity, When I add
+```kotlin
+binding.questionTextView.setText(questionBank[currentIndex].textResId);
+``` 
+* Koala finds by itself *questionTextView*
+  * (from @+id/question_text_view in the activity_main.xml)
+## Adding the Next button action
+* To Log what it does
+  * I select the running device
+  * The filter is *package:com.bignerdranch.android.geoquizz & tag:AWESOME_APP*
+    * or *package:com.bignerdranch.android.geoquizz & tag:AWESOME_APP & level:debug* Koala helps you
+```kotlin
+binding.nextButton.setOnClickListener {view:View ->
+      currentIndex = (currentIndex + 1) % questionBank.size //easy way to loop in the question bank
+      val questionResId = questionBank[currentIndex].textResId;
+      binding.questionTextView.setText(questionResId)
+      val questionMsg = getString(questionResId);//Only for logging
+      Log.d(TAG, "I ask the question |${questionMsg}| which has indice: ${currentIndex}");
+  }
+```
+## Answering the questions:
+* *val correctSnackbar = Snackbar.make(this, binding.root, snackCorrectMsg, Snackbar.LENGTH_SHORT);* 
+  * cannot be a property of MainActivity
+  * It has to be created inside the function that uses it
+  * in that case the listener of the true or false  button
