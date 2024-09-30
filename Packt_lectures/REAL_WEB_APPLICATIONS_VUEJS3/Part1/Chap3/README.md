@@ -286,3 +286,10 @@ const getGeolocation = async(): Promise<void> => {
  * On that page we simulate a errorCallback by calling it at the end of the mock of getComponent
    * *we are defining and invoking the error Callback*
    * we get only a div (the WeatherReoport component if not called because of a v-if)
+* on the web side we define the callbacks as on Succes, onError
+* on the Vitest side we don't define the callbacks but we call them (with the right parameters coors for onSuccess and Error(msg) for onError)
+  * it is like pushing the onSuccess or the onError buttons
+## v.fn
+* on the browser side, I define what the callback functions do.
+* on the testing framework, I create a [spy function](https://jestjs.io/docs/mock-function-api) which thanks to the parameters does call the callback I want to test.
+  * what surpises me is that [vi.fn]() has parameters wich are the callbacks I want to call (once at a time)
