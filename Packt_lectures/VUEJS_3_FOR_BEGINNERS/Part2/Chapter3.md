@@ -111,7 +111,7 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/ch03_from_scratch/Vue.js-3
 * CH03
   CH11
 ```
-* j'intialise le projet
+* initializing the project
 ```bash
 jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/ch03_from_scratch/Vue.js-3-for-Beginners$ npm i
 
@@ -130,11 +130,14 @@ Run `npm audit` for details.
 ```
 * Is is not the right place to start (there are already components)
 ```bash
-jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/ch03_from_scratch$ npm create vue@latest
+jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner$ npm create vue@latest
+Need to install the following packages:
+  create-vue@3.11.1
+Ok to proceed? (y) y
 
 Vue.js - The Progressive JavaScript Framework
 
-✔ Nom du projet : … vue-ch03
+✔ Nom du projet : … vue-for-beginners
 ✔ Ajouter TypeScript ? … Non / Oui
 ✔ Ajouter le support de JSX ? … Non / Oui
 ✔ Ajouter Vue Router pour le développement d'applications _single page_ ? … Non / Oui
@@ -145,12 +148,55 @@ Vue.js - The Progressive JavaScript Framework
 ✔ Ajouter Prettier pour le formatage du code ? … Non / Oui
 ✔ Ajouter l'extension Vue DevTools 7 pour le débogage ? (expérimental) … Non / Oui
 
-Génération du projet dans /home/jmena01/CONSULTANT/my_vuejs-3_beginner/ch03_from_scratch/vue-ch03...
+Génération du projet dans /home/jmena01/CONSULTANT/my_vuejs-3_beginner/vue-for-beginners...
 
 Terminé. Exécutez maintenant :
 
-  cd vue-ch03
+  cd vue-for-beginners
   npm install
   npm run format
   npm run dev
 ```
+## Two projects at the same level
+* the project cloned from the [CH03 BLANK](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/tree/CH03) branch using Git
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap03$ git status
+Sur la branche CH03
+Votre branche est à jour avec 'origin/CH03'. # the project cloned from the Copnion GitHub REPO. The branch is meannt to start the exercises
+
+rien à valider, la copie de travail est propre
+```
+* the project *vue-for-beginners* created through the command *npm create vue@latest*
+```bash
+jjmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/vue-for-beginners$ git status
+fatal: ni ceci ni aucun de ses répertoires parents n'est un dépôt git : .git
+```
+* *vue-for-beginners/README.md* reminds you of all the commands (including the test comands) at your disposal 
+## App.vue
+* *vue-for-beginners/src/App.vue* calls <RouterView />
+  * it is a standard component that allow to switch components depending the route
+  * its configuration file (route --> Component) is under the router folder at: *vue-for-beginners/src/router/index.js*
+    * it gives your two ways to call for a component
+* so for the / Path the component *vue-for-beginners/src/views/HomeView.vue* is called
+## The tests
+* *vue-for-beginners/src/components/__tests__/HelloWorld.spec.js* loads the componnts and unit tests it
+* *vue-for-beginners/cypress/e2e/example.cy.js* simulates a navigator to click or look for HTML Elements in the pages.
+# 43
+* [explanation of the setup keyword with the script tag](https://vuejs.org/api/sfc-script-setup)
+# 44
+* Te good news is that The SocialPost Component uses SASS (lang="scss")
+  * which allows for embedding
+# 46 
+* What is the D switch for? see  [first answer to that StackOverflow Question](https://stackoverflow.com/questions/23177336/what-does-npm-d-flag-mean)
+  * it is a shortcut for *--save-dev* 
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/vue-for-beginners$ npm i -D sass-embedded
+```
+## Your turn
+* [example of a footer in VueJS3](https://dev.to/divewitholeg/a-responsive-and-language-aware-footer-component-for-vue-3-3c5c)
+# 47
+* defineProps is a comiler macro it compiles the declaration ino actual properties
+# 48
+* Is is different depending
+  * it is a text between HTML Tags
+  * It is a HTML Tag attribute
