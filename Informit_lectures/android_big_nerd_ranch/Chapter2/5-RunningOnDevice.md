@@ -9,3 +9,10 @@
   * I can swithch Off the Developper Options at any time 
   * I allow the USB Debugging (I can put it off at any time)
 # TODO I don't see my Device in Android Studio
+* see the [official documentation](https://developer.android.com/studio/run/device#setting-up)
+  * part Windows
+# That day (17/10/2024) Xiomi appears
+* In the Device Manager Screen
+  * After On my Adroid Pysical Xiaomi I have been asked to accept the Encryption key
+* I select the physical Xiaomi Android Device and then
+  * click the Run or the Debug icon see [Adding Icon Chapter](./4-AddingIcon.md)
