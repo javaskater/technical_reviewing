@@ -1,0 +1,4 @@
+# Lecture from [Drupal 10 Module Development](https://www.packtpub.com/en-us/product/drupal-10-module-development-9781837631803)
+* The [preceding book](https://www.packtpub.com/en-us/product/drupal-9-module-development-9781800204621) dates back to 2020 Sipos since wrote a new edition in 2023 [Drupal 10 Module Development](https://www.packtpub.com/en-us/product/drupal-10-module-development-9781837631803)
+## [Source code on Github](https://github.com/PacktPublishing/Drupal-10-Module-Development-Fourth-Edition)
+* As usual for [Packt](https://github.com/PacktPublishing/) the [source Code for Drupal 10 Module Development](https://github.com/PacktPublishing/Drupal-10-Module-Development-Fourth-Edition) is available on [Github](https://github.com/PacktPublishing/Drupal-10-Module-Development-Fourth-Edition) 
