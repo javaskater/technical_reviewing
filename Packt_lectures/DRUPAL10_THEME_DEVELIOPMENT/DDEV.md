@@ -44,4 +44,44 @@ lrwxrwxrwx 1 root root 56 Oct 24 17:32 /usr/bin/docker-compose -> /mnt/wsl/docke
 jpmena@LAPTOP-E2MJK1UO:~$ ddev -v
 ddev version v1.23.5 #Like proposed on the WebSite
 ```
-* I have to file an issue to the project
+## I have to file an issue to the project
+  * I filed the [6647 Issue](https://github.com/ddev/ddev/issues/6647)
+  * The answer
+> Hi @javaskater - DDEV does not use a docker-compose that is installed for your WSL2 distro, it uses its own tightly controlled version at ~/.ddev/bin/docker-compose, which will normally not be in your $PATH.
+> If you use docker-compose for other things, it's up to you to install it the way you want.
+> If you're using WSL2 with docker-ce (I think you are), you'll want to go back to Docker Desktop and turn off the integration with that distro, which should remove bogus links to other versions
+* Without docker-ce started
+
+```bash
+jpmena@LAPTOP-E2MJK1UO:~$ .ddev/bin/docker-compose --version
+Docker Compose version v2.29.7 # This is the right ddev version
+jpmena@LAPTOP-E2MJK1UO:~$ docker --version
+Docker version 27.3.1, build ce12230 # it is the right version, It took the place of the docker from docker-ce 
+# (which has version v24.0.5)
+# only docker-compose
+jpmena@LAPTOP-E2MJK1UO:~$ ll .ddev/bin/
+total 62304
+drwxr-xr-x 2 jpmena jpmena     4096 Oct 24 16:57 ./
+drwxr-xr-x 6 jpmena jpmena     4096 Oct 24 16:57 ../
+-rwxr-xr-x 1 jpmena jpmena 63785037 Oct 24 17:09 docker-compose*
+# All from the ddev GitHub repositry
+jpmena@LAPTOP-E2MJK1UO:~$ ll .ddev/
+total 40
+drwxr-xr-x  6 jpmena jpmena 4096 Oct 24 16:57 ./
+drwxr-x--- 17 jpmena jpmena 4096 Oct 24 18:58 ../
+-rw-r--r--  1 jpmena jpmena 1113 Oct 24 16:57 .amplitude.cache
+-rwxr-xr-x  1 jpmena jpmena  270 Oct 24 16:57 .gitignore*
+drwxr-xr-x  2 jpmena jpmena 4096 Oct 24 16:57 bin/
+drwxr-xr-x  5 jpmena jpmena 4096 Oct 24 16:57 commands/
+-rw-r--r--  1 jpmena jpmena 6440 Oct 24 16:57 global_config.yaml
+drwxr-xr-x  2 jpmena jpmena 4096 Oct 24 16:57 homeadditions/
+-rw-r--r--  1 jpmena jpmena    0 Oct 24 16:57 project_list.yaml
+drwxr-xr-x  2 jpmena jpmena 4096 Oct 24 16:57 traefik/
+``` 
+# in the second comment of the [GitHub ddev 6647 issue](https://github.com/ddev/ddev/issues/6647)
+* When I switch of the Windows Desktop Docker Intagration
+```bash
+jpmena@LAPTOP-E2MJK1UO:~$ ll /usr/bin | grep docker-compose # I have no more link, no result
+```
+# Note that
+* There is a **Uninstall DDEV** Icon I added to the Start Menu

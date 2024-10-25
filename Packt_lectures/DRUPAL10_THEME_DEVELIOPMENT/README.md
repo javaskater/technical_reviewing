@@ -5,3 +5,5 @@
 ## DDEV
 * The author use [DDEV](https://ddev.com/get-started/) like for the [Drupal 10 Development CookBok of Packt](../DRUPAL10_DEVELOPMENT_COOKBOOK/README.md) 
   * (I installed ddev there)
+* More on the [DDEV insitialization with on issue when also using DockerDesktop](./DDEV.md)
+  
