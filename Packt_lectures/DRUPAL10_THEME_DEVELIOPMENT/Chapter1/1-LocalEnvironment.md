@@ -462,3 +462,77 @@ Browserslist: caniuse-lite is outdated. Please run:
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
   ```
   * **https://packt.ddev.site/** starts a website with no CSS
+* Stopping the containers
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev stop
+ Container ddev-packt-db  Stopped
+ Container ddev-packt-storybook  Stopped
+ Container ddev-packt-next  Stopped
+ Container ddev-packt-web  Stopped
+ Container ddev-packt-selenium-chrome  Stopped
+ Container ddev-packt-storybook  Stopped
+ Container ddev-packt-next  Stopped
+ Container ddev-packt-db  Stopped
+ Container ddev-packt-web  Stopped
+ Container ddev-packt-db  Removed
+ Container ddev-packt-web  Removed
+ Container ddev-packt-selenium-chrome  Stopped
+ Container ddev-packt-selenium-chrome  Removed
+ Container ddev-packt-next  Removed
+ Container ddev-packt-storybook  Removed
+ Network ddev-packt_default  Removed
+Project packt has been stopped.
+```
+* Now I have vendor and web under **~/D10Theming/Modernizing-Drupal-10-Theme-Development**
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ll web
+total 96
+drwxr-xr-x  8 jpmena jpmena 4096 Oct 25 15:05 ./
+drwxr-xr-x 15 jpmena jpmena 4096 Oct 25 15:05 ../
+-rw-r--r--  1 jpmena jpmena 1025 Oct 25 15:05 .csslintrc
+-rw-r--r--  1 jpmena jpmena  151 Oct 25 15:05 .eslintignore
+-rw-r--r--  1 jpmena jpmena   41 Oct 25 15:05 .eslintrc.json
+-rw-r--r--  1 jpmena jpmena   14 Oct 25 12:23 .gitignore
+-rw-r--r--  1 jpmena jpmena 2467 Oct 25 15:05 .ht.router.php
+-rw-r--r--  1 jpmena jpmena 8024 Oct 25 15:05 .htaccess
+-rw-r--r--  1 jpmena jpmena   94 Oct 25 15:05 INSTALL.txt
+-rw-r--r--  1 jpmena jpmena 3205 Oct 25 15:05 README.md
+-rw-r--r--  1 jpmena jpmena  315 Oct 25 15:05 autoload.php
+drwxr-xr-x 14 jpmena jpmena 4096 Oct 25 15:05 core/
+-rw-r--r--  1 jpmena jpmena 1495 Oct 25 15:05 example.gitignore
+-rw-r--r--  1 jpmena jpmena  549 Oct 25 15:05 index.php
+drwxr-xr-x  2 jpmena jpmena 4096 Oct 25 12:23 js_client/
+drwxr-xr-x  4 jpmena jpmena 4096 Oct 25 15:05 modules/
+-rwxr-xr-x  1 jpmena jpmena  249 Oct 25 12:23 phpcs.xml.dist*
+drwxr-xr-x  3 jpmena jpmena 4096 Oct 25 12:23 profiles/
+-rw-r--r--  1 jpmena jpmena 1706 Oct 25 15:05 robots.txt
+drwxr-xr-x  3 jpmena jpmena 4096 Oct 25 12:23 sites/
+drwxr-xr-x  3 jpmena jpmena 4096 Oct 25 12:23 themes/
+-rw-r--r--  1 jpmena jpmena  804 Oct 25 15:05 update.php
+-rw-r--r--  1 jpmena jpmena 4039 Oct 25 15:05 web.config
+```
+* *.ddev/commands/db/README.txt* is actually empty I think we will add our scripts following the book code
+## The interesting commands:
+* ddev start/stop (problem it downloads/destroy the image)
+* ddev describe
+* ddev drush
+* ddev ssh
+# 12 (blocked the 26/10/2024)
+## [Issue 61](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/issues/61)
+* I can't go further on as long as [My 61 Issue on the Book's Github account](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/issues/61) is not solved
+* When I start/restart the project (thi 26/10/2024 4 p.m.) ddev downloads once again all the images
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev restart
+Restarting project packt...
+Port 80 is busy, using 33000 instead, see https://ddev.com/s/port-conflict
+v1.23.5: Pulling from ddev/ddev-webserver
+d82880e18c4b: Downloading [=======================>                           ]  244.5MB/517.3MB
+```
+* should I use *ddev poweroff* instead of *ddev stop* ?
+* I also ask the question on the [DDEV project on GitHub](https://github.com/ddev/ddev/issues/6653)
+  * it is the [issue 6653](https://github.com/ddev/ddev/issues/6653) 
+## Reading the page 12
+* [*web/modules/contrib/default_content*](https://www.drupal.org/project/default_content) when called creates a the Demo Module *web/modules/custom/alps_demo/alps_demo.info.yml* with contents! Whe use it as is
+# p 14 the website at the main branch
+* It should be like indicated in the [ERRATA.md](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/blob/main/ERRATA.md) which means [this]().
+  * The version in the book corresponds to the [final branch](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/tree/final)
