@@ -534,5 +534,179 @@ d82880e18c4b: Downloading [=======================>                           ] 
 ## Reading the page 12
 * [*web/modules/contrib/default_content*](https://www.drupal.org/project/default_content) when called creates a the Demo Module *web/modules/custom/alps_demo/alps_demo.info.yml* with contents! Whe use it as is
 # p 14 the website at the main branch
-* It should be like indicated in the [ERRATA.md](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/blob/main/ERRATA.md) which means [this]().
+* It should be like indicated in the [ERRATA.md](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/blob/main/ERRATA.md) which means [this](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/blob/main/ERRATA/1.6.png).
   * The version in the book corresponds to the [final branch](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/tree/final)
+## After stopping my containers
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev stop
+ Container ddev-packt-db  Stopped
+ Container ddev-packt-next  Stopped
+ Container ddev-packt-storybook  Stopped
+ Container ddev-packt-web  Stopped
+ Container ddev-packt-selenium-chrome  Stopped
+ Container ddev-packt-next  Stopped
+ Container ddev-packt-storybook  Stopped
+ Container ddev-packt-web  Stopped
+ Container ddev-packt-db  Stopped
+ Container ddev-packt-storybook  Removed
+ Container ddev-packt-next  Removed
+ Container ddev-packt-db  Removed
+ Container ddev-packt-web  Removed
+ Container ddev-packt-selenium-chrome  Stopped
+ Container ddev-packt-selenium-chrome  Removed
+ Network ddev-packt_default  Removed
+Project packt has been stopped.
+# I still have the images
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ docker image ls
+REPOSITORY                        TAG                                  IMAGE ID       CREATED         SIZE
+ddev/ddev-webserver               v1.23.5-packt-built                  d509e26d71b2   2 minutes ago   1.61GB
+ddev/ddev-dbserver-mariadb-10.4   v1.23.5-packt-built                  266eeb1900ab   3 minutes ago   690MB
+ddev/ddev-ssh-agent               v1.23.5-built                        5f8091055da5   23 hours ago    128MB
+ddev/ddev-webserver               v1.23.5-tryddevproject-30483-built   05610360930f   23 hours ago    1.58GB
+ddev/ddev-webserver               v1.23.5                              aff0bb0fe24e   10 days ago     1.56GB
+ddev/ddev-dbserver-mariadb-10.4   v1.23.5                              b68f807ab536   10 days ago     690MB
+ddev/ddev-traefik-router          v1.23.5                              da1fc460c87f   10 days ago     210MB
+ddev/ddev-ssh-agent               v1.23.5                              bfed6ff7b109   10 days ago     128MB
+ddev/ddev-utilities               latest                               09b7b0fddb95   5 weeks ago     68.3MB
+node                              18-buster-slim                       f7d0a48c51e6   5 months ago    187MB
+busybox                           stable                               6fd955f66c23   17 months ago   4.26MB
+node                              16-alpine3.15                        477eb7db0f23   23 months ago   116MB
+seleniarm/standalone-chromium     4.1.4-20220429                       11cb7be2ddf7   2 years ago     1.54GB
+```
+## Using docker-compose
+* using **~/.ddev/bin/docker-compose** see [DDEV presentation](../DDEV.md)
+  * with the docker-compose file *~/D10Theming/Modernizing-Drupal-10-Theme-Development/.ddev/.ddev-docker-compose-full.yaml* 
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ~/.ddev/bin/docker-compose -f .ddev/.ddev-docker-compose-full.yaml up -d
+[+] Running 6/6
+ ✔ Network ddev-packt_default            Created                                                                                                       0.1s
+ ✔ Container ddev-packt-storybook        Started                                                                                                       1.3s
+ ✔ Container ddev-packt-next             Started                                                                                                       1.5s
+ ✔ Container ddev-packt-selenium-chrome  Started                                                                                                       1.3s
+ ✔ Container ddev-packt-db           Started                                                                                                       1.5s
+ ✔ Container ddev-packt-web              Started 
+ # Traefik is not started so 
+ jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ~/.ddev/bin/docker-compose -f .ddev/.ddev-docker-compose-full.yaml down
+[+] Running 6/6
+ ✔ Container ddev-packt-web              Removed                                                                                                      11.6s
+ ✔ Container ddev-packt-storybook        Removed                                                                                                      11.5s
+ ✔ Container ddev-packt-db               Removed                                                                                                       3.4s
+ ✔ Container ddev-packt-next             Removed                                                                                                      11.2s
+ ✔ Container ddev-packt-selenium-chrome  Removed                                                                                                       4.5s
+ ✔ Network ddev-packt_default            Removed   
+```
+# start is the right solution
+* after the stop it does not ask to reolad the image
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev stop
+ Container ddev-packt-db  Stopped
+ Container ddev-packt-storybook  Stopped
+ Container ddev-packt-next  Stopped
+ Container ddev-packt-web  Stopped
+ Container ddev-packt-selenium-chrome  Stopped
+ Container ddev-packt-web  Stopped
+ Container ddev-packt-db  Stopped
+ Container ddev-packt-next  Stopped
+ Container ddev-packt-storybook  Stopped
+ Container ddev-packt-next  Removed
+ Container ddev-packt-db  Removed
+ Container ddev-packt-storybook  Removed
+ Container ddev-packt-web  Removed
+ Container ddev-packt-selenium-chrome  Stopped
+ Container ddev-packt-selenium-chrome  Removed
+ Network ddev-packt_default  Removed
+Project packt has been stopped.
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev start
+Starting packt...
+Port 80 is busy, using 33000 instead, see https://ddev.com/s/port-conflict
+time="2024-10-27T14:29:23+01:00" level=warning msg="/home/jpmena/D10Theming/Modernizing-Drupal-10-Theme-Development/.ddev/docker-compose.next.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2024-10-27T14:29:23+01:00" level=warning msg="/home/jpmena/D10Theming/Modernizing-Drupal-10-Theme-Development/.ddev/docker-compose.selenium-chrome.yaml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Building project images...
+.Project images built in 2s.
+ Network ddev-packt_default  Created
+ Container ddev-packt-storybook  Created
+ Container ddev-packt-db  Created
+ Container ddev-packt-next  Created
+ Container ddev-packt-selenium-chrome  Created
+ Container ddev-packt-web  Created
+ Container ddev-packt-selenium-chrome  Started
+ Container ddev-packt-next  Started
+ Container ddev-packt-storybook  Started
+ Container ddev-packt-db  Started
+ Container ddev-packt-web  Started
+Waiting for containers to become ready: [web db]
+Warning: command 'n install 16' run as 'jpmena' failed with exit code 124:
+Command 'n install 16' timed out after 30 seconds
+Starting ddev-router if necessary...
+ Container ddev-router  Created
+ Container ddev-router  Started
+Waiting 120s for additional project containers [ddev-packt-selenium-chrome ddev-packt-next ddev-packt-storybook] to become ready...
+Some components of the project packt were not installed properly.
+The project is running anyway, but see the warnings above for details.
+If offline, run 'ddev restart' once you are back online.
+If online, check your connection and run 'ddev restart' later.
+If this seems to be a config issue, update it accordingly.
+Successfully started packt
+Your project can be reached at https://packt.ddev.site
+See 'ddev describe' for alternate URLs.
+```
+* At that place the database is empty composer tasks are there to build it !!! 
+  * see [**.ddev/commands/web/build** in the GitHub Project](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/blob/main/.ddev/commands/web/build)
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev build
+Gathering patches for root package.
+Installing dependencies from lock file (including require-dev)
+Verifying lock file contents can be installed on current platform.
+Nothing to install, update or remove # Composer dependecies previously downloaded in vendor
+Generating autoload files
+94 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+phpstan/extension-installer: Extensions installed
+  * Homepage: https://www.drupal.org/project/drupal
+  * Support:
+    * docs: https://www.drupal.org/docs/user_guide/en/index.html
+    * chat: https://www.drupal.org/node/314178
+ You are about to:
+ * DROP all tables in your 'db' database.
+
+ // Do you want to continue?: yes.
+
+ [notice] Starting Drupal installation. This takes a while.
+ [notice] Performed install task: install_select_language
+ [notice] Performed install task: install_select_profile
+ [notice] Performed install task: install_load_profile
+ [notice] Performed install task: install_verify_requirements
+ [notice] Performed install task: install_verify_database_ready
+ [notice] Performed install task: install_base_system
+ [notice] Performed install task: install_bootstrap_full
+ [notice] Performed install task: install_config_import_batch
+ [notice] Performed install task: install_config_download_translations
+ [notice] Performed install task: install_config_revert_install_changes
+ [notice] Performed install task: install_import_translations
+ [notice] Performed install task: install_configure_form
+ [notice] Performed install task: install_finish_translations
+ [notice] Performed install task: install_finished
+ [success] Installation complete.
+>  [notice] Successfully indexed 14 items on Contents.
+>  [notice] Message: Successfully indexed 14 items.
+>
+ [success] Cache rebuild complete.
+yarn install v1.22.22
+[1/4] Resolving packages...
+success Already up-to-date.
+Done in 0.10s.
+yarn run v1.22.22
+$ ls
+alps_trips.info.yml  node_modules  package.json  yarn.lock
+Done in 0.05s.
+
+> storybook@1.0.0 generate-css
+> postcss src/tailwind.css -o public/main.css
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+```
+# So I have to close the two issues
+* [Issue 61 on the Book GitHub Account](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/issues/61)
+* [issue 6653 on the DDEV project](https://github.com/ddev/ddev/issues/6653) 
