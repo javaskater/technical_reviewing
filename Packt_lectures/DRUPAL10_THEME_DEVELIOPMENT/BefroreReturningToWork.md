@@ -388,3 +388,33 @@ Options:
  lint
   lint:php             Runs the lint:php script as defined in composer.json
 ```
+# To automate the display of the site with the design
+* ddev watch
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev watch
+yarn install v1.22.22
+[1/4] Resolving packages...
+success Already up-to-date.
+Done in 0.12s.
+yarn run v1.22.22
+$ webpack --config webpack.config.js --watch --mode development
+asset styles.css 24.1 KiB [compared for emit] (name: main) 1 related asset
+asset main.js 2.38 KiB [compared for emit] (name: main) 1 related asset
+Entrypoint main 26.4 KiB (10.1 KiB) = styles.css 24.1 KiB main.js 2.38 KiB 2 auxiliary assets
+orphan modules 35.5 KiB (javascript) 937 bytes (runtime) [orphan] 7 modules
+runtime modules 274 bytes 1 module
+cacheable modules 78 bytes (javascript) 23.7 KiB (css/mini-extract)
+  ./js/main.js 28 bytes [built] [code generated]
+  ./css/tailwind.css 50 bytes [built] [code generated]
+  css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./css/tailwind.css 23.7 KiB [built] [code generated]
+webpack 5.95.0 compiled successfully in 2386 ms
+```
+* on the other WSL Host's terminal *ddev browsersync*
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/D10Theming/Modernizing-Drupal-10-Theme-Development$ ddev browsersync
+Proxying browsersync on https://packt.ddev.site:3000
+[Browsersync] Proxying: http://localhost
+[Browsersync] Watching files...
+[Browsersync] File event [change] : web/themes/custom/alps_trips/css/tailwind.css
+[Browsersync] File event [change] : web/themes/custom/alps_trips/build/styles.css
+```

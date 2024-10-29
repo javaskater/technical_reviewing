@@ -78,9 +78,9 @@ true
 # Summary
 * If you don't remember of your WebSite *ddev describe* is your friend.
 * *https://packt.ddev.site/* seemed to be OffLine on Chromen [ERR_CONN_RESET](https://kinsta.com/fr/base-de-connaissances/err_connection_reset/)
+  * On Chrome I go to the vertical ... (at the upper right) And *Suppress Recent History* (All)
+    * And it seems to work again
   * I opened it on Firefox and everything worked OK
 * Using F12 I can access all the CSS Files uncompressed
 * I see in Debug the Javascript Code
 * Looking for the Page Source Code wee see in green the Template suggestions
-
-# 31 interesting git diff and git log commands
