@@ -7,4 +7,12 @@
   * (I installed ddev there)
 * More on the [DDEV insitialization with on issue when also using DockerDesktop](./DDEV.md)
 ## very important page the [ERRATA page on the GitHub repository](https://github.com/PacktPublishing/Modernizing-Drupal-10-Theme-Development/blob/main/ERRATA.md)
-  
+# Note drush not working anymore
+* Note that since the manual actvation of the DEVEL Module (WEB PROFILER p 50) drush returns an error
+  * it did work earlier on 
+```bash
+jpmena@packt-web:/var/www/html/web$ ../vendor/bin/drush
+PHP Fatal error:  Trait "Drush\Commands\AutowireTrait" not found in /var/www/html/web/modules/contrib/devel/src/Drush/Commands/DevelCommands.php on line 25
+jpmena@packt-web:/var/www/html/web$ ../vendor/bin/drush -- # The only working command
+Drush Commandline Tool 11.6.0
+```
