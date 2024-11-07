@@ -198,5 +198,16 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/vue-for-beginners$ npm i -
 * defineProps is a comiler macro it compiles the declaration ino actual properties
 # 48
 * Is is different depending
-  * it is a text between HTML Tags
-  * It is a HTML Tag attribute
+  * it is a text between HTML Tags: use *{{}}*
+  * It is a HTML Tag attribute: replace attrName=xxxxx by *:attrName=variable*
+* The component in question is *vue-for-beginners/src/components/molecules/SocialPost.vue*
+# 52
+* difference between REF and reactive in [this link](https://vuejs.org/api/reactivity-core.html)
+  * we define a reactive from a ref variable
+# 53
+* *&__selected* see [adding suffix in SASS](https://sass-lang.com/documentation/style-rules/parent-selector/#adding-suffixes) 
+# 57 Your Turn
+* For the WelcomeView or the footer
+* If you want to associate a variable to a property prefix the property name with **:** 
+* in order  to interpret the assoiated value as a variable
+  * also true for the templates
