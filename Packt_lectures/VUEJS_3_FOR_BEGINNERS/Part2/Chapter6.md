@@ -42,3 +42,53 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap06$ npm run dev
   ➜  Network: use --host to expose
   ➜  press h to show help
 ```
+# 95 
+## Folder and File changes
+* *chap06/src/components/atoms/TheButton.vue* is not use for the moment
+  * it has 3 props: *theme* (class) *size* (class) *value* (button's text)
+    * to be added to the props 
+  * It embarks the classes you can use for it
+# 96
+* The the class for the icon is defined in the parent component no :class because we give it a string and not a variable
+```html
+<IconSettings class="settings" />
+```
+```scss
+header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    padding-bottom:24px;
+    border-bottom: solid 1px var(--color-border);
+
+    .span {
+        display: flex;
+    }
+    a{
+        font-size: 16px;
+        line-height: 24px;
+        margin-right:8px;
+        font-weight: bolder;
+    }
+    .settings {
+        width: 16px;
+        height: 16px;
+        fill: var(--color-input-mute);
+    }
+}
+```
+# 97
+* The [key attribute](https://vuejs.org/guide/essentials/list#maintaining-state-with-key)
+  * is meant to give VueJS a hint of each element identity in a v-for loop
+  * in order to facilitate in-place replacement for example
+  * In the link example we see that the *v-for* directive is at the template level
+* In our case we have the *v-for* directive is at the child level <SocialPost
+# 99
+* default values can be returned by factory functions (functions that accept 0 parameter)
+  * especially in the case of arrays *() => []* or objects *() => {}* 
+* with a validator with no default value, the property becomes required 
+# 100
+* working on the *chap06/src/components/atoms/TheButton.vue*
