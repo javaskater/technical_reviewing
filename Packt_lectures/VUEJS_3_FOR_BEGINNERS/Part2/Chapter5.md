@@ -63,3 +63,33 @@ onMounted(() => {
 ## Computed properties
 * there are kind of reactive functions
   * for example *formatting a date*
+# 81
+* The author uses Dtring interpolation with backticks to create a *fullName* computed value.
+# 82
+* To add tweets and likes see [The Welcome.vue solution of chapter 5](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH05-end/src/components/TheWelcome.vue)
+  * I always have them in [The Welcome.vue I am using at the start of Chapter 5](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH05/src/components/TheWelcome.vue) 
+* SocialPost does not control the type of its properties (Typescript would do)
+  * that I assign comments do :retweets is accpeted
+```javascript
+const interactions = computed(() => {
+  const commentsNb= props.comments.length
+  return commentsNb + props.retweets + props.likes
+});
+onMounted( () => { //computed are like ref. You have to call their .value method
+  console.log(`[SocialPost][onMounted] user ${props.username} likes ${props.likes} tweets ${props.retweets} total interactions ${interactions.value}`);
+});
+```
+# 88
+## Your turn
+```javascript
+const welcomeMessage = computed(() => {
+    return `Welcome <span>${username.value}</span>` //I can put html code in the computed property (useful when formatting)
+});
+onMounted(() => {
+    console.log(`[TheHeader][onMounted] message ${welcomeMessage.value}`);
+});
+```
+## Methods vs computed properties
+* Figure 5.5 has an error the left header should not be <del>*Ref*</del> but **Method**
+# 90 computed or method
+* In the code sample (the answer) we see a use of fetch (side effect: conect an external API)
