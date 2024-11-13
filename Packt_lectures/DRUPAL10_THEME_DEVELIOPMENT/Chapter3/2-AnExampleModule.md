@@ -76,3 +76,9 @@ alps_weather.settings:
 * the [Controller](https://symfonycasts.com/screencast/drupal8-under-the-hood/modules-routes-controllers) returns content for the mainContent Area
 * The block calculate their content and add it when they are defined visible for that page ...
 * the hook for that array is page (outer key) which for Olivero calls *web/core/themes/olivero/templates/layout/page.html.twig*
+# 68
+* The content region is always present (it is normal because it is the region where the controllers put their contents)
+* The 8 points here are very important
+* The template presented is from *web/core/themes/olivero/templates/layout/page.html.twig*
+# 69
+* Drupal is rendering render arrays althoug twig's {{}} are meant for scalar values (Drupal extension)
