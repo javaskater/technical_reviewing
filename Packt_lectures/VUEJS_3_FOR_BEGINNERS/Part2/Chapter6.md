@@ -91,4 +91,101 @@ header {
   * especially in the case of arrays *() => []* or objects *() => {}* 
 * with a validator with no default value, the property becomes required 
 # 100
+## Properties
 * working on the *chap06/src/components/atoms/TheButton.vue*
+* *NOTICE* difference between book's button style and [GitHub 's code of the Chapter 6's solution](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH06-end/src/components/atoms/TheButton.vue)
+  * I mix the *size* prop, with the button width *v-binded* parameter 
+* The props are by default reactive [props reactivity challenge](https://dev.to/richardevcom/destructuring-vuejs-props-the-reactivity-challenge-5h1i)
+* *defineProps(* without *props=defineProps(* makes directly access to the properties in the child component. 
+## Native events
+* *v-on:change* equals *@change*
+* *v-on:click* equals *@click*
+# 103
+* note the name of the click event associated function name *onWhatTheEventProvokesEvent*
+  * it is a Vue Method
+# 105
+* the figure 6.4 shows the communication from Child Component back to Parent Component
+# 106
+* defineEmits has two purposes
+  * returns a function that can be used to emit events
+  * defines (through th call parameters) the custom event names we may emit 
+# 107
+* I experiment passing parameters to the custom Event
+* on the <SocialPost> side
+```javascript
+const emit = defineEmits(['detruire'])
+const onDeleteClick = () => {
+  console.log("[SocialPost] On Delete...");
+  emit('detruire', props.userId);
+}
+```
+* on the <SocialPosts> side
+```html
+<template>
+  <SocialPost
+    v-for="post in posts"
+    :username="post.username"
+    :userId="post.userId"
+    :avatarSrc="post.avatar"
+    :post="post.post"
+    :comments="post.comments"
+    :likes="post.likes"
+    :retweets="post.retweets"
+    :key="post.userId"
+    @detruire="onDelete" <!--Custom detruire event emited from the SocialPost (with no s)-->
+  ></SocialPost>
+</template>
+```
+```javascript
+const onDelete = (parameter) => {
+    posts.splice(0,1);
+    console.log(`[SocialPosts] we received the parameter ${parameter}`);
+}
+```
+# 108
+* here we do a different choice passing the index on the SocialPosts onFunction
+* We don't need to pass a value (through emit) from the SocialPost to socialPosts 
+* we transmit the event with no parameter (the first element has always the 0 index because of the reactivity from the posts array)
+* * If we pass a index parameter the function does not expect another orgument (the emit's argument)
+## To still get the best of the two
+* On the SocialPost site (child component)
+  * we emit the userIfd with the special evnt *detruire*
+```html
+<div class="header">
+  <img class="avatar" :src="avatarSrc" />
+  <div class="name">{{ username }}</div>
+  <div class="userId">{{ userId }}</div>
+  <IconDelete @click="onDeleteClick" />
+</div>
+```
+```javascript
+const emit = defineEmits(['detruire'])
+const onDeleteClick = () => {
+  console.log("[SocialPost] On Delete...");
+  emit('detruire', props.userId); //We add the userId to the event
+}
+```
+* On the SocialPosts site (parent component)
+  * We use the special parameter event
+```html
+<template>
+  <SocialPost
+    v-for="(post, index) in posts"
+    :username="post.username"
+    :userId="post.userId"
+    :avatarSrc="post.avatar"
+    :post="post.post"
+    :comments="post.comments"
+    :likes="post.likes"
+    :retweets="post.retweets"
+    :key="post.userId"
+    @detruire="onDelete($event, index)"
+  ></SocialPost>
+</template>
+```
+```javascript
+  const onDelete = (event, postIndex) => {
+    posts.splice(postIndex,1);
+    console.log(`[SocialPosts] we delete the ${postIndex +1}th element from the list with argument ${event}`);
+  }
+```
