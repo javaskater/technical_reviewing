@@ -82,3 +82,95 @@ alps_weather.settings:
 * The template presented is from *web/core/themes/olivero/templates/layout/page.html.twig*
 # 69
 * Drupal is rendering render arrays althoug twig's {{}} are meant for scalar values (Drupal extension)
+## Route and Contoller
+* Route in *web/modules/custom/alps_weather/alps_weather.routing.yml*
+```yaml
+alps_weather.forecast:
+  path: '/forecast/{city}' #The name city correspond to the $city paramter of ForecastController::page
+  defaults:
+    _title: 'Forecast'
+    _controller: '\Drupal\alps_weather\Controller\ForecastController::page'
+  requirements:
+    _permission: 'access content'
+```
+* Controller *web/modules/custom/alps_weather/src/Controller/ForecastController.php*
+```php
+/**
+   * Return a render array with full forecast data for the next 5 days.
+   *
+   * @param string $city
+   *
+   * @return array
+   */
+  public function page(string $city): array { //the parameter name city must be the same as the url parameter une thn routing.yaml
+    $forecast = $this->weatherClient->getForecastData($city); //weatherClient is the service of id: alps_weather.weather_client
+
+    $build['content'] = [
+      '#theme' => 'alps_weather_forecast',
+      '#forecast' => $forecast,
+      '#units' => $this->config('alps_weather.settings')->get('units'),
+      '#cache' => [
+        'max-age' => 10800,
+        'tags' => [
+          'forecast:' . $city,
+        ],
+        'contexts' => [
+          'url.path',
+        ],
+      ],
+      '#attached' => [
+        'library' => [
+          'alps_weather/base',
+        ],
+        'drupalSettings' => [
+          'alps_weather' => [
+            'message' => 'Hello from the render array!',
+          ],
+        ],
+      ],
+    ];
+
+    return $build;
+  }
+```
+* *$this->weatherClient* is the service of id: *alps_weather.weather_client*
+  * see *web/modules/custom/alps_weather/src/WeatherClient.php*
+  * **This service is well written**
+  * no static create method (see Controller) instead a public constructor
+    * with the paramters in the order, the arguments' order
+```yaml
+  alps_weather.weather_client:
+    class: 'Drupal\alps_weather\WeatherClient'
+    arguments:
+      - '@http_client'
+      - '@logger.channel.alps_weather'
+      - '@config.factory'
+```
+# 70 The render array of the controller
+## The theme is defined in the module file
+* *web/modules/custom/alps_weather/alps_weather.module*
+* [the hook theme](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Render%21theme.api.php/function/hook_theme/11.x)
+  * Here we don't have a template key so the template name is the same as the theme_hook here *alps_weather_forecast* 
+```php
+function alps_weather_theme(): array {
+  return [
+    'alps_weather_forecast' => [ //The theme we pass no theme key
+      'variables' => [
+        'forecast' => [],
+        'units' => 'metric',
+      ],
+    ],
+    'alps_weather_details' => [ 
+      'variables' => [
+        'forecast' => [],
+        'units' => 'metric',
+      ],
+    ],
+```
+* see *web/modules/custom/alps_weather/templates/alps-weather-forecast.html.twig*
+## Cache
+* [cache tag](https://www.drupal.org/docs/drupal-apis/cache-api/cache-tags)
+* [cache context](https://www.drupal.org/docs/drupal-apis/cache-api/cache-contexts)
+## Block
+* not depending on a route
+* depending of a visibility variable see unordered lis at the end of the page 70
