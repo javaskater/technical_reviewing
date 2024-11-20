@@ -30,3 +30,13 @@ in *web/modules/custom/alps_weather/src/Controller/ForecastController.php* rende
 # 77
 * We don't need to call the JQuery ready function. Drupal does it for us by 
 * (after the DOM is loaded) calling every callbacks attached to the *Drupal.behaviours* object
+* [good example of using once in Drupal](https://mark.ie/blog/how-to-use-once-in-drupal/)
+  * here we attach the on change event only one
+  * the first parameter of once is an arbitrary name we give to the data-one attribute of the element selected
+  * the second parameter is the JQuery selector
+  * the third parameter is the context (that will be changed contrary to the document which is not changed)
+* [The new Javascript once (Drupal Library) comes frm the previous Jquery.once](https://drupalbook.org/blog/replace-jqueryonce-javascript-once-drupal-10)
+  * here we bind the click event only one
+* In our case it has only one specific message...
+  * in the [second example](https://drupalbook.org/blog/replace-jqueryonce-javascript-once-drupal-10) we add the class only one
+* this [Drupal Issue](https://www.drupal.org/project/drupal/issues/444344) explains how to do with and without (when the function risks to be run many times)   
