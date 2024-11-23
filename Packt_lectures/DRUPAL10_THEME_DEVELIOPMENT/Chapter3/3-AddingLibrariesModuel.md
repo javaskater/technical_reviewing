@@ -39,4 +39,11 @@ in *web/modules/custom/alps_weather/src/Controller/ForecastController.php* rende
   * here we bind the click event only one
 * In our case it has only one specific message...
   * in the [second example](https://drupalbook.org/blog/replace-jqueryonce-javascript-once-drupal-10) we add the class only one
-* this [Drupal Issue](https://www.drupal.org/project/drupal/issues/444344) explains how to do with and without (when the function risks to be run many times)   
+* this [Drupal Issue](https://www.drupal.org/project/drupal/issues/444344) explains how to do with and without (when the function risks to be run many times)
+# 78
+* on the php Side (Controller) under *drupalSettings* I put the key *alps_weather* (Should be the module name because all drupalSettings are merged)
+* on the javascript side *Drupal.behaviors.alps_weather = {* I put the key *alps_weather* (Should be the module name because all *Drupal.behaviours* are merged)
+  * they are put in the settings parameters (after the context parameter)
+* I change the message on the controller render array (the php side) and I go to *https://packt.ddev.site/forecast/rome*
+* When I click the *WebProfilerToolbar* On the right *Collectors*
+  * I don't see Assets / Settings (perhaps it does not exists anymore)
