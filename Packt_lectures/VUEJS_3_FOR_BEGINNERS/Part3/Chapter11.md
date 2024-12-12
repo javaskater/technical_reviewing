@@ -101,3 +101,35 @@ undefined
   * for the fetchData in onMount
   * for the fetchData in watch (when there are less that 4 post call the next page of posts) 
 * the [posts store in the solution on gitHub](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH11-end/src/stores/posts.js)
+# 218
+* we played with destructuration to avoid the use of usePostsStore
+```javascript
+  const postsStore = usePostsStore();
+  const { posts } = storeToRefs(postsStore); //posts is now a ref value and no more a reactive (post.value is reactive)
+  const {fetchPosts, removePost} = postsStore;
+```
+# 219
+* We are now adding a post as a Pinia store is a good place to store it without event bubbling and props drilling
+* [unshift (offcial doc)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift) adds to the beginning of an array
+```javascript
+> const a1 = [1,2,3];
+undefined
+> a1.unshift(4,5,6)
+6
+> a1
+[ 4, 5, 6, 1, 2, 3 ]
+```
+* The function *generatePostStructure* is lef to the user see [solution on GitHub](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH11-end/src/stores/posts.js)
+# 220
+* the first value is to get the content of a [ref element](https://blog.logrocket.com/understanding-vue-refs/). We access the textArea element reactive properties
+* and the second value is to get the text content of the textArea, like we would do with an HTML5 INPUT 
+```javascript
+const createPostHandler = (event) => {
+    event.preventDefault();
+    if(createPostForm.value.reportValidity()){
+        addPost(textareaRef.value.value);
+    };
+}
+```
+* TODO create your own store element to toggle from the sideBar the Visibility orf the CreatePost part
+  * Nothing in [the solution part of Chapter 11](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/tree/CH11-end)
