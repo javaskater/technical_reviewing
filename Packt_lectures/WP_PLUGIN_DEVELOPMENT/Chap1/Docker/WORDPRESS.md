@@ -201,3 +201,6 @@ jmena01@M077-1840900:~/CONSULTANT$ docker port consultant-wordpress-1
 80/tcp -> [::]:8080
 ```
 * I filed the [issue 931 on the wordpress on docker website](https://github.com/docker-library/wordpress/issues/931)
+  * I got an answer ... 
+## Getting the script of Lille
+* Locally on my computer at [Scripts Lille directory](./Lille_scripts/README.md)
