@@ -183,4 +183,39 @@ bash-5.1# exit # quit the docker-db-1 container
 exit
 ```
 # giving the www-data:www-data of the container
+* userid and groupid on the host
+```bash
+jpmena@LAPTOP-E2MJK1UO:~$ id -u
+1000  # the user id I am working with on the host
+jpmena@LAPTOP-E2MJK1UO:~$ id -g
+1000 #the group id I am working with on the host
+```
 * the uid:gid of me on the host see [paragrpah *Accessing the wordpress container* on WORDPRESS.md](./WORDPRESS.md)
+* on the container side
+```bash
+jpmena@LAPTOP-E2MJK1UO:~$ docker exec -it docker-wordpress-1 bash # accessing the worpress container
+root@e0921d12c959:/var/www/html# usermod -u 1000 www-data # Lille command
+root@e0921d12c959:/var/www/html# groupmod -g 1000 www-data # Lille command
+root@97db226dfc84:/var/www/html# ls -l wp-content/plugins/
+total 16
+drwxr-xr-x 4       33       33 4096 Nov 21 14:07 akismet
+drwxr-xr-x 2 www-data www-data 4096 Nov 22 11:38 ch2-plugin-header
+-rw-r--r-- 1       33       33 2578 Mar 18  2019 hello.php
+-rw-r--r-- 1       33       33   28 Jun  5  2014 index.php
+root@97db226dfc84:/var/www/html# chown -R www-data:www-data /var/www/html # Lille command
+root@e0921d12c959:/var/www/html# ls -l wp-content/plugins/
+total 12
+drwxr-xr-x 4 www-data www-data 4096 Nov 21 14:07 akismet
+-rw-r--r-- 1 www-data www-data 2578 Mar 18  2019 hello.php
+-rw-r--r-- 1 www-data www-data   28 Jun  5  2014 index.php
+```
+* I can create files from the host
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/technical_reviewing/Packt_lectures/WP_PLUGIN_DEVELOPMENT/Chap1/Docker/wordpress$ touch info.php
+```
+* And they are www-data in the container
+```bash
+root@e0921d12c959:/var/www/html# ls -l info.php
+-rw-r--r-- 1 www-data www-data 0 Dec 16 16:15 info.php
+```
+* And I still can connect to *http://localhost:8080/wp-admin/* (admin/admin)
