@@ -131,5 +131,150 @@ const createPostHandler = (event) => {
     };
 }
 ```
-* TODO create your own store element to toggle from the sideBar the Visibility orf the CreatePost part
-  * Nothing in [the solution part of Chapter 11](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/tree/CH11-end)
+# TODO create your own store element to toggle from the sideBar the Visibility orf the CreatePost part
+* Nothing in [the solution part of Chapter 11](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/tree/CH11-end)
+## the store *src/stores/create.js*
+```javascript
+import { defineStore } from "pinia";
+
+export const useCreatePostStateStore = defineStore('createPost',{
+    state: () => ({closed:true}),
+    getters: {
+        friendlyState(state){
+            return state.closed? "closed":"open";
+        },
+    },
+    actions: {
+        toggleCreatePost() { //call that function when you push the button in order to store the data in windows'storage
+            this.closed = !this.closed;
+            localStorage.setItem("createPost", this.closed);
+        },
+        loadCreatePostFromLocalStorage() { //To be called before the HomeView be mounted
+            const closed = localStorage.getItem("createPost"); //It gives us a string 'true' or 'false'
+            this.closed = closed === 'true';
+            console.log(`[useCreatePostStore][loadCreatePostFromLocalStorage] closed state is now ${this.closed}`);
+        }
+    }
+})
+```
+## the sideBar Button *src/components/organisms/SideBar.vue*
+```html
+<template>
+    <aside :class="{ 'sidebar__closed': sidebarStore.closed}">
+        <template v-if="sidebarStore.closed">
+            <IconRightArrow class="sidebar__icon" @click="sidebarStore.toggleSidebar" />
+        </template>
+        <template v-else>
+            <h2>Sidebar</h2>
+            <IconLeftArrow class="sidebar__icon" @click="sidebarStore.toggleSidebar" />
+            <TheButton>Create post</TheButton>
+            <div>
+                Current time: {{currentTime}}
+            </div>
+            <TheButton @click="onUpdateTimeClick">Update Time</TheButton>
+            <router-link to="privacy">Privacy</router-link>
+            <router-link to="about">About</router-link>
+            <a @click="navigateToPrivacy">Programmatic to privacy</a>
+            <a @click="toggleCreatePost">Display / Hide the create post's form</a>
+        </template>
+    </aside>
+</template>
+<script setup>
+import { ref, onBeforeMount } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import TheButton  from '../atoms/TheButton.vue'
+import IconLeftArrow from '../icons/IconLeftArrow.vue'
+import IconRightArrow from '../icons/IconRightArrow.vue'
+import { useSidebarStore } from '../../stores/sidebar';
+import { useCreatePostStateStore } from '../../stores/create';
+const currentTime = ref(new Date().toLocaleTimeString());
+//const closed = ref(false);
+const sidebarStore = useSidebarStore();
+const createPostState = useCreatePostStateStore();
+const router = useRouter();
+
+/*const toggleSidebar = () => {
+    closed.value = !closed.value;
+    window.localStorage.setItem("sidebar", closed.value);
+}*/
+const onUpdateTimeClick = () => {
+    currentTime.value = new Date().toLocaleTimeString();
+};
+const navigateToPrivacy = (event) => {
+    event.preventDefault();
+    console.log("[SideBar.vue][navigateToPrivacy] programmatically go to the privacy page");
+    router.push("privacy");
+}
+
+const toggleCreatePost = (event) => {
+    event.preventDefault();
+    createPostState.toggleCreatePost() //don't do just createPostState.clodes = !createPostState.closed as it does not store in Navigators local storage
+    console.log(`[SideBar.vue][toggleCreatePost] The State of the createPostform has been set to ${createPostState.friendlyState}`);
+}
+
+onBeforeMount( async () => {
+    /*const sidebarState = window.localStorage.getItem("sidebar");
+    closed.value = sidebarState === "true";*/
+    sidebarStore.loadSidebarFromLocalStorage(); //The same logic applied to HomeView makes the same as th content above
+});
+</script>
+<style scoped>
+aside {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    &.sidebar__closed{
+        width: 40px;
+    }
+    .sidebar__icon{
+        position: absolute;
+        right: 12px;
+        top: 22px;
+        cursor: pointer;
+    }
+}
+</style>
+```
+## The HomeView *src/views/HomeView.vue*
+```html
+<script setup>
+import SocialPosts from '../components/organisms/SocialPosts.vue'
+import CreatePost from '../components/molecules/CreatePost.vue'
+import SideBar from '../components/organisms/SideBar.vue'
+import TheHeader from '../components/organisms/TheHeader.vue'
+import { useCreatePostStateStore } from '../stores/create'
+import { storeToRefs } from 'pinia'
+import { onBeforeMount } from 'vue'
+const createPostState = useCreatePostStateStore();
+const { closed } = storeToRefs(createPostState); //closed has to be a reference to the Pinial states closed, not a copy
+const { loadCreatePostFromLocalStorage } = useCreatePostStateStore() //The function we export from the Pinia
+onBeforeMount( async () => { //same thing as for sideBar.vue
+    loadCreatePostFromLocalStorage(); //Get the stored value of clodes and gives it to Pinial in case we reload the entire page which is not what SPA are about
+});
+</script>
+
+<template>
+  <TheHeader/>
+  <SideBar />
+  <main>
+    <template v-if="!closed"> <!--New we use the ref Pinia state-->
+      <CreatePost />
+    </template>
+    <SocialPosts />
+  </main>
+</template>
+<style>
+@import '../assets/base.css';
+aside { 
+  border-right: 1px solid var(--color-border);
+  padding: 16px 32px;
+}
+main {
+  padding: 16px 32px;
+}
+</style>
+```
+# More on Pinia
+* [$reset for gonig back to the default values](https://pinia.vuejs.org/core-concepts/state.html#Resetting-the-state)
+* [$patch](https://pinia.vuejs.org/core-concepts/state.html#Replacing-the-state)
+  * we cannot change the state by hand
