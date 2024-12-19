@@ -64,7 +64,7 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap12$ npm run dev # star
 ## ref or v-model
 * see [this discussion on reddit](https://www.reddit.com/r/vuejs/comments/dntasl/should_you_prefer_to_use_vmodel_or_ref_when/?rdt=40731)
 # 229
-* If you don't call the line with comment underneath
+* If you don't call the line with comment underneath in *src/components/molecules/CreatePost.vue*
 ```javascript
 const createPostHandler = (event) => {
     event.preventDefault(); //If you don't have it the pages is reloded and the posts store (Pinia) is reloaded
@@ -73,3 +73,115 @@ const createPostHandler = (event) => {
 }
 ```
 * The page is reloaded and you lose the added post (the Pinia store is resetted)
+* The v-model is linked to a Ref variable (const because the enveloppe does not change) 
+> Behind the scenes, v-model assigns the value on the first load and then automatically updates it
+> every time the input field emits a change event
+# 230
+* *@submit* replaced by *@submit.prevent* to avoid to have to call event.preventDefault in the event handler.
+# 231
+* adding *vee-validate* I add the -s flag to install action of npm
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap12$ npm i vee-validate -s
+```
+* now in the *package.json*:
+```javascript
+  "dependencies": {
+    "pinia": "^2.1.6",
+    "vee-validate": "^4.14.7", //Newly added in prod dependencies
+    "vue": "^3.4.27",
+    "vue-router": "^4.2.4"
+  },
+```
+# 232
+* The field name must be the same as the parameter name on the @submit handle function
+  * the parameters' order does not matter
+  * no @submit.prevent (it is not even accepted) 
+* *<Field* is by default an *<input type=text* to have other types of input use the **as** key!
+# 233
+* The field name is also used to connect the field with the error message
+# 235
+* returning an error message is like returning false for the validation's rule
+* *defineRule* defines a validation rule it can be repeated like:
+```javascript
+  defineRule('required', value => {
+    if(!value || !value.length){
+      return 'this field is required';
+    }
+    return true;
+  })
+  defineRule('mon10chars', value => {
+    if(!value || value.length < 10){
+      return 'this field must have 10 characters min';
+    }
+    return true;
+  })
+```
+# 236
+* the name of the field must be the same as the Error's name
+  * Remember: it is used as the name of the parameter in the submit handler function
+# 237
+* [the website for the predefined vee validation rules](https://vee-validate.logaretm.com/v4/guide/global-validators#vee-validaterules) 
+  * is very interesting
+* Adding the package
+  * don't forget the -s switch as it adds the entry in the package.json and  package-lock.json files
+```bash
+jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap12$ npm i @vee-validate/rules -s
+```
+* which added in *package.json*
+```javascript
+ "dependencies": {
+    "@vee-validate/rules": "^4.14.7", //package added
+    "pinia": "^2.1.6",
+    "vee-validate": "^4.14.7",
+    "vue": "^3.4.27",
+    "vue-router": "^4.2.4"
+  },
+```
+* and also added in the *package-lock.json* file
+```javascript
+  "packages": {
+    "": {
+      "name": "vue.js-for-beginners",
+      "version": "0.0.0",
+      "dependencies": {
+        "@vee-validate/rules": "^4.14.7", //just added and locked
+        "pinia": "^2.1.6",
+        "vee-validate": "^4.14.7",
+        "vue": "^3.4.27",
+        "vue-router": "^4.2.4"
+      },
+```
+* the [regex rule](https://vee-validate.logaretm.com/v4/guide/global-validators#regex) could be very interesting
+# 238
+* To have more than one parameter to your rule see the [between global rule](https://vee-validate.logaretm.com/v4/guide/global-validators#between)
+* Their error message are very poor *email2 is not valid* is one of them
+# 239
+* be careful to use *:rules* when you pass an object (don't forget the :)
+```html
+<Form @submit="handleSubmit">
+    <label for="email">Email</label>
+    <Field id="email" type="email" rules="stdrequired|stdemail" placeholder="Enter here your email" name="email2"></Field> <!--pass a string-->
+    <ErrorMessage as="div" class="error" name="email2" />
+    <label for="message">Message</label>
+    <Field id="message" as="textarea" :rules="{stdrequired:true,stdmin:100}" name="message2"></Field>  <!--pass an object-->
+    <ErrorMessage as="div" class="error" name="message2" />
+    <TheButton>Send</TheButton>
+</form>
+```
+## small exercise
+* [making post or get requests with fetch](https://www.topcoder.com/thrive/articles/fetch-api-javascript-how-to-make-get-and-post-requests)
+* doing a [dummyapi.io dummy post request](https://dummyapi.io/docs/post)
+  * I get the Post Create Content on [that models link](https://dummyapi.io/docs/models) 
+```bash
+curl -H "app-id: 657a3106698992f50c0a5885" -H 'Content-Type: application/json' \
+ -d '{"text": "Hello everybody", "image": "https://img.dummyapi.io/photo-1581804928342-4e3405e39c91.jpg", "likes": 0, "tags": ["animal","dog","golden retriever"], "owner": "60d0fe4f5311236168a109d5"}' \
+ -X POST https://dummyapi.io/data/v1/post/create
+```
+* which gives
+```bash
+jmena01@M077-1840900:~$ curl -H "app-id: 657a3106698992f50c0a5885" -H 'Content-Type: application/json'  -d '{"text": "Hello everybody", "image": "https://img.dummyapi.io/photo-1581804928342-4e3405e39c91.jpg", "likes": 0, "tags": ["animal","dog","golden retriever"], "owner": "60d0fe4f5311236168a109d5"}'  -X POST https://dummyapi.io/data/v1/post/create # the request
+{"id":"67644d65b75039f2595c14ec","image":"https://img.dummyapi.io/photo-1581804928342-4e3405e39c91.jpg","likes":0,"link":"","tags":["animal","dog","golden retriever"],"text":"Hello everybody","publishDate":"2024-12-19T16:44:21.376Z","updatedDate":"2024-12-19T16:44:21.376Z","owner":{"id":"60d0fe4f5311236168a109d5","title":"mrs","firstName":"Sibylle","lastName":"Leibold","picture":"https://randomuser.me/api/portraits/med/women/89.jpg"}}
+```
+### TODO makes the post request
+* see [making post or get requests with fetch](https://www.topcoder.com/thrive/articles/fetch-api-javascript-how-to-make-get-and-post-requests)
+* see *src/stores/posts.js*
