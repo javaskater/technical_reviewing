@@ -4,3 +4,7 @@
 * the [corresponding Source Code hosted on gitHub](https://github.com/PacktPublishing/WordPress-Plugin-Development-Cookbook-Third-Edition)
 # Using docker instead of [Local application from flywheel](https://www.localwp.com/)
 * see [My documentation on docker](./Chap1/Docker/Docker.md)
+# Official Docker documentation
+* see page 27 of the book
+* [Wordpress Codex](https://codex.wordpress.org/)
+* [Wordpress Developper Reference](https://developer.wordpress.org/reference/)
