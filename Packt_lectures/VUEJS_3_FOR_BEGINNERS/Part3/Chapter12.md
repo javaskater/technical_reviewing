@@ -185,3 +185,60 @@ jmena01@M077-1840900:~$ curl -H "app-id: 657a3106698992f50c0a5885" -H 'Content-T
 ### TODO makes the post request
 * see [making post or get requests with fetch](https://www.topcoder.com/thrive/articles/fetch-api-javascript-how-to-make-get-and-post-requests)
 * see *src/stores/posts.js*
+* the [official fetch method documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) asks us for not using uppercase letters for the method, headers body, cache keys! 
+  * Otherwise they are ignored   
+```javascript
+addPost(postText) {
+      const post = generatePostStructure(postText);
+      this.posts.unshift(post);
+      this.toggleInProgress();
+      console.log(`[usePostsStore] I will add a new POST Post: ${postText}`);
+      fetch('https://dummyapi.io/data/v1/post/create', { //No uppercase letter for  the keys
+        method: 'POST',
+        headers: {
+          'Accept': 'application.json',
+          'Content-Type': 'application/json',
+          'app-id': '657a3106698992f50c0a5885'
+        },
+        body: generatePostBody(postText), //No this because it is a global method (not inside actions)
+        cache: 'default'
+      }).then(data => {
+        this.toggleInProgress(); //Use this because it is a local method (defined inside action)
+        console.log(`[usePostsStore] Adding post POST successfull, return: ${data}`);
+      })
+      .catch(error => {
+        this.toggleInProgress();
+        //handle error
+        console.log(`[usePostsStore] Adding post POST error, error message: ${error}`);
+      });
+    },
+    toggleInProgress() {
+      this.inProgress = !this.inProgress;
+    }
+  },
+})
+
+const  generatePostBody = (postText) => { //This method is outside of action so it is used globally (no this)
+  const postObj = {
+    text: postText, 
+    image: "https://img.dummyapi.io/photo-1581804928342-4e3405e39c91.jpg", 
+    likes: 0, 
+    tags: ["animal","dog","golden retriever"], 
+    owner: "60d0fe4f5311236168a109d5"
+  };
+  return JSON.stringify(postObj);
+}
+
+const generatePostStructure = (postText) => { //This method is outside of action so it is used globally (no this)
+  return {
+    id: "60d0fe4f5311236168a100cs",
+    owner: {
+      firstName: "Simone",
+    },
+    image: "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=40",
+    text: postText,
+    likes: 0
+  }
+}
+```
+* Tested using the FireFox Console (F12) Network Tab, filtered to let only XHR requests appear
