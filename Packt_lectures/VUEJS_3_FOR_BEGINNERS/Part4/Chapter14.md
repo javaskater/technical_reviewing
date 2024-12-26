@@ -12,3 +12,5 @@
 * [VueJS Developpers](https://vuejsdevelopers.com/newsletter/)
 ## X
 * people to follow  (There are here 5 of them)
+# 262
+* [RFCs on github](https://github.com/vuejs/rfcs)
