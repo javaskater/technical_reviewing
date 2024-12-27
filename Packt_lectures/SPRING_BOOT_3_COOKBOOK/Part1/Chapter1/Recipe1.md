@@ -184,4 +184,161 @@ Downloading from central: https://repo.maven.apache.org/maven2/org/springframewo
 [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/ProjectBuildingException
 [ERROR] [Help 2] http://cwiki.apache.org/confluence/display/MAVEN/UnresolvableModelException
 ```
-* **TODO**: see why idt does not download the parent pom perhaps [Java does not pass through the proxy in *mvnw*](https://github.com/pmd/pmd/issues/498)
+* **TODO**: see why idt does not download the parent pom perhaps [Java does not pass through the proxy in *mvnw*](https://github.com/pmd/pmd/issues/498) solution in the [Mavenwrapper documentation page](./MVNW.md)
+# 6
+## VSCode problem
+* It accepted the package *com.packt.football* 
+  * for *src/main/java/com/packt/football/FootballApplication.java*
+  * but not for *src/main/java/com/packt/football/PlayerController.java*
+* no problem when running *./mvnw spring-boot:run*
+## Just a mistake in the *import org.springframework.web.bind.annotation.*;* 
+* I forgot the a
+* *./mvnw spring-boot:run* told me it cannot find the @GetMapping annotation compilation failure
+# 7
+* The GET verb does work !!!
+```bash
+jmena01@M077-1840900:~$ curl http://localhost:8080/players
+["Ivana ANDRES","Alexia PUTELLAS"]
+jmena01@M077-1840900:~$ curl http://localhost:8080/players -H "Accept: application/json"
+["Ivana ANDRES","Alexia PUTELLAS"] # a JSON array
+```
+* The POST verb does work
+  * the curl test is given page 8 above
+```bash
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" --request POST --data 'Itana BONMATI' http://localhost:8080/players
+Player Itana BONMATI created
+```
+* in the Visual Studio output console
+```bash
+2024-12-27T14:36:12.241+01:00  INFO 152386 --- [football] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-27T14:36:12.241+01:00  INFO 152386 --- [football] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-27T14:36:12.242+01:00  INFO 152386 --- [football] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+```
+* the Get of a specific one player
+  * note the @PathVariable annotation
+* test at the top of page 9
+  * two ways of specifying headers (-H or --header) 
+```bash
+mena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request GET  http://localhost:8080/players/Ivana%20ANDRES
+Ivana ANDRES
+```
+* The output console
+```bash
+2024-12-27T14:44:08.079+01:00  INFO 157585 --- [football] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-27T14:44:08.079+01:00  INFO 157585 --- [football] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-27T14:44:08.080+01:00  INFO 157585 --- [football] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+```
+## The PUT verb
+```bash
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request PUT --data 'Itiana Andres'  http://localhost:8080/players/Ivana%20ANDRES
+Player Ivana ANDRES renamed to Itiana Andres
+```
+## Note for the path parameter
+* If the condition (see comment) is not met no answer is produced
+```java
+  @GetMapping("/{name}") //the name of the path variable must be the same that the correponding method parameter
+  public String readPlayer(@PathVariable String name){
+      return name;
+  }
+  @PutMapping("/{oldname}") //the name of the path variable must be the same that the correponding method parameter
+  public String updatePlayer(@PathVariable String oldname, @RequestBody String newname){
+      return String.format("Player %s renamed to %s", oldname, newname);
+  }
+```
+## The DELETE verb
+```bash
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request DELETE  http://localhost:8080/players/Ivana%20ANDRES
+Player Ivana ANDRES deleted!!!
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request DELETE  http://localhost:8080/players/Jean-Pierre%20MENA
+Player Jean-Pierre MENA deleted!!!
+```
+# 9
+## Adding RequestHeader
+* see [Official Spring doc](https://docs.spring.io/spring-framework/reference/web/webflux/controller/ann-methods/requestheader.html)
+* The code
+```java
+  @GetMapping("/{name}")
+  public String readPlayer(@PathVariable String name, @RequestHeader("jpm-header") String monHeader){
+      if (monHeader != null && monHeader.length() > 0){
+          return String.format("Header %s ajouté au paramètre du path %s", monHeader, name);
+      }
+      return name; //Isn't useful because the header is mandatory and may not be blank
+  }
+```
+* Tests
+```bash
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" -H "jpm-header: annonce de JPM" --request GET  http://localhost:8080/players/Ivana%20ANDRES
+Header annonce de JPM ajouté au paramètre du path Ivana ANDRES
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request GET  http://localhost:8080/players/Ivana%20ANDRES # No answer the jpm-header is mandatory and mya not be blank
+```
+* the Header is mandatory is is confirmed in the Java output console
+```bash
+2024-12-27T15:33:06.743+01:00  WARN 185546 --- [football] [nio-8080-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingRequestHeaderException: Required request header 'jpm-header' for method parameter type String is not present]
+```
+* Solution make two methods:
+  * one with the mandatory header
+  * one without the header
+## Request param
+* see the [official Spring documentation](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/requestparam.html)
+* Java
+```java
+
+```
+* Test
+```bash
+mena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request GET  http://localhost:8080/players/Ivana%20ANDRES #no answer the q request param is mandatory
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request GET  http://localhost:8080/players/Ivana%20ANDRES?q=Ma%20Question
+query parameter Ma Question added to path variable Ivana ANDRES
+```
+* Solution make two methods:
+  * one with the mandatory query
+  * one without the quesry
+* but the methods must be attached to two different paths
+* Java
+```java
+  @GetMapping("/header/{name}")
+  public String readPlayer(@PathVariable String name, @RequestHeader("jpm-header") String monHeader){
+      if (monHeader != null && monHeader.length() > 0){
+          return String.format("Header %s ajouté au paramètre du path %s", monHeader, name);
+      }
+      return name;
+  }
+  @GetMapping("/query/{name}")
+  public String readPlayerWithRequestParame(@PathVariable String name, @RequestParam("q") String myquery){
+      if (myquery != null && myquery.length() > 0){
+          return String.format("query parameter %s added to path variable %s", myquery, name);
+      }
+      return name;
+  }
+```
+* Test
+```bash
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" -H "jpm-header: annonce de JPM" --request GET  http://localhost:8080/players/header/Ivana%20ANDRES
+Header annonce de JPM ajouté au paramètre du path Ivana ANDRES 
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request GET  http://localhost:8080/players/query/Ivana%20ANDRES #no answer ?q is mandatory see output console
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request GET  http://localhost:8080/players/query/Ivana%20ANDRES?q=My%20Query
+query parameter My Query added to path variable Ivana ANDRES
+``` 
+## The result code
+```bash
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/text" -H "Accept: application/text" --request GET  http://localhost:8080/players/query/Ivana%20ANDRES?q=My%20Query -vvv
+Note: Unnecessary use of -X or --request, GET is already inferred.
+* Uses proxy env variable no_proxy == 'localhost,127.0.0.1,.dgfip,.impots,172.16.32.15,10.154.53.200,.rie.gouv.fr'
+*   Trying ::1:8080...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /players/query/Ivana%20ANDRES?q=My%20Query HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.68.0
+> Content-Type: application/text
+> Accept: application/text
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 #The result code
+< Content-Type: application/text;charset=UTF-8
+< Content-Length: 60
+< Date: Fri, 27 Dec 2024 15:21:27 GMT
+< 
+* Connection #0 to host localhost left intact
+query parameter My Query added to path variable Ivana ANDRES
+```
