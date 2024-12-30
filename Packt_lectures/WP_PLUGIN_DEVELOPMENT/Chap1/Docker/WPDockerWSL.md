@@ -219,3 +219,11 @@ root@e0921d12c959:/var/www/html# ls -l info.php
 -rw-r--r-- 1 www-data www-data 0 Dec 16 16:15 info.php
 ```
 * And I still can connect to *http://localhost:8080/wp-admin/* (admin/admin)
+# Script to pass after each start
+* I automated the Lille commands in [after_starting_container.sh](./scripts/after_starting_container.sh)
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/technical_reviewing/Packt_lectures/WP_PLUGIN_DEVELOPMENT/Chap1/Docker/scripts$ ./after_starting_container.sh 
+30/12/2024 11:18:18 - setting the host userid (1000) as the container www-data user
+30/12/2024 11:18:19 - setting the host grouprid (1000) as the container www-data group
+30/12/2024 11:18:19 - giving all whordpress files www-data:www-data user/group
+```
