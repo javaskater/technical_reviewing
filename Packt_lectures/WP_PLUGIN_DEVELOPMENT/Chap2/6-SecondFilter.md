@@ -18,6 +18,14 @@ jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/technical_reviewing/Packt_lectures/WP_PLUGIN
 # 36
 * It is the **href** which is very long, it contains:
   * the mailto
-  * the subject 
+  * the subject (?subject)
   * the body (&body) (very long with article permalink)
     * **%0A** means newLine 
+* *?subject=xxxx&body=bla ba yyyyy* in the mailto use the query params of an URL
+* Getting to the line in the href is not *%OA* but *%0A*
+* the cpost content relates
+  * either to a Post
+  * or to a Page
+# 38
+## I is a technique
+* That can be used for popular social networks sites
