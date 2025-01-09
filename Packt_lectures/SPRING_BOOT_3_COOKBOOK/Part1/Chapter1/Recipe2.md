@@ -87,3 +87,63 @@ jmena01@M077-1840900:~$ tail -10 playersFmt.json
     }
 ]
 ```
+## For the second Controller function
+```bash
+jmena01@M077-1840900:~$ curl http://localhost:8080/players/415396 -H "Accept: application/json" # a player id that exists see just above
+{"id":"415396","jerseyNumber":13,"name":"Enith SALON","position":"Goalkeeper","dateOfBirth":"2001-09-24"}jmena01@M077-1840900:~$ 
+jmena01@M077-1840900:~$ curl http://localhost:8080/players/9999 -H "Accept: application/json" # a player that does not exist
+{"timestamp":"2025-01-09T16:14:35.533+00:00","status":500,"error":"Internal Server Error","path":"/players/9999"}
+```
+* In case of a non existent player the Embedded Tomcat Console tells us
+```bash
+2025-01-09T17:14:35.530+01:00 ERROR 147960 --- [football] [nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: com.packt.football.exceptions.NotFoundException: Player not Found!!!] with root cause
+
+com.packt.football.exceptions.NotFoundException: Player not Found!!!
+        at com.packt.football.services.FootballService.getPlayer(FootballService.java:50) ~[classes/:na]
+```
+## For the Third Controller function (POST)
+```bash
+# We POST a new player
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/json" -H "Accept: application/json" --request POST --data '{"id":"9999", "jerseyNumber": 0, "name": "JP MENA", "position": "All", "dateOfBirth": "0967-08-08"}}'  http://localhost:8080/players
+# We chack that that user exists
+jmena01@M077-1840900:~$ curl http://localhost:8080/players/9999 -H "Accept: application/json"
+{"id":"9999","jerseyNumber":0,"name":"JP MENA","position":"All","dateOfBirth":"0967-08-08"}
+```
+## For the Fourth Controller action (PUT)
+* The id in the controller is no use (the service uses player.id). We skip it
+```bash
+# I create the user (myself)
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/json" -H "Accept: application/json" --request POST --data '{"id":"9999", "jerseyNumber": 0, "name": "JP MENA", "position": "All", "dateOfBirth": "0967-08-08"}'  http://localhost:8080/players
+## I check that I exist
+jmena01@M077-1840900:~$ curl http://localhost:8080/players/9999 -H "Accept: application/json"
+{"id":"9999","jerseyNumber":0,"name":"JP MENA","position":"All","dateOfBirth":"0967-08-08"} 
+# I correct the date of birth 0967 to 1967
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/json" -H "Accept: application/json" --request PUT --data '{"id":"9999", "jerseyNumber": 0, "name": "JP MENA", "position": "All", "dateOfBirth": "1967-08-08"}'  http://localhost:8080/players
+{"id":"9999","jerseyNumber":0,"name":"JP MENA","position":"All","dateOfBirth":"1967-08-08"} # the PUT returns the added Player object in JSON format
+## I check that my date of birth has been corrected
+jmena01@M077-1840900:~$ curl http://localhost:8080/players/9999 -H "Accept: application/json"
+{"id":"9999","jerseyNumber":0,"name":"JP MENA","position":"All","dateOfBirth":"1967-08-08"}
+```
+## For the Fifth Controller action (DELETE)
+* I changed the DELETE service for 
+  * (the id and no more a whole Player object as parameter)
+  * I don't return void but the removed player
+```java
+       public Player deletePlayer(String id){
+        if (!players.containsKey(id)){
+            throw new NotFoundException(String.format("[FootballService][deletePlayer]The Player of id %s is not present in the Map of players", id).toString()); // nothing to return the code after this line is not reachable
+        } else {
+            return players.remove(id);
+        }
+    }
+```
+### Tests
+```bash
+# I add myseld
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/json" -H "Accept: application/json" --request POST --data '{"id":"9999", "jerseyNumber": 0, "name": "JP MENA", "position": "All", "dateOfBirth": "0967-08-08"}'  http://localhost:8080/players
+jmena01@M077-1840900:~$ curl --header "Content-Type: application/json" -H "Accept: application/json" --request DELETE http://localhost:8080/players/9999 # I delete myself
+{"id":"9999","jerseyNumber":0,"name":"JP MENA","position":"All","dateOfBirth":"0967-08-08"} # my delete action returns the deleted player
+jmena01@M077-1840900:~$ curl http://localhost:8080/players/9999 -H "Accept: application/json"
+{"timestamp":"2025-01-09T16:56:08.586+00:00","status":500,"error":"Internal Server Error","path":"/players/9999"} # I don't exist anymore (Exception thrown see the server logs/Console)
+```
+
