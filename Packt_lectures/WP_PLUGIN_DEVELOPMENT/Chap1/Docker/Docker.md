@@ -66,3 +66,6 @@ CONTAINER ID   IMAGE       COMMAND                  CREATED              STATUS 
 * especially [docker_compose_site.sh](https://forge.dgfip.finances.rie.gouv.fr/dgfip/esi59/formation-drupal-administrateur/-/blob/main/docker/scripts/docker_compose_site.sh?ref_type=heads)
 * and [execute_command_in_php_container.sh](https://forge.dgfip.finances.rie.gouv.fr/dgfip/esi59/formation-drupal-administrateur/-/blob/main/docker/scripts/execute_command_in_php_container.sh?ref_type=heads)
 ## Note the [simplified scripts of Manuel](https://forge.dgfip.finances.rie.gouv.fr/dgfip/esi59/formation-drupal-administrateur/-/tree/main/instance%20docker%20minimal?ref_type=heads)
+## Those Lille Docker scripts
+* are reused in [WP Docker 2](./WPDockerWSL.md)
+  * but also in [WP Doker 1](./WORDPRESS.md) 
