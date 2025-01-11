@@ -24,6 +24,8 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 [Sun Jan 05 09:33:38.578114 2025] [core:notice] [pid 1:tid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
 [Sun Jan 05 09:55:51.064617 2025] [php:error] [pid 74:tid 74] [client 172.19.0.1:45580] PHP Parse error:  syntax error, unexpected identifier "ch2nmf_new_nav_menu_items" in /var/www/html/wp-content/plugins/ch2-nav-menu-filter/ch2-nav-menu-filter.php on line 14, referer: http://localhost:8080/wp-admin/plugins.php # My error like in the book
 ```
+* [access_wordpress_container.sh](../Chap1/Docker/scripts/access_wordpress_container.sh)
+  * now allows to either access the container bash or outputs the syslog
 ## Repeating the erro while the plugin is activated
 * the propose me a [link to debug Wordpress](https://fr.wordpress.org/support/article/debugging-in-wordpress/)
 * using [WP_DEBUG](https://fr.wordpress.org/support/article/debugging-in-wordpress/#wp_debug)
@@ -44,3 +46,37 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 define( 'WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', '') );
 ```
 * It is explained in that [StackOverflow Post](https://stackoverflow.com/questions/73109392/enabling-wordpress-debug-mode-in-docker-compose-environment) 
+* So I added the last line in *Docker/docker-compose.yml*
+```yaml
+  wordpress:
+    image: wordpress
+    user: ${UID}
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+      WORDPRESS_DEBUG: 1 # I added that Last Line
+```
+* And As I call *http://localhost:8080/* I get a blak page with the only text
+> Parse error: syntax error, unexpected identifier "ch2nmf_new_nav_menu_items" in /var/www/html/wp-content/plugins/ch2-nav-menu-filter/ch2-nav-menu-filter.php on line 14
+## How to add a menu bar
+* It is not what is written on the Book 
+* Go to *Appearance / Editor*
+  * On the right Appearance sidebar select Models
+  * select Your theme (in my case *Twenty Twenty Four*)
+  * select Site Main page..
+  * On the Bloc Tab, select Header
+  * see the [official WP Video how to create a menu](https://wordpress.com/support/menus/create-a-menu/) 
+## The ultimate content of that item
+* see [GitHub solution of the book](https://github.com/PacktPublishing/WordPress-Plugin-Development-Cookbook-Third-Edition/tree/main/ch2/ch2-nav-menu-filter)
+# 46
+* It does not work on the 2024 Theme as it uses Blocks
+* You have to go to a old theme that manages itself its menus
+* see (in frech) [on that french Blog](https://wpmarmite.com/menu-wordpress/)
+  * and see the note at the Top of page 47
+# 49
+* I have to think using XDebug see [XDEBUG for Wordpress Official Image](https://www.wpdiaries.com/wordpress-with-xdebug-for-docker/) 

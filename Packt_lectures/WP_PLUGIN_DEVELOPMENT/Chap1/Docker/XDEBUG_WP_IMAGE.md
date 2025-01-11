@@ -1,0 +1,1 @@
+# Starts from [Wordpress Official Image with XDebug](https://www.wpdiaries.com/wordpress-with-xdebug-for-docker/)

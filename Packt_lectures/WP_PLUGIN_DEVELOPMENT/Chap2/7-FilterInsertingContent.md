@@ -23,3 +23,10 @@
   * but the hitCallback function here does the work of redirecting to the page
 * transport: beacon make the request to Google Analytics to be sent through a Post verb and not through a Get verb.
 * This output links analytics is useful when I want to have revenues from the websites I recommend... 
+## [wp_nav_menu_objects](https://developer.wordpress.org/reference/hooks/wp_nav_menu_objects/) does exist
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/technical_reviewing/Packt_lectures/WP_PLUGIN_DEVELOPMENT/Chap1/Docker/wordpress$ grep -rin wp_nav_menu_objects .
+./wp-includes/nav-menu-template.php:234:        $sorted_menu_items = apply_filters( 'wp_nav_menu_objects', $sorted_menu_items, $args );
+./wp-content/plugins/ch2-nav-menu-filter/ch2-nav-menu-filter.php:12:add_filter('wp_nav_menu_objects', 'ch2nmf_new_nav_menu_items', 10, 2);
+```
+* I try an echo it does not work neither.
