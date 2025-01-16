@@ -73,3 +73,117 @@ jmena01@M077-1840900:~/Téléchargements$ curl http://localhost:8081/albums/play
 ### Wiremock and WiremockServer
 * it seems [both do the same](https://stackoverflow.com/questions/57422081/difference-between-wiremockserver-vs-mockserverclient)
 * [More about WireMock on this Baeldung blog](https://www.baeldung.com/introduction-to-wiremock#overview)
+* I had to add to the pom.xml [3.0.1 is the latest version](https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock-standalone)
+```xml
+  <!-- Using standalone version as there is an incompatibility with Spring Boot 3.2.1 - See: https://github.com/wiremock/wiremock/issues/2395 -->
+  <dependency>
+    <groupId>com.github.tomakehurst</groupId>
+    <artifactId>wiremock-standalone</artifactId>
+    <version>3.0.1</version>
+    <scope>test</scope>
+  </dependency>
+```
+* It is very pactical to use the full static class of elements that there is only one test in this case
+  * for hasSize (already in [Recipe 4](./Recipe4.md)) see [response 0 of this StackOverflow Post](https://stackoverflow.com/questions/70354292/how-to-import-willreturn-hassize-and-is-methods-for-a-spring-test)
+```java
+	@BeforeAll
+	static void init(){
+		WireMock.configureFor(7979);
+		
+	}
+
+	@Test
+	void testGetPlayers() throws Exception  {
+		WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/players"))
+							.willReturn(WireMock.aResponse()
+								.withHeader("content-Type", "application/json") //Write Content-Type and not contentType
+								.withBody(
+									"""
+									[
+										{
+											"id": "325636",
+											"jerseyNumber": 11,
+											"name": "Alexia PUTELLAS",
+											"position": "Midfielder",
+											"dateOfBirth": "1994-02-04"
+										},
+										{
+											"id": "396930",
+											"jerseyNumber": 2,
+											"name": "Ona BATLLE",
+											"position": "Defender",
+											"dateOfBirth": "1999-06-10"
+										}
+									]
+									"""
+								)
+							)
+		);
+		mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/albums/players").accept(org.springframework.http.MediaType.APPLICATION_JSON))
+		.andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+		.andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(2)))
+		.andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath("$[0].name").value("Alexia PUTELLAS"));
+	}
+```
+#### Connection refused
+```bash
+[ERROR] com.packt.albums.AlbumsControllerTests.testGetPlayers -- Time elapsed: 1.901 s <<< ERROR!
+wiremock.org.apache.hc.client5.http.HttpHostConnectException: Connect to http://localhost:7979 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connexion refusée
+```
+* That means that
+```java
+WireMock.configureFor(7979);
+```
+* is not sufficient
+* If I do
+```java
+@BeforeAll
+	static void init(){
+		wiremockServer = new WireMockServer(7979);
+		wiremockServer.start();
+		//WireMock.configureFor(7979);
+	}
+```
+* the mvc tries to connect to the localhost:8080 when trying to create the Stub
+```bash
+        at com.github.tomakehurst.wiremock.client.WireMock.register(WireMock.java:446)
+        at com.github.tomakehurst.wiremock.client.WireMock.register(WireMock.java:441)
+        at com.github.tomakehurst.wiremock.client.WireMock.givenThat(WireMock.java:130)
+        at com.github.tomakehurst.wiremock.client.WireMock.stubFor(WireMock.java:134)
+        at com.packt.albums.AlbumsControllerTests.testGetPlayers(AlbumsControllerTests.java:42)
+```
+* line 42 is in fact:
+```java
+WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/players"))
+							.willReturn(WireMock.aResponse()
+								.withHeader("Content-Type", "application/json")
+								.withBody(
+									"""
+									[
+										{
+											"id": "325636",
+											"jerseyNumber": 11,
+											"name": "Alexia PUTELLAS",
+											"position": "Midfielder",
+											"dateOfBirth": "1994-02-04"
+										},
+										{
+											"id": "396930",
+											"jerseyNumber": 2,
+											"name": "Ona BATLLE",
+											"position": "Defender",
+											"dateOfBirth": "1999-06-10"
+										}
+									]
+									"""
+								)
+							)
+		);
+```
+# 27
+## Client code Generators of interest
+* [openapi-generator](https://github.com/OpenAPITools/openapi-generator) see the API clients
+  * Spring 5, Spring 6 (and personnaly Symfony)
+* [swagger-codegen](https://github.com/swagger-api/swagger-codegen) only Jersey not Feigh nor Spring Client, but personnally
+  * PHP client
+  * Symfony server stub
