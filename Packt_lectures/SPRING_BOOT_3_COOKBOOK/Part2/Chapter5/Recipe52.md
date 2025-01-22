@@ -39,10 +39,76 @@ Foreign-key constraints:
 Access method: heap
 ```
 ### launching the test and checking the database
-* TODO
+* [findAny and is Present in this Baeldung Post](https://www.baeldung.com/java-stream-findfirst-vs-findany#usingstreamfindany)
+```java
+  @Test
+  public void testAddPlayer(){
+      Random random = new Random();
+      Player player = new Player();
+      player.setName(String.format("Random player %d", random.nextInt())); // 32 Bits Random number
+      player.setJerseyNumber(random.nextInt(20)); //20 Bits Random number
+      player.setPosition("Midfielder");
+      player.setTeamId(1882891); //Australia
+      
+      Player createdPlayer = playersService.createPlayer(player);
+      assertNotNull(createdPlayer);
+      assertNotNull(createdPlayer.getId());
+      System.out.println(String.format("[testAddPlayer]+++ last Id entered %d", createdPlayer.getId())); //adding trace in the console
+      assertTrue(createdPlayer.getId() > 0);
+      
+      List<Player> players = playersService.getPlayers();
+      assertTrue(players.stream().filter(t -> t.getName().contains(player.getName())).findAny().isPresent());
+  }
+```
+* After adding the output
+```bash
+[testAddPlayer]+++ last Id entered 3 # a low id
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.552 s -- in com.packt.footballpg.PlayersServiceTests
+```
+* checking the Database after the test
+```bash
+football=# select * from players where name ~ '^Random player';
+ id | jersey_number |           name            |  position  | date_of_birth | team_id 
+----+---------------+---------------------------+------------+---------------+---------
+  1 |             3 | Random player -545142218  | Midfielder |               | 1882891
+  2 |            11 | Random player -1668058797 | Midfielder |               | 1882891
+  3 |            11 | Random player 993953072   | Midfielder |               | 1882891
+```
+## Writing the Controller
 ## testing the controller using curl
-
+```bash
+jmena01@M077-1840900:~$ curl http://localhost:8080/players/3 -H "Accept: application/json" 
+{"id":3,"jerseyNumber":11,"name":"Random player 993953072","position":"Midfielder","dateOfBirth":null,"teamId":1882891}
+```
 ### Testing the createPlayer
-* curl command
-* checking the database
+```java
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+  @PostMapping
+  public Player createPlayer(@RequestBody Player player){
+      return playersService.createPlayer(player);
+  }
+```
+* curl command see [RECIPE 5 of Chapter 1 with the curl command proposed by Swagger UI](../../Part1/Chapter1/Recipe5.md)
+  * here you have to add the teamId (otherwise 500 with a stacktrace in the console)
+  * Here the generated id is 5 (I should have done an alter sequece before calling the service/creation function)
+```bash
+jmena01@M077-1840900:~$ curl -X 'POST' http://localhost:8080/players -H 'accept: */*' -H 'Content-Type: application/json'  -d '{"jerseyNumber": 11, "name": "MENA Jean-Pierre", "position": "unknown", "dateOfBirth": "1967-08-08", "teamId": "1882891"}'
+{"id":5,"jerseyNumber":11,"name":"MENA Jean-Pierre","position":"unknown","dateOfBirth":"1967-08-08","teamId":1882891}
+```
+* checking the database:
+```sql
+--Before the curl
+football=# select * from players where name ~ '^MENA';
+ id | jersey_number | name | position | date_of_birth | team_id 
+----+---------------+------+----------+---------------+---------
+(0 rows)
+--After the curl
+football=# select * from players where name ~ '^MENA';
+ id | jersey_number |       name       | position | date_of_birth | team_id 
+----+---------------+------------------+----------+---------------+---------
+  5 |            11 | MENA Jean-Pierre | unknown  | 1967-08-08    | 1882891
+(1 row)
+```
