@@ -202,5 +202,96 @@ jmena01@M077-1840900:~/CONSULTANT$ docker port consultant-wordpress-1
 ```
 * I filed the [issue 931 on the wordpress on docker website](https://github.com/docker-library/wordpress/issues/931)
   * I got an answer ... 
-## Getting the script of Lille
-* Locally on my computer at [Scripts Lille directory](./Lille_scripts/README.md)
+## My solution
+### Exporting no more 33060 byt 3307 
+```yaml
+db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - 3307:3306 # export 3306 in the container to 3307 on the host
+```
+* now I see it on netstat:
+```bash
+jpmena@LAPTOP-E2MJK1UO:~$ netstat -tln
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN
+tcp        0      0 10.255.255.254:53       0.0.0.0:*               LISTEN
+tcp        0      0 0.0.0.0:3307            0.0.0.0:*               LISTEN # port 3307 on the host
+tcp        0      0 127.0.0.1:39841         0.0.0.0:*               LISTEN
+tcp6       0      0 :::8080                 :::*                    LISTEN
+tcp6       0      0 :::3307                 :::*                    LISTEN
+tcp6       0      0 :::80                   :::*                    LISTEN
+```
+* docker also tells me it is exported
+```bash
+# checking the active containers
+jpmena@LAPTOP-E2MJK1UO:~$ docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS         PORTS                                                    NAMES
+2899695e2353   wordpress   "docker-entrypoint.s…"   8 minutes ago   Up 8 minutes   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp                  docker-wordpress-1
+3f9442a0916d   mysql:8.0   "docker-entrypoint.s…"   8 minutes ago   Up 8 minutes   33060/tcp, 0.0.0.0:3307->3306/tcp, [::]:3307->3306/tcp   docker-db-1
+# What does the database container export ?
+jpmena@LAPTOP-E2MJK1UO:~$ docker port docker-db-1
+3306/tcp -> 0.0.0.0:3307 # accessing through port 3307 from the host
+3306/tcp -> [::]:3307
+# What does the wordpress container export ?
+jpmena@LAPTOP-E2MJK1UO:~$ docker port docker-wordpress-1
+80/tcp -> 0.0.0.0:8080
+80/tcp -> [::]:8080
+```
+## accessing the mysql database from the host
+### Through mysql-client (previously installed see above)
+```bash
+jpmena@LAPTOP-E2MJK1UO:~$ mysql -h 127.0.0.1 -P 3307 -u exampleuser exampledb -p
+Enter password: # enter examplepass see docker-compose file
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables;
++-----------------------+
+| Tables_in_exampledb   |
++-----------------------+
+| wp_commentmeta        |
+| wp_comments           |
+| wp_links              |
+| wp_options            |
+| wp_postmeta           |
+| wp_posts              |
+| wp_term_relationships |
+| wp_term_taxonomy      |
+| wp_termmeta           |
+| wp_terms              |
+| wp_usermeta           |
+| wp_users              |
++-----------------------+
+12 rows in set (0.00 sec)
+
+mysql> \q
+Bye
+```
+### From [DBEAVER Windeow standalone client](https://dbeaver.io/download/)
+* My DBeaver has just been updated to version 24.3.3 (25/01/2025)
+#### Accessing the db container's database
+* New database
+* choose the *Mysql Driver*
+* host/port: 127.0.0.1/3307 (for the exported port see the [Docker Compose File](./docker-compose.yml) db section and see test above)
+* database/login/password: exampledb/exampleuser/examplepass (see see the [Docker Compose File](./docker-compose.yml) wordpress section)
+* It will download thei right Java database Driver (here mysql-connector.jar)
+# Getting the script of Lille
+* [Giving the correct user:group and rights between host and wordpress container](../Docker/scripts/starting_containers_and_update_woredpress_rights.sh) on my computer inspired by [Lille's scripts](./Lille_scripts/README.md)
+* I have to pass that shell (which includes *docker compose up -d*) each time I want to work on the wordpress site
+* I created it to get the right user:group (Host) -> www-data:www-data (wordpress container)

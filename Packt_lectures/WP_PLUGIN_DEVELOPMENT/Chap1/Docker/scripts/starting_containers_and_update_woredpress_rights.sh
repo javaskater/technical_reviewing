@@ -11,6 +11,11 @@ function passing_command_in_the_wp_container(){
 }
 
 function main(){
+
+trace "starting containers wordpress and db (mysql)"
+docker compose -f ../docker-compose.yml up -d 2>&1
+ret0=$?
+
 uid_host=$(id -u)
 gid_host=$(id -g)
 
