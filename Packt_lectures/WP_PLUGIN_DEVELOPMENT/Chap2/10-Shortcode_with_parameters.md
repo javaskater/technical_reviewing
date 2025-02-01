@@ -11,3 +11,5 @@ jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/technical_reviewing/Packt_lectures/WP_PLUGIN
 * for shortcode_atts the [code of the function](https://developer.wordpress.org/reference/functions/shortcode_atts/) speaks by itself
   * we get a key value pair with the key 'username', the value $atts['username'] if present otherwise 'ylefebvre'  
 * Through extract the key username becomes $username
+# 53
+* for the script *//platform.twitter.com/widgets.js* I suppose it looks for the <a> links whose class is *twitter-timeline* it takes from the href value where to take the posts
