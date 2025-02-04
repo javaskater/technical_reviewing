@@ -9,3 +9,5 @@
 * I do'nt copy the code too long
 * I checked index, forum-category, forum-name
 * **TODO** forum-topic.html (the adress in the Firefox address bar: *file:///home/jmena01/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-1/chapter-1/example-user-interfaces/forum/forum-topic.html*)
+# 17
+* The portfolio example is very important for creating my online resumee
