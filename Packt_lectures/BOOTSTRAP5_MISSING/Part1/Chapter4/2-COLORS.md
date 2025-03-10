@@ -46,3 +46,66 @@ $enable-negative-margins:true;
     @warn "à la clé #{$color}: correspond la valeur #{$value}";
   }
 ```
+# 84
+## Generating color classes
+```scss
+/* Perso */
+
+@each $key, $value in $theme-colors {
+  .jpmstyle_#{$key} {
+    background-color: $value;
+  }
+}
+```
+# 85
+* we are a lot playing with maps() in sass.
+## Grays
+* [generating and testing the Grays on Github](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/tree/main/part-1/chapter-4/colors/grays)
+## Regular colors
+* [generating and testing the regular colors on Github](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/tree/main/part-1/chapter-4/colors/regular-colors)
+# 93
+```scss
+$mixed-colors: (
+  "blue": $blue,
+  "green": $green,
+  "red": #f00,
+  "primary": $primary
+);
+
+@each $color, $value in $mixed-colors {
+  .bg-#{$color} {
+    background-color: $value;
+  }
+}
+
+$custom-colors: (
+  "primary": $indigo,
+  "tertiary": $indigo,
+  "quarternay": $purple,
+  "quinary": $pink,
+  "senary": $orange,
+  "septenary": $teal
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@each $color, $value in $theme-colors {
+  .bg-#{$color} {
+    background-color: $value;
+  }
+  @warn "[theme merger] à la clé #{$color}: correspond la valeur #{$value}";
+}
+```
+* primary does does overrides primary in *_variables.scss* it generates a bg-primary ith indigo
+* underneath 2 *.bg-primary*
+  * the one from *mixed-colors*
+  * the one in the new *theme-colors*
+```css
+.bg-primary {
+  background-color: #0d6efd; /** From mixed-colors */
+}
+
+.bg-primary {
+  background-color: #6610f2; /** From the overrides in theme-colors */
+}
+```
