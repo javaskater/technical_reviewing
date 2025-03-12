@@ -109,3 +109,16 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   background-color: #6610f2; /** From the overrides in theme-colors */
 }
 ```
+# 99 [removing the secondary key](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/blob/main/part-1/chapter-4/colors/custom-color-palette/scss/style.scss)
+* I can test it by commenting/uncommenting the following
+```scss
+$theme-colors: map-remove($theme-colors, "secondary");
+```
+* And adding in the index.html
+```html
+<div class="bg-dark" style="color:white">.bg-dark</div>
+<div class="bg-secondary">.bg-secondary</div>
+<!--and further down-->
+<div class="text-dark">.text-dark</div>
+<div class="text-secondary">.text-secondary</div>
+```
