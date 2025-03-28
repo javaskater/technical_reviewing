@@ -48,3 +48,4 @@ print(f"found index {index.item()}")
 * prints 207
 * the [link](https://pytorch.org/docs/stable/generated/torch.nn.Softmax.html#torch.nn.Softmax) gives the Softmax definition
   * index[0] is the same thing as index.item() as there is only one element
+#  
