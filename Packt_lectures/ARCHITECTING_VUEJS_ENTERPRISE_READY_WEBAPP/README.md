@@ -1,0 +1,3 @@
+# The Book [Architecting Vue.js 3 Enterprise-Ready Web Applications: Build and deliver scalable and high-performance, enterprise-ready applications with Vue and JavaScript](https://www.packtpub.com/en-us/product/architecting-vuejs-3-enterprise-ready-web-applications-9781801073905)
+# [The source code on GitHub](https://github.com/PacktPublishing/Architecting-Vue.js-3-Enterprise-Ready-Web-Applications/tree/main?tab=readme-ov-file)
+* on branch for each chapter !!!!
