@@ -6,3 +6,6 @@
 * I only see one project. It is the unique companion project of this book.
 * Each chapter/part of the book correspond to a branch
   * by default  [the project](https://github.com/PacktPublishing/Vue.js-3-for-Beginners) opens to the last branch (CH11) 
+
+# Working another time on the book
+* on the 29/09/2025 end of [Chapter 3](./Part2/Chapter3.md) Starting [Chapter 4](./Part2/Chapter4.md)

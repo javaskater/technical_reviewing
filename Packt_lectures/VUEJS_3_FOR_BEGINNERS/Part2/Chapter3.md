@@ -50,11 +50,57 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/ch03_from_scratch/vue.js-f
 
   ➜  press h + enter to show help
 ```
+## The new npm interface
+* use the space bar to switch on/off and the up/down arrow to pass from an option to another
+```bash
+jmena01@m077-2281091:~/CONSULTANT$ npm create vue@latest
+Need to install the following packages:
+create-vue@3.18.0
+Ok to proceed? (y) y
+
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'create-vue@3.18.0',
+npm warn EBADENGINE   required: { node: '^20.19.0 || >=22.12.0' },
+npm warn EBADENGINE   current: { node: 'v20.18.1', npm: '10.8.2' }
+npm warn EBADENGINE }
+
+> npx
+> create-vue
+
+┌  Vue.js - The Progressive JavaScript Framework
+│
+◇  Nom du projet :
+│  Vue.js-3for-Beginners-test
+│
+◇  Nom du package :
+│  vue-js-3for-beginners-test
+│
+◆  Sélectionnez les fonctionnalités à inclure dans votre projet : (↑/↓ pour naviguer, espace pour sélectionner, a pour tout sélectionner, entrée pour confirmer)
+│  ◻ TypeScript
+│  ◻ Support de JSX
+│  ◼ Router (développement SPA)
+│  ◻ Pinia (gestion de l''état)
+│  ◻ Vitest (tests unitaires)
+│  ◻ Tests de bout en bout
+│  ◻ ESLint (prévention des erreurs)
+│  ◻ Prettier (formatage du code)
+└
+# Questions about the frameworks to use
+Terminé. Exécutez maintenant :
+
+   cd test_Vur_JS
+   npm install
+   npm run format
+   npm run dev
+
+```
+### The DevTools links
 * The [devTools Vue](http://localhost:5173/__devtools__/)
   * has a very interesting right Toolbar (see [the offical page](https://devtools.vuejs.org/))
   * that brings more information than the [Vue DevTools Firefox Plugin](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
     * which tells us nothing
   * especially the graph icon (very weel done)
+* it really has to be opened in a new Friefox (not on a new tab)
 # p 40
 * no more dist folder
 # p 41

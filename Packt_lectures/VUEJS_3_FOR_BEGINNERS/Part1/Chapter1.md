@@ -17,6 +17,50 @@
 jmena01@M077-1840900:~/Documents/CONSULTANT/technical_reviewing/Packt_lectures$ node --version
 v18.16.0
 ```
+## New Codium 
+* Change in the **~/.bashrc** file
+  * nodeJS has been [installed using Volta](https://thethmuu.medium.com/use-volta-instead-of-nvm-to-install-node-a34a9edb461f)
+  * Wh just need to give the right PATH to access this NodeJS version
+```bash
+jmena01@m077-2281091:~/.volta/bin$ tail -2 ~/.bashrc
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+```
+* all the tools we have at our disposal
+```bash
+jmena01@m077-2281091:~/.volta/bin$ ll
+total 29904
+drwxr-xr-x 2 jmena01 domain users     4096 juil. 30 12:50 ./
+drwxr-xr-x 7 jmena01 domain users     4096 juil. 30 13:09 ../
+lrwxrwxrwx 1 jmena01 domain users       35 juil. 30 12:50 node -> /home/jmena01/.volta/bin/volta-shim*
+lrwxrwxrwx 1 jmena01 domain users       35 juil. 30 12:50 npm -> /home/jmena01/.volta/bin/volta-shim*
+lrwxrwxrwx 1 jmena01 domain users       35 juil. 30 12:50 npx -> /home/jmena01/.volta/bin/volta-shim*
+lrwxrwxrwx 1 jmena01 domain users       35 juil. 30 12:50 pnpm -> /home/jmena01/.volta/bin/volta-shim*
+-rwxr-xr-x 1 jmena01 domain users 11553368 déc.   5  2024 volta*
+-rwxr-xr-x 1 jmena01 domain users  8415048 déc.   5  2024 volta-migrate*
+-rwxr-xr-x 1 jmena01 domain users 10637848 déc.   5  2024 volta-shim*
+lrwxrwxrwx 1 jmena01 domain users       35 juil. 30 12:50 yarn -> /home/jmena01/.volta/bin/volta-shim* # even Yarn is available
+lrwxrwxrwx 1 jmena01 domain users       35 juil. 30 12:50 yarnpkg -> /home/jmena01/.volta/bin/volta-shim*
+```
+* We have a newer version of Node (and associated tools) at our disposal
+```bash
+jmena01@m077-2281091:~/.volta/bin$ node --version
+v20.18.1
+jmena01@m077-2281091:~/.volta/bin$ npm --version
+10.8.2
+jmena01@m077-2281091:~/.volta/bin$ npx --version
+10.8.2
+jmena01@m077-2281091:~/.volta/bin$ yarn --version # has to be installed separataly not functional here
+Volta error: Yarn is not available.
+
+Use `volta install yarn` to select a default version (see `volta help install` for more info).
+# just activate it
+jmena01@m077-2281091:~/.volta/bin$ volta install yarn # very quick command
+success: installed and set yarn@4.10.3 as default
+jmena01@m077-2281091:~/.volta/bin$ yarn --version
+4.10.3
+```
+
 ## GIT
 * I didn't know [Git Kraken](https://www.gitkraken.com/)
   * It can be a Visual Studio extension under the name of [Git Lens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
