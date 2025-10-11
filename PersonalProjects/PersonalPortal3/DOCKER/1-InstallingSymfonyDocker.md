@@ -153,3 +153,4 @@ jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/symfony-docker$ docker compose down --remove
 ```bash
 docker compose exec php composer req symfony/orm-pack # symfony/orm-pack includes a recipe
 ```
+* installing [Mysql Container through a recipe](./2-InstallingMysqlDocker.md)
