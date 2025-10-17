@@ -41,6 +41,89 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap07$ npm run dev
 ```
 ## Accessing the WebService
 * I cannot sigh up for the WEB-Service be it frm work or on My Mobile Device
+### Testing the WebService using CURL
+* the app-id is given in the book page 112 because new version of the API d'ont give an app-id
+* the -L option before the {url} is meant to follow the redirections (without it we get code 302)
+```bash
+jmena01@m077-2281091:~$ curl -H "app-id: 6835b3b89ccb3c0e9f8e75a1" -H "Accept: application/json" -H "Content-Type: application/json" -L https://dummyapi.io/data/v1//post?limit=5 -o posts.json
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    56  100    56    0     0    770      0 --:--:-- --:--:-- --:--:--   811
+100  2097  100  2097    0     0   3240      0 --:--:-- --:--:-- --:--:--     0
+```
+### formatting the results using node
+* I adapt [that example on the web](https://www.geeksforgeeks.org/node-js/how-to-read-and-write-json-file-using-node-js/) which gives
+```javascript
+jmena01@m077-2281091:~$ cat format.js 
+const fs = require("fs"); 
+
+// Read users.json file 
+fs.readFile("posts.json", function(err, data) { 
+    
+    // Check for errors 
+    if (err) throw err; 
+
+    // Converting to JSON 
+    const posts= JSON.parse(data); 
+    console.log(posts); // Print posts 
+});
+```
+* when I run it I get
+```javascript
+jmena01@m077-2281091:~$ node format.js
+{
+  data: [
+    {
+      id: '60d21b4667d0d8992e610c85',
+      image: 'https://img.dummyapi.io/photo-1564694202779-bc908c327862.jpg',
+      likes: 43,
+      tags: [Array],
+      text: 'adult Labrador retriever',
+      publishDate: '2020-05-24T14:53:17.598Z',
+      owner: [Object]
+    },
+    {
+      id: '60d21b4967d0d8992e610c90',
+      image: 'https://img.dummyapi.io/photo-1510414696678-2415ad8474aa.jpg',
+      likes: 31,
+      tags: [Array],
+      text: 'ice caves in the wild landscape photo of ice near ...',
+      publishDate: '2020-05-24T07:44:17.738Z',
+      owner: [Object]
+    },
+    {
+      id: '60d21b8667d0d8992e610d3f',
+      image: 'https://img.dummyapi.io/photo-1515376721779-7db6951da88d.jpg',
+      likes: 16,
+      tags: [Array],
+      text: '@adventure.yuki frozen grass short-coated black do...',
+      publishDate: '2020-05-24T05:44:55.297Z',
+      owner: [Object]
+    },
+    {
+      id: '60d21b3a67d0d8992e610c60',
+      image: 'https://img.dummyapi.io/photo-1581804928342-4e3405e39c91.jpg',
+      likes: 7,
+      tags: [Array],
+      text: 'Hiking with my dog in the woods. black labrador re...',
+      publishDate: '2020-05-23T22:56:11.424Z',
+      owner: [Object]
+    },
+    {
+      id: '60d21bf967d0d8992e610e9b',
+      image: 'https://img.dummyapi.io/photo-1574457547512-5b1646994eea.jpg',
+      likes: 28,
+      tags: [Array],
+      text: 'Two boys hug their dogs in a leaf pile in the fall...',
+      publishDate: '2020-05-23T18:52:32.613Z',
+      owner: [Object]
+    }
+  ],
+  total: 873,
+  page: 0,
+  limit: 5
+}
+```
 ### Accessing the SocialPosts
 * [in the SocialPosts organism for the solution](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH07-end/src/components/organisms/SocialPosts.vue)
 * We get the apid
@@ -71,6 +154,26 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap07$ curl --header "app
 [1] 25382 # it is asynchronous
 jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap07$ {"data":[{"id":"60d21b4667d0d8992e610c85","image":"https://img.dummyapi.io/photo-1564694202779-bc908c327862.jpg","likes":43,"tags":["animal","dog","golden retriever"],"text":"adult Labrador retriever","publishDate":"2020-05-24T14:53:17.598Z","owner":{"id":"60d0fe4f5311236168a109ca","title":"ms","firstName":"Sara","lastName":"Andersen","picture":"https://randomuser.me/api/portraits/women/58.jpg"}},{"id":"60d21b4967d0d8992e610c90","image":"https://img.dummyapi.io/photo-1510414696678-2415ad8474aa.jpg","likes":31,"tags":["snow","ice","mountain"],"text":"ice caves in the wild landscape photo of ice near ...","publishDate":"2020-05-24T07:44:17.738Z","owner":{"id":"60d0fe4f5311236168a10a0b","title":"miss","firstName":"Margarita","lastName":"Vicente","picture":"https://randomuser.me/api/portraits/med/women/5.jpg"}},{"id":"60d21b8667d0d8992e610d3f","image":"https://img.dummyapi.io/photo-1515376721779-7db6951da88d.jpg","likes":16,"tags":["dog","pet","canine"],"text":"@adventure.yuki frozen grass short-coated black do...","publishDate":"2020-05-24T05:44:55.297Z","owner":{"id":"60d0fe4f5311236168a109ed","title":"miss","firstName":"Kayla","lastName":"Bredesen","picture":"https://randomuser.me/api/portraits/med/women/13.jpg"}},{"id":"60d21b3a67d0d8992e610c60","image":"https://img.dummyapi.io/photo-1581804928342-4e3405e39c91.jpg","likes":7,"tags":["canine","pet","mammal"],"text":"Hiking with my dog in the woods. black labrador re...","publishDate":"2020-05-23T22:56:11.424Z","owner":{"id":"60d0fe4f5311236168a109d5","title":"mrs","firstName":"Sibylle","lastName":"Leibold","picture":"https://randomuser.me/api/portraits/med/women/89.jpg"}},{"id":"60d21bf967d0d8992e610e9b","image":"https://img.dummyapi.io/photo-1574457547512-5b1646994eea.jpg","likes":28,"tags":["dog","human","animal"],"text":"Two boys hug their dogs in a leaf pile in the fall...","publishDate":"2020-05-23T18:52:32.613Z","owner":{"id":"60d0fe4f5311236168a109f7","title":"mrs","firstName":"Jolanda","lastName":"Lacroix","picture":"https://randomuser.me/api/portraits/med/women/32.jpg"}}],"total":873,"page":0,"limit":5}
 [1]+  Fini                    curl --header "app-id: 657a3106698992f50c0a5885" https://dummyapi.io/data/v1/post?limit=5
+```
+# page 118
+## logging in the console the posts
+* Note the forEach function in Javascript [response 5280 of this StackOverflow Post](https://stackoverflow.com/questions/3010840/loop-through-an-array-in-javascript)
+```javascript
+const fetchPosts = () => {
+    const baseUrl = "https://dummyapi.io/data/v1";
+    fetch(`${baseUrl}/post?limit=5`,{
+      "headers":{
+        "app-id": "6835b3b89ccb3c0e9f8e75a1"
+      }
+    }).then (response => response.json()).then( result => {
+      posts.push(...result.data)
+      posts.forEach(function (p,i){
+        //console.log(p.owner);
+        console.debug(`[SocialPosts Main Loop] at index ${i}: first name ${p.owner.firstName} post test |${p.text}| post id ${p.id}`);   
+      })
+    })
+  }
+  fetchPosts()
 ```
 ### Accessing the comments
 * We are using the same key [Social Post's Comments in the Chapter 7 solution](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH07-end/src/components/molecules/SocialPostComments.vue)
