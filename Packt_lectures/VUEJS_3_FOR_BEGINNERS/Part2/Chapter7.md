@@ -272,8 +272,15 @@ const fetchComments = (postId) => {
   fetchComments(props.postId);
 ```
 * The remarks/warning in Yellow in the Firefox / Ouput / Console are also important for debugging unattended behaviours 
+# 121
+* the two first posts don't have any comments, hence the 204 HTTP answer in the Firefow Console Network Tab
+* With this console (network Tab / Response Tab on the right), you can check the answer already as Javascript object ...
 # 122 
 * The template element supports v-if, v-else directives without adding any HTML Tag to he DOM.
+  * contrary to 
+```html
+<div v-if="comments.length == 0">There are no comments for this post!</div
+```
 *  power of v-for
   * we can either have comment is the entire *{"id":"60d2237267d0d8992e6118d7","message":"Handsome shot","owner":{"id":"60d0fe4f5311236168a10a19","title":"miss","firstName":"Debbie","lastName":"Garcia","picture":"https://randomuser.me/api/portraits/med/women/86.jpg"},"post":"60d21bf967d0d8992e610e9b","publishDate":"2019-12-12T18:57:30.941Z"}]*
 ```html
@@ -284,15 +291,21 @@ const fetchComments = (postId) => {
 ```html
 <div v-for="{message, owner} in comments" class="comment">
 ```
+## The problem with that direct approach
+* I don't with for the comments are loaded before actually deciding wether there are comments or not
+  * So it first shows the message displayed when there areeffectively no comments
+  * it then shows the different comments
+* see page 127 and the need of a await/suspense component
 # 124
 * we use both red and reactive variable in the same *SocialPosts* component
   * [that page](https://vuejsdevelopers.com/2022/06/01/ref-vs-reactive/) does well explain the difference between the two
 # 125
 * Watch; when less than 4 posts are in the SocialPosts Vue, il recalls fetchPosts and the then logs all the posts including the old ones.
 * From the console.log, I removed all the warnings by correcting SocialPost.vue
-# 127
-* await takes a Promise as a parameter that is why fetcComments must return the last then result
+# 127-128
+* await takes a Promise as a parameter that is why fetcComments must return the fetch function itself which returns a promise in the last **then(result => {...})**
 # 129
+* <Suspense> is like <template> in the sense that it adds no HTML element in the DOM
 * With the fallback message we have an example of a slot. The [offical link](https://vuejs.org/guide/components/slots) explains that for the client of my Element (parent template of the BaseLayout template) with slots:
 ```html
 <BaseLayout>
@@ -344,3 +357,5 @@ const fetchComments = (postId) => {
   </div>
 </template>
 ```
+* The fallback template disappears as soon as the await of the Child Component synchronised in the Suspense completes
+* [Suspense/OnError Captured mix](https://vuejs.org/guide/built-ins/suspense#error-handling)
