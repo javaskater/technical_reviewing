@@ -119,3 +119,14 @@ aside {
   * tab storage
   * on the left click to local storage
 * we can see the sidebar value to switch between true and false (all strings) when clickin on the Icon Arrows
+* I preferesd to call the key *sidebar_closed* instead of *sidebar*
+```javascript
+const toggleSideBar = () => {
+    closed.value = !closed.value
+    window.localStorage.setItem("sidebar_closed", closed.value ) // call it sidebar_closed instead of sidebar
+}
+onBeforeMount( () => {
+    closed.value = window.localStorage.getItem("sidebar_closed") === "true";
+    console.log(`It is closed ${closed.value}`); //Adding a console does not harm
+})
+```
