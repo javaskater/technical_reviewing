@@ -62,6 +62,9 @@ navigation
 ```
 * note that in the template *router-link* is in Kebab Case
   * and in the script section it is imported in Camel Case 
+* note that router-link accepts the path of a route and not the name of a route !!!
+# 185
+* same thing with event handling *router.push("privacy");* expects a path not the name of a route
 # 188
 * It is not clear in the Book but we are creating a [UserProfileView.vue](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH10-end/src/views/UserProfileView.vue)
   * passing to the route a hard encoded userId of *657a3106698992f50c0a5885*
