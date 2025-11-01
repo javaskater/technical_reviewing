@@ -141,3 +141,44 @@ ritwickdey.liveserver
 xdebug.php-debug
 yzhang.markdown-all-in-one
 ```
+# running Symfony's console commands directly from the Host
+* the container app-php is associated with the php service in the main compose.yaml file
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/symfony-docker$ docker compose exec php bin/console dbal:run-sql "SELECT school_name, link from jpm_di
+plomas"
+ ------------------------- ------------------------------ 
+  school_name               link                          
+ ------------------------- ------------------------------ 
+  Ecole Centrale de Lille   https://centralelille.fr/     
+  Ecole Centrale de Lille   https://centralelille.fr/en/  
+  Ecole Centrale de Lille   https://centralelille.fr/en/  
+ ------------------------- ------------------------------
+ ```
+ * i can access the shell using the same docker compose service named php
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/symfony-docker$ docker compose exec -it php bash
+root@c7fe34350fb4:/app# ls -l bin/console 
+-rwxr-xr-x 1 root root 629 Sep 27 14:40 bin/console
+root@c7fe34350fb4:/app# exit
+exit
+```
+* or with pure docker (without docker compose) accessin the container through its name (docker container ls)
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/symfony-docker$ docker exec -it symfony-docker-php-1 bash
+root@c7fe34350fb4:/app# ls bin/console 
+bin/console
+root@c7fe34350fb4:/app# exit
+exit
+```
+### There is the image (docker), the container (docker) and the service (docker compose)
+* The started services by *docker compose*
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/symfony-docker$ docker compose config --services
+database
+php
+```
+# Symfony php / composer commands from the host
+* same command using the php  *docker compose* service
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/symfony-docker$ docker compose exec php composer req --dev symfony/maker-bundle
+```
