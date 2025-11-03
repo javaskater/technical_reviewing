@@ -106,6 +106,7 @@ const fetchUser = (userId) => {
     * dynamically add reoutes
 * from the component/Vues that is called for you use useRoute to get the route's parameters
   * here the component called for is *src/views/UserProfileView.vue*
+* userRouter is verry practical to use routes by name and not by url
 ## Second mistake
 * as userID we pass to the UserProfileView url the postId
   * I get the following object as *result*
