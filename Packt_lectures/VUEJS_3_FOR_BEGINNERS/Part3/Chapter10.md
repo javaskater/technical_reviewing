@@ -152,6 +152,10 @@ const navigateToUser = () => {
   });
 }
 ```
+# 194
+* small mistake in the text
+  - *src/views/UserPostsView.vue* is a copy of *src/components/organisms/SocialPosts.vue* and not of *src/components/molecules/SocialPost.vue*
+- *src/views/UserView.vue* becomes *src/views/UserView.vue*
 ## For errors p 188 and p 192, I created [an issue on the gitHub project](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/issues/5)
 # 197-198
 * note that a route child has the same format than a main route, there are 3 keys: *name*, *path*, *component*.
@@ -193,6 +197,54 @@ routes: [
   ]
 ```
 * !!! be careful, only the children paths do no start with /
+## Using a common template for children Route
+* define a parent **src/views/UserMainView.vue** calling *<RouterView />* where you want the children put their template
+  * which gives for the component
+```html
+<script setup>
+import SideBar from '../components/organisms/SideBar.vue'
+import TheHeader from '../components/organisms/TheHeader.vue'
+import { RouterView } from 'vue-router'
+</script>
+
+<template>
+  <TheHeader/>
+  <SideBar />
+  <main>
+    <RouterView /> <!--Here the components of the child routes will put their templates-->
+  </main>
+</template>
+<style>
+@import '../assets/base.css';
+aside { 
+  border-right: 1px solid var(--color-border);
+  padding: 16px 32px;
+}
+main {
+  padding: 16px 32px;
+}
+</style>
+```
+* put that *src/views/UserMainView.vue* as component in the parent route
+```javascript
+{
+      path: "/user/:userId",
+      name: "one_specific_user",
+      component: UserMainView, // The main/parent template
+      children: [
+        {
+          path: 'profile',
+          name: 'user-profile',
+          component: UserProfileView // Child template
+        },
+        {
+          path: 'posts',
+          name: 'user-posts',
+          component: UserPostsView // Child template
+        }
+      ]
+    }
+```
 ## 198
 * the redirect could be a complex object with params like in *src/components/molecules/SocialPost.vue*
 ```javascript
