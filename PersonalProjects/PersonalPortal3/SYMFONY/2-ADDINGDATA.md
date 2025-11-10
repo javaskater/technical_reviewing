@@ -12,3 +12,25 @@ No security vulnerability advisories found.
 Using version ^4.3 for doctrine/doctrine-fixtures-bundle
 ```
 * we have a new File in the php container (*src/DataFixtures/AppFixtures.php*) which is a Feature example
+  * My first feature **src/DataFixtures/DiplomsFixtures.php**
+## Loading the fixture
+* see [loading the just created fixture](https://symfony.com/bundles/DoctrineFixturesBundle/current/index.html#loading-fixtures)
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec php bin/console doctrine:fixtures:load --help
+Description:
+  Load data fixtures to your database
+
+Usage:
+  doctrine:fixtures:load [options]
+
+##############################################""
+  
+    php bin/console doctrine:fixtures:load --dry-run
+```
+* Why is my Fixture not applied ? (todo)
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec php bin/console doctrine:fixtures:load --dry-run
+   (dry-run)
+   > purging database
+   > loading App\DataFixtures\AppFixtures # not my fixture
+```

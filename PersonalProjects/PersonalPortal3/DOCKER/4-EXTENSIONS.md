@@ -16,3 +16,12 @@ root@c7fe34350fb4:/app# chmod 666 src/DataFixtures/*.php # To make them writable
 * On the Host Side it works but does not see the vendor classes
 * Do I have to create another link (todo)
   * vendor -> vendor
+```yaml
+    volumes:
+      - ./:/app
+      - ./frankenphp/Caddyfile:/etc/frankenphp/Caddyfile:ro
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+      # If you develop on Mac or Windows you can remove the vendor/ directory
+      #  from the bind-mount for better performance by enabling the next line:
+      - ./vendor:/app/vendor # it is no more an anonymous volume so I can use IntelliPHPSense on the Host side
+```
