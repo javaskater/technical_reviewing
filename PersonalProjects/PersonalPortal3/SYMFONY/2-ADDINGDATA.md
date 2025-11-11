@@ -34,3 +34,37 @@ jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec p
    > purging database
    > loading App\DataFixtures\AppFixtures # not my fixture
 ```
+* REASON: The Class Name was DiplomFixtures the Filename was DimplomsFixtures (with two s)
+  * The class was not seen by Symfony AutoWire
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec php bin/console doctrine:fixtures:load --dry-run
+   (dry-run)
+   > purging database
+   > loading App\DataFixtures\AppFixtures
+   > loading App\DataFixtures\DiplomFixtures
+```
+* Now I have (after I ran the Fixture:load with no dry run) with mysql client on the Host
+```sql
+mysql> select id, school_name, language, url from jpm_diplom;
++----+-------------------------+----------+------------------------------+
+| id | school_name             | language | url                          |
++----+-------------------------+----------+------------------------------+
+|  4 | Ecole Centrale de Lille | fr_FR    | 'https://centralelille.fr/   |
+|  5 | Ecole Centrale de Lille | en_EN    | https://centralelille.fr/en/ |
+|  6 | Ecole Centrale de Lille | de_DE    | https://centralelille.fr/en/ |
++----+-------------------------+----------+------------------------------+
+3 rows in set (0.00 sec)
+```
+* or without Mysql Client on the Host:
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec php bin/console dbal:run-sql "select id, school_name, language, url from jpm_diplom"
+ ---- ------------------------- ---------- ------------------------------ 
+  id   school_name               language   url                           
+ ---- ------------------------- ---------- ------------------------------ 
+  4    Ecole Centrale de Lille   fr_FR      'https://centralelille.fr/    
+  5    Ecole Centrale de Lille   en_EN      https://centralelille.fr/en/  
+  6    Ecole Centrale de Lille   de_DE      https://centralelille.fr/en/  
+ ---- ------------------------- ---------- ------------------------------
+ ```
+ ## TO CHECK
+ * when restarting the docker mysql container, will the data be still present ? (todo check)
