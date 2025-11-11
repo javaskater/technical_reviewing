@@ -75,3 +75,82 @@ main: # That was already there
 ```
 # Using the Logger
 * seems to be used like the [default Logger](https://symfony.com/doc/current/components/console/logger.html)
+  * does not work
+* First [existing channels](https://symfony.com/doc/current/logging/channels_handlers.html) 
+* I choose php Channel
+  * The console command gives you the way to use it 
+```bash
+  [18] monolog.logger
+  [19] monolog.logger.cache
+  [20] monolog.logger.console
+  [21] monolog.logger.deprecation
+  [22] monolog.logger.doctrine
+  [23] monolog.logger.event
+  [24] monolog.logger.php
+  [25] monolog.logger.request
+  [26] monolog.logger.router
+  [27] monolog.logger_prototype
+  [28] monolog.processor.psr_log_message
+ > 24
+
+
+Information for Service "monolog.logger.php"
+============================================
+
+ Monolog log channel
+
+ ---------------- ---------------------------------------------------- 
+  Option           Value                                               
+ ---------------- ---------------------------------------------------- 
+  Service ID       monolog.logger.php                                  
+  Class            Monolog\Logger                                      
+  Tags             -                                                   
+  Calls            pushHandler, pushHandler, pushHandler, pushHandler  
+  Public           no                                                  
+  Synthetic        no                                                  
+  Lazy             no                                                  
+  Shared           yes                                                 
+  Abstract         no                                                  
+  Autowired        no                                                  
+  Autoconfigured   no                                                  
+  Arguments        php                                                 
+  Usages           Psr\Log\LoggerInterface $phpLogger    # just define the Psr\Log\LoggerInterface variable with that exact name (autowire will do the job)             
+                   debug.error_handler_configurator                    
+ ---------------- ---------------------------------------------------- 
+
+ ! [NOTE] The "monolog.logger.php" service or alias has been removed or inlined when the container was compiled.  
+```
+* Just call **phpLogger** (in your controller contructor) the variable implementing *\Psr\Log\LoggerInterface* interface  (autowire will do the link)
+  * my controller has a new constructor (see code below)
+```php
+use Psr\Log\LoggerInterface;
+
+class JPMController extends AbstractController
+{
+
+    
+    public function __construct(
+        private LoggerInterface $phpLogger,
+    ) {
+    }
+```
+## The result on the php container
+```bash
+root@9599910826cd:/app/var/log# tail -2 dev.log
+[2025-11-11T18:08:56.307693+00:00] php.ERROR: [main Controller] Calling jpm [] [] # My log
+[2025-11-11T18:08:56.379991+00:00] request.ERROR: Uncaught PHP Exception Symfony\Component\HttpKernel\Exception\NotFoundHttpException: "No route found for "GET https://localhost/favicon.ico" (from "https://localhost/")" at RouterListener.php line 156 {"exception":"[object] (Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException(code: 0): No route found for \"GET https://localhost/favicon.ico\" (from \"https://localhost/\") at /app/vendor/symfony/http-kernel/EventListener/RouterListener.php:156)\n[previous exception] [object] (Symfony\\Component\\Routing\\Exception\\ResourceNotFoundException(code: 0): No routes found for \"/favicon.ico/\". at /app/vendor/symfony/routing/Matcher/Dumper/CompiledUrlMatcherTrait.php:70)"}
+```
+* Using Curl with -k (or --insecure)
+```bash
+jpmena@LAPTOP-E2MJK1UO:~$ curl -k https://localhost
+OK
+```
+* in the Log file of the php container
+```bash
+root@9599910826cd:/app/var/log# tail -1 dev.log
+[2025-11-11T19:19:45.082610+00:00] php.DEBUG: [main Controller] Calling jpm [] []
+root@9599910826cd:/app/var/log# date
+Tue Nov 11 19:20:10 UTC 2025
+```
+###  (To ask) what to put in the Array ([] [] in the log line)
+* It is the context
