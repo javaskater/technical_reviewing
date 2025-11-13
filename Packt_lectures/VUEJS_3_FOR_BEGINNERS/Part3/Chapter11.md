@@ -71,9 +71,32 @@ undefined
 ```
 # 210
 * we have left the getters/computed empty for that first part
+* ===  hase priority over the =
+```javascript
+> a = true
+true
+> b = true
+true
+> b = a === false
+false
+> b
+false
+> 
+```
+* so
+```javascript
+this.closed = closed === 'true' //is a way to translate from the string 'true' or 'false' to the boolean true or false
+```
 ## to use the store, first use it in the component it is foreseen for, here SideBar.vue
 * replace method with actions
 * replace redf with state! 
+# 211
+* onBeforeMount, the last line should no be striked through so that we have [see also the solution on GitHub](https://github.com/PacktPublishing/Vue.js-3-for-Beginners/blob/CH11-end/src/components/organisms/SideBar.vue)
+```javascript
+onBeforeMount( async () => {
+    sidebarStore.loadSidebarFroLocalStorage();
+});
+```
 # 212
 * Be careful when the sideBar is closed not only
   * we do put its width to 40px through aside's class binding
