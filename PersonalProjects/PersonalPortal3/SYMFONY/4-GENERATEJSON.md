@@ -69,3 +69,7 @@ jpmena@LAPTOP-E2MJK1UO:~$ curl -H "Accept: application/json" -k https://localhos
 # [How to pretty print JSON In Javascript](https://www.geeksforgeeks.org/javascript/how-to-pretty-print-json-string-in-javascript/)
 * I wrote that [NODEJS script](./prettifyJSONCurl.js) to show and write a prettify version of a curl command
   * I need NodeJS installed on my WSL/Ubuntu24 see [Installing Node JS for Vue Development](../VUEJS/0-INSTALLINGNODEJS.md)
+## For the [prettifyer](./prettifyJSONCurl.js)
+* [Playing with path in JSON](https://nodejs.org/en/learn/manipulating-files/nodejs-file-paths)
+  * It is very important to [add null, 4 to stringify see answer 1137 to this StackOverflow](https://stackoverflow.com/questions/5670752/how-can-i-pretty-print-json-using-node-js)
+
