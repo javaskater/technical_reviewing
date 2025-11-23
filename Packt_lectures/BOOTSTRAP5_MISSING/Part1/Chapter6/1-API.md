@@ -65,4 +65,27 @@ p[class^="font-weight"] {
   font-weight: 400 !important; /*sets a property*/
 }
 ```
+## back to the sass compilation system
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-1/chapter-6/api-syntax/local-css-variables$ npm i --save-dev sass # --save-dev must be before the package
+
+added 17 packages in 1s
+
+5 packages are looking for funding
+  run `npm fund` for details
+```
+* Testing sass local command
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-1/chapter-6/api-syntax/local-css-variables$ node_modules/.bin/sass --version
+1.94.2 compiled with dart2js 3.10.1
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-1/chapter-6/api-syntax/local-css-variables$ node_modules/.bin/sass scss/style.scss css/style.css 
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+## A lot of Deprecation Warnings
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-1/chapter-6/api-syntax/local-css-variables$ ll css/
+total 16
+drwxr-xr-x 2 jpmena jpmena 4096 Nov 23 17:06 ./
+drwxr-xr-x 6 jpmena jpmena 4096 Nov 23 17:04 ../
+-rw-r--r-- 1 jpmena jpmena  296 Nov 23 17:06 style.css
+-rw-r--r-- 1 jpmena jpmena  189 Nov 23 17:06 style.css.map
+```
 # 149 State (todo)
