@@ -130,3 +130,63 @@ $utilities: map-merge(
 <div class="w-20 bg-secondary text-white p-3 mb-2">.w-20</div>
 ```
 * for the mb class see [Answer 435 of this StackOverflow](https://stackoverflow.com/questions/41574776/what-is-class-mb-0-in-bootstrap-4)
+
+# 160 modifying a utility
+* the scss we want to adapt is in *bootstrap/scss/_utilities.scss*
+```scss
+  "margin-start": (
+    responsive: true,
+    property: margin-left,
+    class: ms,
+    values: map-merge($spacers, (auto: auto))
+  ),
+```
+* do I still have ms or only ml in the compiled *css/style.css* ?
+* I only have **.ml** (no *.ms* anymore)
+```css
+.ml-0 {
+  margin-left: 0 !important;
+}
+
+.ml-1 {
+  margin-left: 0.25rem !important;
+}
+
+.ml-2 {
+  margin-left: 0.5rem !important;
+}
+```
+* The reponsive flag to true makes that we also have
+```css
+.ml-sm-0 {
+  margin-left: 0 !important;
+}
+.ml-sm-1 {
+  margin-left: 0.25rem !important;
+}
+.ml-sm-2 {
+  margin-left: 0.5rem !important;
+}
+```
+# 162 removing an utility
+* without removing we have in the css/style.css
+```css
+.pe-none {
+  pointer-events: none !important;
+}
+
+.pe-auto {
+  pointer-events: auto !important;
+}
+```
+* they don't appear affter activating
+```scss
+$utilities: map-merge(
+  $utilities, (
+    "margin-start": map-merge(
+      map-get($utilities, "margin-start"),
+      ( class: ml ),
+    )
+  )
+);
+```
