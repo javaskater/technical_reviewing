@@ -1,5 +1,65 @@
 # In this Part2 we are connecting to a Database
+## Already installed on my computer
+```bash
+jmena01@m077-2281091:~$ docker --version
+Docker version 27.5.1, build 9f9e405
+jmena01@m077-2281091:~$ docker compose version # docker compose also present
+Docker Compose version v2.32.4
+```
 # 189
+## Accessing docker without sudo
+* [Answer 1501 of this StackExchange post](https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo)
+* docker group already present
+```bash
+jmena01@m077-2281091:~$ cat /etc/group | grep -i docker
+docker:x:985:
+```
+* Adding myself to that group
+```bash
+jmena01@m077-2281091:~$ echo $USER
+jmena01
+jmena01@m077-2281091:~$ sudo gpasswd -a $USER docker # I am adding mysel to the docker group
+Ajout de l''utilisateur jmena01 au groupe docker
+jmena01@m077-2281091:~$ cat /etc/group | grep -i docker
+docker:x:985:jmena01 # I am in the docker group
+```
+* restarting the computer !!!!
+* testing with a simple Image
+```bash
+jmena01@m077-2281091:~$ docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+17eec7bbc9d7: Pull complete 
+Digest: sha256:d4aaab6242e0cace87e2ec17a2ed3d779d18fbfd03042ea58f2995626396a274
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+* the image hello-world is now in my repository List
+```bash
+jmena01@m077-2281091:~$ docker image ls
+REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+hello-world   latest    1b44b5a3e06a   4 months ago   10.1kB
+```
 ## getting and accessing a postgres container
 ### Getting and starting a container from a postgres image
 ```bash
@@ -28,6 +88,42 @@ jmena01@M077-1840900:~$ docker ps # my container postgresql (from image postgres
 CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS                                       NAMES
 8bdf0e12660a   postgres   "docker-entrypoint.s…"   49 seconds ago   Up 12 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   postgresql
 ```
+* the above command is in the [docker create + up command shell](./scripts/docker_postgres_create_up_connect.sh)
+* Stopping the container [docker down command shell](./scripts/docker_postgres_down.sh)
+  * see [this Baeldung link](https://www.baeldung.com/ops/docker-stop-delete-active-container)
+```bash
+jmena01@m077-2281091:~/CONSULTANT/technical_reviewing/Packt_lectures/SPRING_BOOT_3_COOKBOOK/Part2/scripts$ ./docker_postgres_down.sh 
+postgresql 
+jmena01@m077-2281091:~/CONSULTANT/technical_reviewing/Packt_lectures/SPRING_BOOT_3_COOKBOOK/Part2/scripts$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES # no more containers running
+jmena01@m077-2281091:~$ docker image ls
+REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+postgres      latest    b5caf683a8bb   6 days ago     456MB # The image is still here and does not need to be reloaded
+hello-world   latest    1b44b5a3e06a   4 months ago   10.1kB
+```
+* to restart the container it does need to bre created again it is the joc ogf [that very simple script using container name](./scripts/docker_postgres_up.sh)
+```bash
+jmena01@m077-2281091:~/CONSULTANT/technical_reviewing/Packt_lectures/SPRING_BOOT_3_COOKBOOK/Part2/scripts$ ./docker_postgres_up.sh 
+postgresql
+jmena01@m077-2281091:~/CONSULTANT/technical_reviewing/Packt_lectures/SPRING_BOOT_3_COOKBOOK/Part2/scripts$ docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS         PORTS                    NAMES
+20cf43cb22fd   postgres   "docker-entrypoint.s…"   28 minutes ago   Up 9 seconds   0.0.0.0:5432->5432/tcp   postgresql # the conntainer is started
+```
+### Installing the postgres client on the Host
+```bash
+jmena01@m077-2281091:~$ apt list --installed | grep postgresql
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+libobasis7.2-postgresql-sdbc/inconnu,now 7.2.7.2-2 amd64  [installé]
+postgresql-client-17/noble-pgdg,now 17.2-1.pgdg24.04+1 amd64  [installé] # I alread installed it for profesional tests
+postgresql-client-common/noble-pgdg,now 267.pgdg24.04+1 all  [installé]
+```
+* test the installed client
+```bash
+jmena01@m077-2281091:~$ psql --version
+psql (PostgreSQL) 17.2 (Ubuntu 17.2-1.pgdg24.04+1)
+```
 ### Accessing the Postgres server from the Host
 * don't forget the *-h localhost* otherwise it tries to access through a socket
 ```bash
@@ -47,6 +143,8 @@ psql: error: la connexion au serveur sur le socket « /var/run/postgresql/.s.PGS
 ### Entering datas in the Database
 * We are using 
   * the [script for creating the database and 2 tables: teams and players](https://github.com/PacktPublishing/Spring-Boot-3.0-Cookbook/blob/main/chapter5/recipe5-1/start/sql/db-creation.sql)
+    * I downloaded the script in [the creation](./sql_docker/insert-data.sql)
+    * in the [Data insertion](./sql_docker/insert-data.sql)
     * note that after we have created the database we connect to it in order to place the tables inside it
 ```sql
 CREATE DATABASE football
@@ -218,6 +316,8 @@ jmena01@M077-1840900:~$ docker ps
 CONTAINER ID   IMAGE      COMMAND                  CREATED      STATUS         PORTS                                       NAMES
 8bdf0e12660a   postgres   "docker-entrypoint.s…"   4 days ago   Up 4 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   postgresql
 ```
+* to start the container once it is created just use [this simple script](./scripts/docker_postgres_up.sh)
+* see [the simple script](./scripts/docker_postgres_up.sh)
 ### check the database Volume is maintained
 ```bash
 jmena01@M077-1840900:~$ psql -h localhost -U packt -d football # We directly connect to the football database
@@ -260,7 +360,8 @@ football=# select * from players LIMIT 10; # it is the public schema no prefix/s
 football=# \q
 ```
 ## stopping the container
-* just call **docker stop container_name**
+* just call **docker stop container_name** 
+  * command of [this simple script](./scripts/docker_postgres_down.sh)
 ```bash
 jmena01@M077-1840900:~$ docker stop postgresql
 postgresql

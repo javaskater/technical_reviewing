@@ -245,7 +245,8 @@ football=# select * from players where date_of_birth = '06/12/2000'; --date in a
 ## 7 getTeam
 * also here the stream().map(xxxxxxxxxx).toList() is only to return a list of Player from a list of PlayerEntitiy
   * this list of Player is the 3rd parameter of the Team record (the record not the TeamEntity).
-*  we are reading not wrtiting so the @Transactional(readonly=true)
+*  we are reading not writing so the @Transactional(readonly=true)
+  * be careful to use the right @transactional class see [answer 32 of this StackOverflow Post](https://stackoverflow.com/questions/32087469/the-attribute-readonly-is-undefined-for-the-annotation-type-transactional)
 ### curl
 * see first curl command in the [request shell in the solution](https://github.com/PacktPublishing/Spring-Boot-3.0-Cookbook/blob/main/chapter5/recipe5-3/end/scripts/requests.sh)
 ```bash
