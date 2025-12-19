@@ -44,8 +44,32 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap13$ npm run dev
   ➜  Network: use --host to expose
   ➜  press h to show help
 ```
+# 244
+* [VueJs Dev Tool for Firefox](https://addons.mozilla.org/fr/firefox/addon/vue-js-devtools/)
+* restart Firefox to see the Vue Extension in the F12 Firefox debug console
 # 245
 * pin Vue devtools to the Toolbar on Firefox
-# 257
+# 252
+## Timeline
+* To make the Timeline in **My Firefox 140.3.0esr** You have to activate the Events you want to appear
+  * Right click on a section (left panel) / select activate
+  * click on the red circle to start Recording
+  * **restart Firefox**
+* What is very interesting is the component section
+# 254
+* I don't see how you get the recorded events
 ## Time line
 * in order to see te detail Vue of Each event you must be in recording active mode
+  * when you provok e another event you see alo all the events before
+# 257
+* I don't know how to install Vue DevTools plugin,
+ * or are they present when You use them in you Vue App see *package.json*
+```javascript
+  "dependencies": {
+    "@vee-validate/rules": "^4.12.6",
+    "pinia": "^2.1.6", //also in Vue DevTools
+    "vee-validate": "^4.12.6",
+    "vue": "^3.4.27",
+    "vue-router": "^4.2.4" //also in Vue DevTools
+  },
+```

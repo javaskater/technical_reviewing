@@ -81,7 +81,7 @@ const createPostHandler = (event) => {
 # 231
 * adding *vee-validate* I add the -s flag to install action of npm
 ```bash
-jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap12$ npm i vee-validate -s
+jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap12$ npm i vee-validate -s # -s or --save for updating the package.json with this new dependency
 ```
 * now in the *package.json*:
 ```javascript
@@ -155,6 +155,7 @@ jmena01@M077-1840900:~/CONSULTANT/my_vuejs-3_beginner/chap12$ npm i @vee-validat
 # 238
 * To have more than one parameter to your rule see the [between global rule](https://vee-validate.logaretm.com/v4/guide/global-validators#between)
 * Their error message are very poor *email2 is not valid* is one of them
+  * to customaize error message see [Overwriting message on VueValidate](https://vee-validate.logaretm.com/v2/guide/messages.html#overwriting-messages) I did'en test it
 # 239
 * be careful to use *:rules* when you pass an object (don't forget the :)
 ```html

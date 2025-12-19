@@ -281,6 +281,13 @@ jmena01@M077-1840900:~$ node -e "console.log(JSON.stringify(JSON.parse(require('
     ]
 }
 ```
+* getting the [HTTP response code from the curl command](https://stackoverflow.com/questions/2220301/how-to-evaluate-http-response-codes-from-bash-shell-script)
+```bash
+jmena01@m077-2281091:~/CONSULTANT/technical_reviewing/Packt_lectures/SPRING_BOOT_3_COOKBOOK/Part2/scripts$ response=$(curl --write-out '%{http_code}' --silent --output test.json  servername)
+tp://localhost:8080/football/teams/1884823)
+jmena01@m077-2281091:~/CONSULTANT/technical_reviewing/Packt_lectures/SPRING_BOOT_3_COOKBOOK/Part2/scripts$ echo $response 
+200
+```
 ## create a new Team
 * do we need to set the ID or will it be set in the save method 
   * see *src/main/java/com/packt/footballpg/TeamEntity.java*
@@ -319,6 +326,7 @@ public record Team(Integer id, String name, List<Player> players) {
 }
 ```
 ### Curl test
+* see [the requests.sh script delivered with the code](https://github.com/PacktPublishing/Spring-Boot-3.0-Cookbook/blob/main/chapter5/recipe5-3/end/scripts/requests.sh)
 ```bash
 jmena01@M077-1840900:~$ curl --request POST -H "Content-Type: application/text" -d 'Antarctica' http://localhost:8080/football/teams
 {"id":2,"name":"Antarctica","players":[]}
@@ -396,3 +404,6 @@ football=# select distinct position from players;
 >
 > That is the reason to create a Service class and not return Entities directly in the RESTful API.
 * A restController cannot accept Transactional methods
+## Entity.to.DtO
+* [MapStruc very intersting](https://mapstruct.org/)
+  * [Simple Mapping](https://mapstruct.org/documentation/stable/reference/html/#basic-mappings)
