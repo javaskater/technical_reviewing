@@ -37,3 +37,34 @@ Updating files: 100% (3381/3381), done.
 ## ToDo node on Windows
 * [take the MSI installer](https://nodejs.org/en/download)
 * use for compiling SASS source files 
+# problem we don't have the Bootstrap icons
+```bash
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/bootstrap$ find . -name *icon*.css -type f # does return nothing
+```
+## installing icons locally
+* see [answer 0 of this StackOverflow Post](https://stackoverflow.com/questions/63216712/use-bootstrap-icons-with-npm)
+```bash
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-2/chapter-7/website$ npm i bootstrap-icons
+
+added 1 package in 869ms
+
+1 package is looking for funding
+  run `npm fund` for details
+# Go insde node_modules
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-2/chapter-7/website/node_modules/bootstrap-icons$ find . -name *.scss
+./font/bootstrap-icons.scss
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-2/chapter-7/website/node_modules/bootstrap-icons$ find . -name *.css
+./font/bootstrap-icons.css
+./font/bootstrap-icons.min.css
+```
+## changing in the html/head part
+* from 
+```html
+    <link rel="stylesheet" href="../../../bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../bootstrap-icons/font/bootstrap-icons.css"> <!--not present there forgotten by the author-->
+```
+* to 
+```html
+    <link rel="stylesheet" href="../../../bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">  <!-- newly dowloaded through npm -->
+```
