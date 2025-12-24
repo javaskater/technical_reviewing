@@ -107,3 +107,24 @@
   * the Javascript makes it to *display:block*
 # Shop
 * p 179
+## ofcanvas
+* the modal (contains the filters when screensize has is greater or equal than lg) has a ofcanvas class that set its position as absolute and its coordinate on the upperleft
+## The filters (lg and up)
+```html
+<div class="col-lg-4 col-xxl-3 d-none d-lg-block"> <!--d-lg-blck with lg appear otherwise d-none disappear-->
+          <aside class="sticky-top pt-lg-3 pb-lg-5">
+```
+* When lower than lg it is not seen/displayed 
+  * *d-none d-lg-block*
+## sticky 
+* makes the sidebar stays at the top/left  see *bootstrap/scss/helpers/_position.scss*
+```css
+.sticky-top {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 1020;
+}
+```
+## input (form-check) checked
+* it is just changing the position of the check which is replaced by a white circle in SVG
