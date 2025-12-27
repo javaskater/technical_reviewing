@@ -37,3 +37,24 @@ const fetchUser = (lang) => {
     })
 }
 ```
+# When starting the node dev I also have the devTools
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_client_vuejs$ npm run dev
+
+> jpm_pages_client@0.0.0 dev
+> vite
+
+
+  VITE v7.2.2  ready in 1355 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window # no need of browser vue extension
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+  ➜  press h + enter to show help
+```
+* I don't know How to use /__devtools__/ page when I am not on /home
+* Prefer using the browsers extensions
+  * [Chrome VueJs DevTool](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=fr)
+  * [Firefox VueJS Extension](https://addons.mozilla.org/fr/firefox/addon/vue-js-devtools/)
+    * for that last extension see [Chapter 13 of the Packt Book (VueJS for Beginners)](../../../Packt_lectures/VUEJS_3_FOR_BEGINNERS/Part4/Chapter13.md)
