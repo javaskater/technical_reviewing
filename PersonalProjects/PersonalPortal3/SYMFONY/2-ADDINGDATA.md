@@ -67,4 +67,31 @@ jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec p
  ---- ------------------------- ---------- ------------------------------
  ```
  ## TO CHECK
- * when restarting the docker mysql container, will the data be still present ? (todo check)
+ * when restarting the docker mysql container, will the data be still present ? answer yes (mysql volume)
+
+## New Data in my fixture
+* After adding new Diploms in [Diplom Fixture](https://github.com/javaskater/jpm_pages_symfony_vue/blob/main/src/DataFixtures/DiplomFixtures.php)
+* One command to load the new Data
+  * it truncates the actual datas before running the Fixtures
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec php bin/console doctrine:fixtures:load
+
+ Careful, database "app" will be purged. Do you want to continue? (yes/no) [no]: # It will empty the table
+ > yes
+
+   > purging database
+   > loading App\DataFixtures\AppFixtures
+   > loading App\DataFixtures\DiplomFixtures
+# To check if my datas are present
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_symfony_vue$ docker compose exec php bin/console dbal:run-sql "select id, school_name, language, url from jpm_diplom"
+ ---- ------------------------- ---------- ------------------------------- 
+  id   school_name               language   url                            
+ ---- ------------------------- ---------- ------------------------------- 
+  7    Ecole Centrale de Lille   fr_FR      https://centralelille.fr/      
+  8    Ecole Centrale de Lille   en_EN      https://centralelille.fr/en/   
+  9    Ecole Centrale de Lille   de_DE      https://centralelille.fr/en/   
+  10   Université Lille 1        fr_FR      https://www.univ-lille.fr/     
+  11   University of Lille       en_EN      https://www.univ-lille.fr/en/  
+  12   Lille Universität         de_DE      https://www.univ-lille.fr/en/  
+ ---- ------------------------- ---------- ------------------------------- 
+ ```
