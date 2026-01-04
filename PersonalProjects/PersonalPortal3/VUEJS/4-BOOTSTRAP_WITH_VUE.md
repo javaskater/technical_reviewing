@@ -80,3 +80,38 @@ export default defineConfig({
   },
 })
 ```
+# Putting a navbar
+* The style does not appear
+* see for integration [This GitHub Account](https://github.com/parisnakitakejser/video-tutorial-javascript-code/tree/master/VueJS/bootstrap-vue)
+* I have to put in  ** all the libraries present in 
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_client_vuejs$ ./node_modules/.bin/sass ./scss/boot.scss ./src/assets/boot.css 2>&1  | tee compile.log
+```
+## Problem It stops after 320 warnings
+* use of the verbose flag
+```bash
+jpmena@LAPTOP-E2MJK1UO:~/CONSULTANT/jpm_pages_client_vuejs$ ./node_modules/.bin/sass --verbose ./node_modules/bootstrap/scss/bootstrap.scss ./src/assets/boot.css 2>&1  | tee compile.log
+```
+* I now find navbar in the generated *src/assets/boot.css*
+* change the *src/main.js* for
+```javascript
+//import './assets/main.css'
+import './assets/boot.css' // integrating all the bootstrap libraries
+
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+import App from './App.vue'
+import router from './router'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
+```
+## Another Problem
+* All Style pathes are absolute not relative
+* Adding the bootstrap.js to the main page
+  * I can be added at the very root of the app: *index.html*
