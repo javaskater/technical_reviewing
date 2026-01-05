@@ -128,3 +128,53 @@
 ```
 ## input (form-check) checked
 * it is just changing the position of the check which is replaced by a white circle in SVG
+# 185
+## Review Part of Product
+* [the symbol before the review Text is floated](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/float)
+```css
+.float-start {
+	float: left !important;
+}
+```
+## About page
+* the figure tag assoicated with the figure-caption is pure hmtl 5. Th corresponding classes do the job !!!
+# 186
+* Our brands responsive images !!!!
+  * the gutter width is given one level up on the row
+```html
+<div class="col-6 col-sm-4 col-lg-2"><!--Very interesting responsive col widths-->
+  <img src="img/400x300.png" class="img-fluid"> <!--adpats to the container-->
+</div> 
+```
+# 189
+## Team
+* We create a section div just to put a margin bottom of 5
+* one row
+```html
+<div class="row gy-3"> <!--the cols gutter is defined at the row level-->
+  <div class="col-6 col-md-4 col-lg-3 col-xl-2 text-center">
+    <img src="img/200x200.png" class="img-fluid rounded-circle mb-2" alt="Employee image">
+    <ul class="list-inline mb-2">
+      <li class="list-inline-item"><a href="#"><i class="bi-twitter"></i><span class="visually-hidden">Twitter</span></a></li>
+      <li class="list-inline-item"><a href="#"><i class="bi-linkedin"></i><span class="visually-hidden">LinkedIn</span></a></li>
+    </ul>
+    <div class="h5">Firstname Lastname</div>
+    <div>Job Title</div>
+  </div>
+```
+## Location:
+* playing with ratio and 
+```css
+.ratio::before { /** prepare the needed space in hight for the iFrame */
+  display: block;
+  padding-top: var(--bs-aspect-ratio);
+  content: "";
+}
+.ratio > * {
+  position: absolute; /** The IFrame has an absolute position in a empty space */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+```
