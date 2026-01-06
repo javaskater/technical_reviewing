@@ -195,3 +195,67 @@
 ### Main area
 * The 6 product images are in one row (with gutter 4)
   * the row itself is in a column that represents the page's main area
+* Each product is also a card with a image as a header
+  * the header is a simple div (no card-header) with a position of relative 
+    * to allow the absolute placement of the Tag
+
+* Same thing the card-body has a position:relative class
+  * this to allo the absolute placement of the In Stock text with icon
+  * We put it inside a div to make it appear outside the normal flow
+    * the position is 0,0 but with the two margins we place it inside the container
+```html
+<div class="small position-absolute bottom-0 end-0 mb-2 me-3 text-success">
+  <i class="bi-check-circle"></i>
+  In stock
+</div>
+```
+#### CardFooter
+* we vreate an extra div to allow the items be placed using d-flex
+* for the prices note the used classes
+  * the sapn redefines:
+    * the font size
+    * the font style (strike through)
+    * the font color (text-muted)
+* the 2 buttons are themseleves inside a d-flex div
+## Modal
+* The author placed a main div around the modal dialog div
+  * placed just after the footer div.
+  * with inline style *display: block* or *display:none*
+* The form is made of a div of input-group class
+# 193
+## Cart
+The Tab panes are just an ul and a div
+### Shopping Cart
+* Same thing tha Product Review just above
+* a d-flex arangment of a flex column
+# 197
+## CART / Shippping Details 
+* Note the use of Fieldset for the définition of an entire form section
+  * the first element is legend
+  * the rest are rows 
+    * and inside rows form-label, form-control or form-select classes
+### The [ButtonGroup](https://getbootstrap.com/docs/5.0/components/button-group/#checkbox-and-radio-button-groups) Shipping Method
+* By default the first is checked, that has nothing to do with the checed attribute
+* The d-flex class makes the button group occupy the entire width of the enclosing fieldset
+* The alert is very intersting
+### Buttons next and close
+* are just placed without any div (their parent is the form itself)
+## Summary
+* common to the *Payment Option* and to the *Shipping Details* Tabs
+* IThe parent div has a d-flex (horizontal)
+  * The first sibling has a d-flex (horisontal + vertical) associated to align-items-center
+* for the pricing there is a lot of use of *justify-content-between* to maximize the spéce between title and price
+```html
+<div class="d-flex justify-content-between">
+  <span>Shipping (Standard Delivery)</span>
+  <span>$5</span>
+</div>
+```
+## Cart / Payment Options
+* The right part is the same than *Shipping Details*
+* For each Payment Option we use a Card (that garantees the 4 borders)
+  * for-check, form-check-input adn form-check-label are the 3 used classes
+  * not inside the label the span with the class visually hidden very useful for text-readers
+
+# 198 FAQ
+* TODO
