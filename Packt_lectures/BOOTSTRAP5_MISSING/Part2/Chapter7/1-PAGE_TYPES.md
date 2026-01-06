@@ -178,3 +178,20 @@
   height: 100%;
 }
 ```
+## Contact Form
+* It is also a section (with a margin bottom)
+* The for elements themselves are in col of a row which is itself in a col of a row
+* note the two Bootstrap classes
+  * form-label
+  * and the more important form-control
+* The two button are freely placed under the main row (no need of a div to encapsulate them)
+# 192
+## Whishlist
+### SideBar
+* the sticky class of the aside tag allows the side to remain always present at the top of the current windows
+  * especially useful when the page is scrolled down
+* the nav only gives an aria-label: used by screen readers for impaired peoples
+* underneath there is a [Card using list groups](https://getbootstrap.com/docs/5.0/components/card/#list-groups)
+### Main area
+* The 6 product images are in one row (with gutter 4)
+  * the row itself is in a column that represents the page's main area
