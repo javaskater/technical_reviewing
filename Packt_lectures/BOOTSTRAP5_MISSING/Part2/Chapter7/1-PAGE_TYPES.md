@@ -258,4 +258,29 @@ The Tab panes are just an ul and a div
   * not inside the label the span with the class visually hidden very useful for text-readers
 
 # 198 FAQ
-* TODO
+* Accordeons, each accordeon is in its own section (just for the margin bottom)
+* The three sections are in a container div
+## [Accordion](https://getbootstrap.com/docs/5.3/components/accordion/)
+* The most complicated is a accordion item body
+  * headingCategory1One refers to the title's id
+  * accordionCategory1 refers to the main accordeon id
+```html
+<div id="collapseCategory1One" class="accordion-collapse collapse" aria-labelledby="headingCategory1One" data-bs-parent="#accordionCategory1" style="">
+  <div class="accordion-body"><!--The text we want to put--></div>
+</div>
+```
+# 202
+## Example of terms of Service
+### A card on the left
+* with a cardheader
+* and a [listgroup](https://getbootstrap.com/docs/4.0/components/list-group/#links-and-buttons) (we have full autonomy for what we put in a card)
+* it is made sticky by the class of a containing div
+### An article On the right
+* An article is made of many sections, each section has a id linked the left Page Navigation.
+#### main p
+* interesting class lead
+#### Section 1
+* remember image's class fluid
+  * it takes the entire conteneur width, but no more
+#### Section 4
+* we have the example of a [bootstrap striped table](https://getbootstrap.com/docs/5.3/content/tables/#striped-rows)
