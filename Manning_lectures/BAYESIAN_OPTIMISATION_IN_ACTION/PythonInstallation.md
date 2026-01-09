@@ -282,3 +282,5 @@ wadllib             1.3.6
 wheel               0.37.1
 zipp                1.0.0
 ```
+# TODO
+* install the required libraries see [The PythonLibs used in the CNAM / RCP 217 Project](https://github.com/javaskater/rcp217_project/blob/main/docs/INSTALLATIONS/PYTHONLIBS.md)
