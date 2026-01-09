@@ -48,3 +48,26 @@ found 0 vulnerabilities
 jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-2/chapter-8/website$ ./node_modules/.bin/sass scss/style.scss css/style.css
 ## lots of deprecation warnings
 ```
+## Missing Bootstrap-icons
+```bash
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-2/chapter-8/website$ npm i bootstrap-icons --save
+
+added 1 package, and audited 22 packages in 743ms
+
+9 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+```
+* it enriched the package.json with that dependency
+```javascript
+{
+  "devDependencies": {
+    "sass": "^1.97.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1" // the new package
+  }
+}
+```
