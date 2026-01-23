@@ -1,6 +1,18 @@
 # 14
 * Créate a new project
   * with more questions 
+# 15
+* I need the solution Code
+```bash
+jmena01@m077-2281091:~/CONSULTANT/REALVUEJS$ git clone https://github.com/PacktPublishing/Building-Real-world-Web-Applications-with-Vue.js-3.git
+Clonage dans 'Building-Real-world-Web-Applications-with-Vue.js-3'...
+remote: Enumerating objects: 746, done.
+remote: Counting objects: 100% (52/52), done.
+remote: Compressing objects: 100% (28/28), done.
+remote: Total 746 (delta 36), reused 24 (delta 24), pack-reused 694 (from 2)
+Réception d''objets: 100% (746/746), 1.72 Mio | 673.00 Kio/s, fait.
+Résolution des deltas: 100% (294/294), fait.
+```
 # 17
 * The isChecked property is bidirectional
   * can be set at initialisation by the parent component
@@ -39,6 +51,28 @@
     item.checked = !item.checked
     console.log(`The item ${item.title} has changed its status to ${item.checked?"ON":"OFF"}`)
  }
+```
+# 23 
+## I added 2 console.log in the TodoList.vue
+```typescript
+onst updateItem = (item:Item):void => {
+    const updatedItem = findItemInList(item)
+    console.log(`[TODOLIST][updateItem] item found ${updatedItem?.title}`) //first console.log
+    if (updatedItem){
+        toggleItemChecked(updatedItem)
+    }
+}
+
+const findItemInList = (item: Item): Item | undefined => {
+    return listItems.value.find(
+        (itemInList: Item) => itemInList.title === item.title
+    )
+}
+
+const toggleItemChecked = (item:Item): void => {
+    item.checked = !item.checked
+    console.log(`[TODOLIST][toggleItemChecked] I just chnaged ${item.title} to ${item.checked}`) //second console.log
+}
 ```
 
 # 23
@@ -159,6 +193,21 @@ onMounted(() => {
     initListItems()
     storageItems.value = getFromStorage() //Cannot work without because we reload from the updated List storageItems.value
 })
+```
+## Typescript default return
+* If you are using the {} you must have an explicit return instruction
+```typescript
+const sortedList = computed(() => {
+        var sortedItems = [...storageItems.value].sort((a,b) => (a.checked ? 1: 0) - (b.checked ? 1: 0))
+        return sortedItems
+    }
+)
+```
+* otherwise online methods don't need {} and in that case no return instruction
+```typescript
+const sortedList = computed(() => 
+    [...storageItems.value].sort((a,b) => (a.checked ? 1: 0) - (b.checked ? 1: 0))
+)
 ```
 # 27
 * [VueJsDevTools](https://vuejs.org/guide/scaling-up/tooling.html#browser-devtools) was introduced page 7 

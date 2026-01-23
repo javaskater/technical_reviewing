@@ -49,8 +49,17 @@ position: {coords:Geolocation}
   * because getcurrentPosition waits for an async the function calling it is putting a *await* in front of it
   * it does not returns immediatly so the function calling await is itslef a async !!!
 * *http://localhost:5173/*  never returns the position (is it due to the proxy  or is it due to the local server?) 
+# 35
+* the async is in the declaration part
+* the await is in the code of the async function, and declares which part is to be waited for (because it is a function defined as async)
+* see [this Blog Post](https://blog.greenroots.info/javascript-async-and-await-in-plain-english-please)
 # 36 -37
 * I put mys APIWEATHER key (cbbee947ff994b1c89b154220241308) in the .env at the root of the project
+* I test calling the API on my Linux console using latitude and longitude given by the preceding code
+```javascript
+jmena01@m077-2281091:~$ curl "https://api.weatherapi.com/v1/current.json?key=cbbee947ff994b1c89b154220241308&q=45.79328,4.8431104"
+{"location":{"name":"Caluire-Et-Cuire","region":"Rhone-Alpes","country":"France","lat":45.8,"lon":4.85,"tz_id":"Europe/Paris","localtime_epoch":1769161568,"localtime":"2026-01-23 10:46"},"current":{"last_updated_epoch":1769161500,"last_updated":"2026-01-23 10:45","temp_c":7.0,"temp_f":44.6,"is_day":1,"condition":{"text":"Overcast","icon":"//cdn.weatherapi.com/weather/64x64/day/122.png","code":1009},"wind_mph":9.8,"wind_kph":15.8,"wind_degree":174,"wind_dir":"S","pressure_mb":995.0,"pressure_in":29.38,"precip_mm":0.0,"precip_in":0.0,"humidity":81,"cloud":0,"feelslike_c":4.1,"feelslike_f":39.4,"windchill_c":3.6,"windchill_f":38.5,"heatindex_c":6.6,"heatindex_f":43.9,"dewpoint_c":3.8,"dewpoint_f":38.8,"vis_km":10.0,"vis_miles":6.0,"uv":0.3,"gust_mph":14.3,"gust_kph":23.0}}
+```
 * Explanation of the (I have been looking at before) 
   * url to ask 
   * type WeatherData we take only some infos of the json result (see the curl result above)
@@ -59,6 +68,7 @@ position: {coords:Geolocation}
   * it is a contract (like the anonymous types see first example)
   * it only require that you have at least the properties defined by the interface (cooler than a type) 
   * here a key *coords* of props (wihich is the object passed by the calling component here GetLocation) whose value is of type *Coords*
+  * [difference between type and interface](https://gibbok.github.io/typescript-book/book/differences-between-type-and-interface/)
 * what is [defineProps](https://dev.to/cn-2k/working-with-props-declaration-in-vue-3-ts-included-4o4f)
  * this component will be called by the GetLocation
 # 39
@@ -69,6 +79,7 @@ position: {coords:Geolocation}
   * I have a file *Chapter3/vue-local-weather/vite.config.ts* at the root of the Weather project...
 * [postcss](https://postcss.org/) is not SASS, it only adpats to the browser using  prefixes, polyfills
   * it must use [autoprefixer](https://autoprefixer.github.io/) which add vendor prefixes to the classes
+* the **-D** flag is the synonym of *--save-dev*
 ```bash
 jmena01@M077-1840900:~/CONSULTANT/my_vue_js/Chapter3/vue-local-weather$ npm install -D tailwindcss postcss autoprefixer
 npm WARN EBADENGINE Unsupported engine {
@@ -127,6 +138,31 @@ export default {
 ```
 * exposing utility classes of tailwind to the application
   * is using @Tailwind annotation int a root style.css which is imported int he main.ts file
+# problem on the 23/01/2026
+```bash
+jmena01@m077-2281091:~/CONSULTANT/REALVUEJS/vue-local-weather$ npx tailwindcss init -p
+npm error could not determine executable to run
+npm error A complete log of this run can be found in: /home/jmena01/.npm/_logs/2026-01-23T14_42_22_734Z-debug-0.log
+```
+* see [response 35 to this StackOverflow Post](https://stackoverflow.com/questions/79489946/while-installing-tailwind-css-i-am-having-this-error-npm-error-could-not-determ)
+```bash
+jmena01@m077-2281091:~/CONSULTANT/REALVUEJS/vue-local-weather$ rm -rf node_modules/
+jmena01@m077-2281091:~/CONSULTANT/REALVUEJS/vue-local-weather$ rm package.json 
+jmena01@m077-2281091:~/CONSULTANT/REALVUEJS/vue-local-weather$ rm package-lock.json 
+jmena01@m077-2281091:~/CONSULTANT/REALVUEJS/vue-local-weather$ npm install -D tailwindcss@3 postcss autoprefixer # we don't want the version 4 of tailwind back to version 3
+
+added 81 packages in 4s
+
+23 packages are looking for funding
+  run `npm fund` for details
+```
+* now it works again
+```bash
+jmena01@m077-2281091:~/CONSULTANT/REALVUEJS/vue-local-weather$ npx tailwindcss init -p
+
+Created Tailwind CSS config file: tailwind.config.js
+Created PostCSS config file: postcss.config.js
+```
 # 41
 * the style.css file is not imported in the traditional sense, it is only an element of the development pipeline
   * it is just the list of all the utility classes used by the tooling system
