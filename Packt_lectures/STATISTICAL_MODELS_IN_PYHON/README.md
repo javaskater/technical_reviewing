@@ -1,0 +1,2 @@
+# Packt Book [Building Statistical Models in Python: Develop useful models for regression, classification, time series, and survival analysis ](https://www.packtpub.com/en-us/product/building-statistical-models-in-python-9781804614280)
+* The [source Code of the Book is on Github](https://github.com/PacktPublishing/Building-Statistical-Models-in-Python)
