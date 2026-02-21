@@ -204,5 +204,65 @@ Receiving objects: 100% (171/171), 7.38 MiB | 8.62 MiB/s, done.
 Resolving deltas: 100% (58/58), done.
 ```
 ## on Windows with [Git on Windows](https://git-scm.com/install/windows)
-* TODO
+```bash
+jeanp@jpmena MINGW64 ~/CONSULTANT
+$ git clone https://github.com/PacktPublishing/Building-Statistical-Models-in-Python.git
+Cloning into 'Building-Statistical-Models-in-Python'...
+fatal: protocol 'https' is not supported # We have to clone using ssh mode not https
+jeanp@jpmena MINGW64 ~/CONSULTANT
+$ git clone git@github.com:PacktPublishing/Building-Statistical-Models-in-Python.git
+Cloning into 'Building-Statistical-Models-in-Python'...
+The authenticity of host 'github.com (140.82.121.3)' can''t be established.
+ED25519 key fingerprint is: SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+# I have to generate key and add it to my GitHub profile
+jeanp@jpmena MINGW64 ~/CONSULTANT
+$ ssh-keygen
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/c/Users/jeanp/.ssh/id_ed25519):
+Enter passphrase for "/c/Users/jeanp/.ssh/id_ed25519" (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/jeanp/.ssh/id_ed25519
+Your public key has been saved in /c/Users/jeanp/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:2ozXrqDSFAtGprYkz1f9U9E7Qu8v/W4P6C9uASyj4aU jeanp@jpmena
+The key''s randomart image is:
++--[ED25519 256]--+
+|             .   |
+|  o         o .  |
+| +     . . . o . |
+|ooo . o = o o +  |
+|++.. = =S+ o o . |
+| .o + E= .o ...  |
+|   +  + + .....o |
+|  . .. o . .o ..+|
+|   ..   ...ooo.+*|
++----[SHA256]-----+
+jeanp@jpmena MINGW64 ~/.ssh
+$ ll
+total 3
+-rw-r--r-- 1 jeanp 197609 399 Feb 21 17:06 id_ed25519
+-rw-r--r-- 1 jeanp 197609  94 Feb 21 17:06 id_ed25519.pub # upload it to your GitHub Account
+-rw-r--r-- 1 jeanp 197609  92 Feb 21 17:01 known_hosts
+```
+* I upload *id_ed25519.pub*
+  * I have to confirm the upload using [GitHub App 4 Android]()
+```bash
+jeanp@jpmena MINGW64 ~/CONSULTANT
+$cgit clone git@github.com:PacktPublishing/Building-Statistical-Models-in-Python.git
+Cloning into 'Building-Statistical-Models-in-Python'...
+remote: Enumerating objects: 171, done.
+remote: Counting objects: 100% (171/171), done.
+remote: Compressing objects: 100% (140/140), done.
+remote: Total 171 (delta 58), reused 124 (delta 30), pack-reused 0 (from 0)
+Receiving objects: 100% (171/171), 7.38 MiB | 10.35 MiB/s, done.
+Resolving deltas: 100% (58/58), done.
+```
 ### Does VSCode Git works on windows ?
