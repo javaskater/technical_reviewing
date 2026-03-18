@@ -1,0 +1,2 @@
+- [Brandon Rhodes Python Design Patterns](https://python-patterns.guide/)
+- [The source Code of the Book on Github](https://github.com/jwcnmr/jameswcooper/tree/main/Pythonpatterns)
