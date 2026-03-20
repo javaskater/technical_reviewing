@@ -35,3 +35,13 @@ found 0 vulnerabilities
   </body>
 </html>
 ```
+### Not necessayr
+* The Bootstrap js is present [at the main page of the WebSite](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/tree/main)
+  
+## in the page the link to the icons' css becomes
+```css
+<link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
+```
+* the [Bootstrap Icon's CSS](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/tree/main/bootstrap-icons/fonts)
+  * is not present (a mistake ?)
+
