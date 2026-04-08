@@ -27,3 +27,38 @@ added 1 package in 643ms
 ```
 - In the scss/style.scss with no success
 -  the author pretends the dark mode is already set which is not true
+* **The-Missing-Bootstrap-5-Guide/part-3/chapter-10/website/css/darkmode.css** is there where the dark-mode is implemented (but also in the style.css)
+  * In that file we have the traditional
+```css
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+  }
+  .bg-light, .jumbotron {
+    background-color: var(--bs-dark) !important;
+  }
+  .bg-dark {
+    background-color: var(--bs-gray-700) !important;
+  }
+  .accordion-button,
+  .accordion-item,
+  .card,
+  .list-group-item {
+    background-color: var(--bs-dark);
+  }
+  .accordion-button,
+  .breadcrumb-item.active,
+  .figure-caption,
+  .list-group-item,
+  .navbar-light .navbar-brand,
+  .navbar-light .navbar-nav .nav-link {
+    color: var(--bs-light);
+  }
+}
+```
+# in the [MDN Example](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme)
+* I made an exemple [an index2 simple file](./files/index2.html)
+  * the dark mode works very well
+# I Created an issue 
+- Issue 1 on the [PacktPublishing GitHub Account of that book](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/issues/1)
