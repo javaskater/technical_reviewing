@@ -96,3 +96,135 @@ p {
   white-space: nowrap;
 }
 ```
+# 267
+- [Changing light modes inside the example](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/blob/main/part-3/chapter-10/website/index.html)
+```bash
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-3/chapter-10/website$ npm i sass --save-dev
+
+added 12 packages in 290ms
+
+5 packages are looking for funding
+  run `npm fund` for details
+# Bootstrap is already there
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-3/chapter-10/website$ npm i bootstrap-icons --save
+
+added 1 package in 643ms
+
+9 packages are looking for funding
+  run `npm fund` for details
+```
+## It happens [here The-Missing-Bootstrap-5-Guide/part-3/chapter-10/website/scss/_custom-styles.scss](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/blob/main/part-3/chapter-10/website/scss/_custom-styles.scss)
+## Problem (TO SOLVE)
+* I don't know how to apply the color Scheme
+- I try 
+```scss
+:root {
+  /* light styles here */
+  color-scheme: dark;
+}
+```
+- In the scss/style.scss with no success
+-  the author pretends the dark mode is already set which is not true
+* **The-Missing-Bootstrap-5-Guide/part-3/chapter-10/website/css/darkmode.css** is there where the dark-mode is implemented (but also in the style.css)
+  * In that file we have the traditional
+```css
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+  }
+  .bg-light, .jumbotron {
+    background-color: var(--bs-dark) !important;
+  }
+  .bg-dark {
+    background-color: var(--bs-gray-700) !important;
+  }
+  .accordion-button,
+  .accordion-item,
+  .card,
+  .list-group-item {
+    background-color: var(--bs-dark);
+  }
+  .accordion-button,
+  .breadcrumb-item.active,
+  .figure-caption,
+  .list-group-item,
+  .navbar-light .navbar-brand,
+  .navbar-light .navbar-nav .nav-link {
+    color: var(--bs-light);
+  }
+}
+```
+## in the [MDN Example](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme)
+* I made an exemple [an index2 simple file](./files/index2.html)
+  * the dark mode works very well
+## I Created an issue 
+- Issue 1 on the [PacktPublishing GitHub Account of that book](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/issues/1)
+# 271
+## gradients [Gradient example on this book Github site](https://github.com/PacktPublishing/The-Missing-Bootstrap-5-Guide/tree/main/part-3/chapter-10/examples/mixins/gradients)
+* defined in **mixins/_gradients.scss** in my case the mixin is called with no color which means black (000000) ?
+```scss
+@mixin gradient-bg($color: null) {
+  background-color: $color;
+
+  @if $enable-gradients {
+    background-image: var(--#{$prefix}gradient);
+  }
+}
+```
+
+* In fact the null value for background-color is replaced with noththing the instruction does not appear in the generated css
+* It is the .bg-dark class that makes the job (black bacground)
+```bash
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/bootstrap/scss$ egrep -rin '\$gradient' .
+./_root.scss:35:  --#{$prefix}gradient: #{$gradient};
+./_variables.scss:364:$gradient: linear-gradient(180deg, rgba($white, .15), rgba($white, 0)) !default;
+```
+* the result in the css/style.css
+```css
+--bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+/** And later */
+.gradient-bg {
+  background-image: var(--bs-gradient);
+}
+```
+* .bg-dark (seen previously in the book) défined from **mixins/_utilities.scss** 'line 67 as indicated by Firefox'
+  * dand the utilities values in **_utilities.scss** especially
+```scss
+// scss-docs-start utils-bg-color
+    "background-color": (
+      property: background-color,
+      class: bg,
+      local-vars: (
+        "bg-opacity": 1
+      ),
+      values: map-merge(
+        $utilities-bg-colors,
+        (
+          "transparent": transparent
+        )
+      )
+    ),
+```
+* all gradiant from **mixins/_gradients.scss**
+* [The color stop](https://stackoverflow.com/questions/14989851/what-exactly-does-the-stop-color-mean-in-css-gradient) means full purple will be at 50% of the dicv width
+```scss
+@mixin gradient-x-three-colors($start-color: $blue, $mid-color: $purple, $color-stop: 50%, $end-color: $red) {
+  background-image: linear-gradient(to right, $start-color, $mid-color $color-stop, $end-color);
+}
+```
+* **gradient-striped** means that transparent it the .bg-dark, the values are from ... to ...
+
+# 274 Sass functions
+* To know where the css style comes from
+```bash
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-3/chapter-10/examples/functions$ npm i sass --save-dev
+
+added 12 packages in 286ms
+
+5 packages are looking for funding
+  run `npm fund` for details
+jmena01@m077-2281091:~/CONSULTANT/The-Missing-Bootstrap-5-Guide/part-3/chapter-10/examples/functions$ ./node_modules/.bin/sass scss/style.scss css/style.css 
+Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+# lots of warnings
+```
