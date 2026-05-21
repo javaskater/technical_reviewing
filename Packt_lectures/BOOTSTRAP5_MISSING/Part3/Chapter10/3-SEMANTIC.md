@@ -69,3 +69,12 @@ header .h1 {
 # 285
 
 - I work on the footer before anything else
+- At the end, everywhere in the genrated style.css we have things like
+
+```css
+.input-group .btn,
+.input-group main > aside > div > div > a {
+  position: relative;
+  z-index: 2;
+}
+```
