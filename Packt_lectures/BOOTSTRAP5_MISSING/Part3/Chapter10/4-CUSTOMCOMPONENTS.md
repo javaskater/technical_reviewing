@@ -162,3 +162,43 @@ scss/style.scss:60 Debug: [timeline-breakpoints] breakpoint xxl with infix -xxl
   </li>
 </ul>
 ```
+
+# 291
+
+- list-unstyled (bootstrap/scss/mixins/\_lists.scss) is so much used that it is a mixin
+
+# 291-292
+
+- the [position:relative -- see demo](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position) of timeline-item allow the **::before** which is a son timeline-item element to position absolute to the timeline-element
+- same with timeline-time the top with the poisition relative allows to offset the top but to keep the element as a block element in the flow
+  - position absolute would put the element out of the flow
+
+# 292
+
+- state in $theme-colors are the keys of:
+
+```scss
+// scss-docs-start theme-colors-map
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+) !default;
+```
+
+- li elements have the original and the colored classes
+
+```html
+<h2>Colors</h2>
+<ul class="timeline">
+  <!--the two classes-->
+  <li class="timeline-item timeline-item-primary">
+    <div class="timeline-time">2022</div>
+  </li>
+</ul>
+```
