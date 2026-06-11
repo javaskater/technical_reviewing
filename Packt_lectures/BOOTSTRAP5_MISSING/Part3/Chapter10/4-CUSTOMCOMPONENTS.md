@@ -202,3 +202,44 @@ $theme-colors: (
   </li>
 </ul>
 ```
+
+# page 295
+
+- I time ago already printed on the console what append
+
+```scss
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @debug "[timeline-breakpoints] breakpoint |#{$breakpoint}| with infix |#{$infix}|";
+    .timeline-horizontal#{$infix} {
+      display: flex;
+      padding-top: 0.6rem;
+      overflow-y: scroll;
+
+      .timeline-item {
+        border-left: none;
+        border-top: $border-width solid $border-color;
+
+        &::before {
+          top: -0.6rem;
+        }
+      }
+    }
+  }
+}
+```
+
+- the result is
+
+```bash
+scss/style.scss:60 Debug: [timeline-breakpoints] breakpoint |xs| with infix ||
+scss/style.scss:60 Debug: [timeline-breakpoints] breakpoint |sm| with infix |-sm|
+scss/style.scss:60 Debug: [timeline-breakpoints] breakpoint |md| with infix |-md|
+scss/style.scss:60 Debug: [timeline-breakpoints] breakpoint |lg| with infix |-lg|
+scss/style.scss:60 Debug: [timeline-breakpoints] breakpoint |xl| with infix |-xl|
+scss/style.scss:60 Debug: [timeline-breakpoints] breakpoint |xxl| with infix |-xxl|
+```
+
+- the **display: flex;** property makes all the li-items place themself horizontally
+- for the fonts inspect is a sass function which makes a SASS array into a string !!!
