@@ -2,7 +2,7 @@ botorch==0.6.0
 gpytorch==1.6.0
 jupyter==1.0.0
 jupyterlab==3.2.5
-matplotlib==3.5.1
+--only-binary matplotlib==3.5.1
 notebook==6.4.6
 numpy==2.4.6
 pandas==3.0.3
