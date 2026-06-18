@@ -43,3 +43,12 @@ ERROR: Ignored the following yanked versions: 3.9.1
 ERROR: Could not find a version that satisfies the requirement matplotlib==3.5.1 (from versions: 3.7.3, 3.7.4, 3.7.5, 3.8.0, 3.8.1, 3.8.2, 3.8.3, 3.8.4, 3.9.0rc2, 3.9.0, 3.9.1.post1, 3.9.2, 3.9.3, 3.9.4, 3.10.0rc1, 3.10.0, 3.10.1, 3.10.3, 3.10.5, 3.10.6, 3.10.7, 3.10.8, 3.10.9, 3.11.0rc1, 3.11.0rc2, 3.11.0)
 ERROR: No matching distribution found for matplotlib==3.5.1
 ```
+
+- With the --only-binary option in the \_requirements.txt_il it downloads anyway the latest bersion that has a binary ...
+  - it has a different behaviour from just above
+
+# prefer-binary
+
+- It didn't find a binary for the 3.5.1 version of matplotlib. It then compiles from the sources
+  - that is the defaut behaviour of --prefer-binary
+- is --prefer-binary the default option of pip install ???
