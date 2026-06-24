@@ -224,12 +224,85 @@ SpringDevDb=# select * from packt.anti_hero_entity; -- after the update
 
 # 102
 
-## TODO DELETE
+## DELETE
+
+```java
+    @DeleteMapping("/{id}")
+    public void deleteAntiHeroById(@PathVariable("id") UUID id){
+        service.removeAntiHeroById(id);
+    }
+```
+
+- the request
+
+```bash
+curl --location --request DELETE 'http://localhost:8080/api/v1/antiheroes/e95f5f5b-cb1a-48af-ac6c-ee181a14740b'
+```
+
+- after calling that method, the entry is not present in the Database
+
+## making the GET Request catch the NotFoundException
+
+- useful after we deleted the Entry
+- Code taken from the PUT command
+
+```java
+    @GetMapping("/{id}")
+    public AntiHeroDto getAntiHeroById(@PathVariable("id") UUID id){
+        try
+        {
+            var entity = service.findAntiHeroById(id);
+            return convertToDto(entity);
+        } catch (NotFoundException nex)
+        {
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "id does not match with an existing Hero"
+            );
+        }
+
+    }
+```
 
 # 1O3
+
+## Get all AntiHeroes
+
+- be careful no / at the end of the URL (otherwise it is 404 Not Found)
+
+```bash
+jmena01@m077-2281091:~$ curl --location --request GET 'http://localhost:8080/api/v1/antiheroes'
+[]
+```
 
 ## StreamSupport
 
 - [more on the SplitITerator](https://medium.com/unibench/java-spliterator-examine-how-arraylist-gets-converted-to-a-stream-3d1b23e31fab) when the second parameter is set to false it means we split the Steam not in parallel but in serial !!!!
 - [Official documentation of a splitIterator](https://docs.oracle.com/javase/8/docs/api/java/util/Spliterator.html)
 - an ierable ha s splitIterator
+- I don't especially understand the split operator
+
+```java
+    @GetMapping
+    public List<AntiHeroDto> getAntiHeroes(){
+        var antiHeroEntityList = StreamSupport.stream(service.findAllAntiHeroes().spliterator(), false).collect(Collectors.toList());
+        return antiHeroEntityList.stream().map(e -> convertToDto(e)).collect(Collectors.toList());
+    }
+```
+
+- After two POST requests it gives
+
+```bash
+jmena01@m077-2281091:~$ curl --location --request GET 'http://localhost:8080/api/v1/antiheroes'
+[{"firstName":"JEan-Pierre","house":"Neuilly Plaisance","id":"58554ea4-a75c-4030-93f7-6cd78c5bbe67","knownAs":"jpm","lastName":"MENA"},{"firstName":"Liliane","house":"Guilers","id":"803739e7-f55a-4ed3-a8e0-c74cc21dff61","knownAs":"lq","lastName":"QUERRE"}]
+```
+
+- and in the database
+
+```sql
+SpringDevDb=# select * from packt.anti_hero_entity;
+                  id                  |        created_at         | first_name  |       house       | known_as | last_name
+--------------------------------------+---------------------------+-------------+-------------------+----------+-----------
+ 58554ea4-a75c-4030-93f7-6cd78c5bbe67 | 24-06-02026 10:00:34 CEST | JEan-Pierre | Neuilly Plaisance | jpm      | MENA
+ 803739e7-f55a-4ed3-a8e0-c74cc21dff61 | 24-06-02026 10:01:06 CEST | Liliane     | Guilers           | lq       | QUERRE
+(2 lignes)
+```
