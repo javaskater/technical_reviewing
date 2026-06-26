@@ -7,3 +7,5 @@
 
 - Modifying [the SpringBootPlugin](https://dev.to/imajenasyon/maven-plugin-vs-springboot-plugin-38j8)
 - It is already there ....
+- both plugins work together like explained on [Spring Doc explanation](https://springdoc.org/plugins.html)
+  - Right click on the pom.xml / Maven / Run / Reimport
