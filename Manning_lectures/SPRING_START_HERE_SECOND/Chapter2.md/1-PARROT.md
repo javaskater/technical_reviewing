@@ -29,3 +29,18 @@ public class Main {
 ## see [parrot in unit tests](https://github.com/Spring-Start-Here/Spring-Start-Here/blob/main/ssh_ch2_ex2/src/test/java/com/example/AppTests.java)
 
 - They use here the Bean method name tho retrive the Managed Bean from the context !!!
+- **import org.springframework.test.context.junit.jupiter.SpringExtension;** brings the automatic declaration of beans
+  - the bean name is the name of the method in the configuration
+
+# Testing the PArros
+
+- [The code on the WebSite is too advanced id does not work](https://github.com/Spring-Start-Here/Spring-Start-Here/blob/main/ssh_ch2_ex2/src/test/java/com/example/AppTests.java)
+
+# I have a problem
+
+- with the File structure in the IntelliJ project
+- it does copnsider srr and test the source of my packages not rsrc/java nor test.java
+  - **TODO** To correct
+- Goto Project file
+  - mark src/java as Source Root File (Right click / mark directory as ...)
+  - mark test/java as Test Source File
