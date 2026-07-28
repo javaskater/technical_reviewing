@@ -44,3 +44,37 @@ public class Main {
 - Goto Project file
   - mark src/java as Source Root File (Right click / mark directory as ...)
   - mark test/java as Test Source File
+
+## Running the Spring Config
+
+- The method getBean
+
+```java
+ Parrot p = context.getBean("parrot",Parrot.class);
+```
+
+- can be used with one parameter (the class)
+  - only in the case of only one Parrot instance in the whole Spring configuration
+- otherwhise you must specify a name
+  - which is the method name in the Configuration class.
+
+```java
+@Configuration // This annotation tells that it is a configuration class
+public class ProjectConfig
+{
+    @Bean // The method name undereath that annotation gives the bean name in the Spring context
+    Parrot parrot(){
+        var p = new Parrot();
+        p.setName("Kiki");
+        return p;
+    }
+```
+
+# 43
+
+> By default, Spring uses the names of the methods annotated with
+> @Bean as the beans’ names themselves
+
+# 46
+
+- Component and ComponenetScan see [Exercice 5 of Chapter 2](https://github.com/Spring-Start-Here/Spring-Start-Here/tree/main/ssh_ch2_ex5)
