@@ -16,3 +16,7 @@ jmena01@m077-2281091:~/CONSULTANT$ unzip Spring-Start-Here-main.zip
    creating: Spring-Start-Here-main/ssh_ch9_ex3/src/test/java/com/example/ssh_ch9_ex3/processors/
   inflating: Spring-Start-Here-main/ssh_ch9_ex3/src/test/java/com/example/ssh_ch9_ex3/processors/LoginProcessorLoginTest.java
 ```
+
+# The Book suggest trying the code with [Intellij IDE](https://lp.jetbrains.com/intellij-idea-promo/)
+
+- I use at the time of 30th of july 2026 **IntelliJ IDEA 2026.1.3**

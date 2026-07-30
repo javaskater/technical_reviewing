@@ -78,3 +78,34 @@ public class ProjectConfig
 # 46
 
 - Component and ComponenetScan see [Exercice 5 of Chapter 2](https://github.com/Spring-Start-Here/Spring-Start-Here/tree/main/ssh_ch2_ex5)
+
+# 50
+
+```java
+import jakarta.annotation.PostConstruct; //comes with a new depdency
+import org.springframework.stereotype.Component;
+
+@Component
+public class Parrot {
+
+    private String name;
+
+    @PostConstruct
+    void init(){
+        name = "KikiM";
+    }
+```
+
+- The PostConstruc annotation, is not a Spring annotation
+  - it is a jakarta annotation
+  - for the code to work we need to add to the pom.xml:
+
+```xml
+<dependency>
+    <groupId>jakarta.annotation</groupId>
+    <artifactId>jakarta.annotation-api</artifactId>
+    <version>2.1.1</version>
+</dependency>
+```
+
+- A the right-click on the pom.xml select Maven an then **Select Project**
