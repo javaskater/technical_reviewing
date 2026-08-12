@@ -168,3 +168,32 @@ traitlets        : 5.16.1
 - to stop the notebook server
 # deactivate
 - to quit the virtual env
+
+# Starting the jupyter Notebook
+```bash
+# Going to the virtual environment which has all necessary libraries
+jpmena@jpmena-HP-OmniBook-X-Flip-Laptop-14-fm0xxx:~/CONSULTANT$ source ./ManningBayesian/bin/activate
+# Starting the Jupyter Notebook itself
+(ManningBayesian) jpmena@jpmena-HP-OmniBook-X-Flip-Laptop-14-fm0xxx:~/CONSULTANT$ jupyter notebook
+[W 2026-08-12 11:07:52.017 ServerApp] A `_jupyter_server_extension_points` function was not found in nbclassic. Instead, a `_jupyter_server_extension_paths` function was found and will be used for now. This function name will be deprecated in future releases of Jupyter Server.
+[I 2026-08-12 11:07:52.019 ServerApp] jupyter_lsp | extension was successfully linked.
+[I 2026-08-12 11:07:52.023 ServerApp] jupyter_server_terminals | extension was successfully linked.
+[I 2026-08-12 11:07:52.026 ServerApp] jupyterlab | extension was successfully linked.
+[I 2026-08-12 11:07:52.029 ServerApp] nbclassic | extension was successfully linked.
+[I 2026-08-12 11:07:52.032 ServerApp] notebook | extension was successfully linked.
+[I 2026-08-12 11:07:52.285 ServerApp] notebook_shim | extension was successfully linked.
+[I 2026-08-12 11:07:52.305 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2026-08-12 11:07:52.307 ServerApp] jupyter_lsp | extension was successfully loaded.
+[I 2026-08-12 11:07:52.308 ServerApp] jupyter_server_terminals | extension was successfully loaded.
+[I 2026-08-12 11:07:52.311 LabApp] JupyterLab extension loaded from /home/jpmena/CONSULTANT/ManningBayesian/lib/python3.14/site-packages/jupyterlab
+[I 2026-08-12 11:07:52.311 LabApp] JupyterLab application directory is /home/jpmena/CONSULTANT/ManningBayesian/share/jupyter/lab
+[I 2026-08-12 11:07:52.311 LabApp] Extension Manager is 'pypi'.
+[I 2026-08-12 11:07:52.348 ServerApp] jupyterlab | extension was successfully loaded.
+
+  _   _          _      _
+ | | | |_ __  __| |__ _| |_ ___
+ | |_| | '_ \/ _` / _` |  _/ -_)
+  \___/| .__/\__,_\__,_|\__\___|
+```
+# The navigator is launched automatically
+- to http://localhost:8888/tree
